@@ -9,18 +9,25 @@ File::File(string filePath) {
     this->filePath = filePath;
 }
 
-void File::read(int size) {
-    int v[size];
-
+void File::read() {
+    cout << "--------------\n" << "Lendo o arquivo" << endl;
     file.open(filePath, ios::in | ios::binary);
 
     if (!file) exit(2);
 
-    file.read(reinterpret_cast<char *>(v), size * sizeof(int));
+    unsigned int size;
+    file.read(reinterpret_cast<char *>(&size), sizeof(size));
+
+    cout << "Amostras encontradas: " << size << "\n--------------" << endl;
+
+    int v[size];
+
+    file.read(reinterpret_cast<char *>(v), size * sizeof(signed short));
 
     for (auto i : v) cout << i << endl;
 
     file.close();
+    cout << "--------------" << endl;
 }
 
 void File::write() {

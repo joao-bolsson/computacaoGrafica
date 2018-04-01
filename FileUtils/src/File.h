@@ -29,9 +29,8 @@ public:
 
     /**
      * Reads the file
-     * @param size Stream size.
      */
-    void read(int size);
+    void read();
 
     /**
      * Writes a default int vector in the file (for while).

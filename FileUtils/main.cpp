@@ -15,13 +15,9 @@ int main() {
     string filePath;
     cin >> filePath;
 
-    cout << "Quantidade de linhas a serem lidas: ";
-    int size;
-    cin >> size;
-
     File *file = new File(filePath);
 
-    cout << "Vamos ler " << size << " linhas do arquivo " << filePath << endl;
-    file->read(size);
+    cout << "Vamos ler o arquivo " << filePath << endl;
+    file->read();
     return 0;
 }
