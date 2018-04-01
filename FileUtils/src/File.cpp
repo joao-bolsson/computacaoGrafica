@@ -20,9 +20,9 @@ void File::read() {
 
     cout << "Amostras encontradas: " << size << "\n--------------" << endl;
 
-    int v[size];
+    signed short v[size];
 
-    file.read(reinterpret_cast<char *>(v), size * sizeof(signed short));
+    file.read(reinterpret_cast<char *>(v), sizeof(v));
 
     for (auto i : v) cout << i << endl;
 
