@@ -14,17 +14,17 @@ Component::~Component() {
 }
 
 void Component::draw() {
-    for (auto c = components->begin(); c != components->end(); c++) {
-        (*c)->draw();
+    for (auto c : components) {
+        c->draw();
     }
 }
 
 void Component::addComponent(Component &component) {
     // TODO: verificar se o elemento já existe na lista ou se o componente é this
-    components->push_back(&component);
+    components.push_back(&component);
 }
 
 void Component::removeComponent(Component &component) {
-    components->remove(&component);
+    components.remove(&component);
 }
 

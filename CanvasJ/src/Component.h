@@ -17,7 +17,7 @@ class Component {
 
 private:
     // TODO: essa lista precisa ser um ponteiro?
-    list<Component *> *components;
+    list<Component *> components;
 public:
     /**
      * Default component construct.

@@ -11,7 +11,7 @@ Window::Window(unsigned short width, unsigned short height, string title) {
     this->height = height;
 }
 
-void Window::draw() {
+void Window::show() {
     int argc = 1;
     char arg1[] = "teste";
     char *argv[] = {arg1};
@@ -38,9 +38,7 @@ void Window::draw() {
     glutPassiveMotionFunc(motion);
     glutMotionFunc(motion);
     glutMouseWheelFunc(mouseWheelCB);
-}
 
-void Window::show() {
     draw();
     runCanvas();
 }

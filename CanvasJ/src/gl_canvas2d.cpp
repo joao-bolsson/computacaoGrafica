@@ -21,6 +21,7 @@
 //-
 
 #include "gl_canvas2d.h"
+#include <iostream>
 
 #include <GL/glut.h>
 //#include <GL/freeglut_ext.h> //callback da wheel do mouse.
@@ -34,7 +35,8 @@ void point(int x, int y) {
 }
 
 void render() {
-
+    // TODO: esse metodo precisa ser sobrescrito na main para chamar a função para desenhar a window
+    std::cout << "render" << std::endl;
 }
 
 void keyboard(int key) {

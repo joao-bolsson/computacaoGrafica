@@ -29,9 +29,6 @@ public:
      */
     void show();
 
-    void draw() override;
-
-
 };
 
 #endif //CANVASJ_WINDOW_H
