@@ -28,7 +28,6 @@ public:
      * Show this window on screen.
      */
     void show();
-
 };
 
 #endif //CANVASJ_WINDOW_H

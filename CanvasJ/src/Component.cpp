@@ -28,3 +28,7 @@ void Component::removeComponent(Component &component) {
     components.remove(&component);
 }
 
+const list<Component *> &Component::getComponents() const {
+    return components;
+}
+

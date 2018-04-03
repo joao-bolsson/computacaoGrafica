@@ -45,6 +45,8 @@ public:
      * @param component Component to remove.
      */
     void removeComponent(Component &component);
+
+    const list<Component *> &getComponents() const;
 };
 
 

@@ -34,11 +34,6 @@ void point(int x, int y) {
     glEnd();
 }
 
-void render() {
-    // TODO: esse metodo precisa ser sobrescrito na main para chamar a função para desenhar a window
-    std::cout << "render" << std::endl;
-}
-
 void keyboard(int key) {
 
 }

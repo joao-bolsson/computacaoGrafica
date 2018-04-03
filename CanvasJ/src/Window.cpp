@@ -39,6 +39,5 @@ void Window::show() {
     glutMotionFunc(motion);
     glutMouseWheelFunc(mouseWheelCB);
 
-    draw();
     runCanvas();
 }
