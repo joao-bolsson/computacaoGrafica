@@ -1,10 +1,10 @@
 #ifndef __CANVAS_2D__H__
 #define __CANVAS_2D__H__
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cmath>
+#include <cstring>
 
 #include <GL/glut.h>
 #include <GL/freeglut_ext.h> //callback da wheel do mouse.

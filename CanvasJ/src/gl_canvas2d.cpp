@@ -12,19 +12,8 @@
 *                   http://www.opengl.org/documentation/specs/glut/spec3/node1.html
 **/
 
-
-//*****************************************************************************
-//modificacoes
-//*****************************************************************************
-//- passar tamanho da janela
-//- retangulo preenchido em qualquer orientacao (polygon)
-//-
-
 #include "gl_canvas2d.h"
 #include <iostream>
-
-#include <GL/glut.h>
-//#include <GL/freeglut_ext.h> //callback da wheel do mouse.
 
 int largura, altura;
 

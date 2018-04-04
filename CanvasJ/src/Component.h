@@ -16,18 +16,8 @@ using namespace std;
 class Component {
 
 private:
-    // TODO: essa lista precisa ser um ponteiro?
     list<Component *> components;
 public:
-    /**
-     * Default component construct.
-     */
-    Component();
-
-    /**
-     * Component destructor.
-     */
-    ~Component();
 
     /**
      * Render the component on screen.
@@ -39,14 +29,6 @@ public:
      * @param component Component to add.
      */
     void addComponent(Component &component);
-
-    /**
-     * Remove a component of this component.
-     * @param component Component to remove.
-     */
-    void removeComponent(Component &component);
-
-    const list<Component *> &getComponents() const;
 };
 
 
