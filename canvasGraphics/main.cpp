@@ -5,6 +5,9 @@
  * @since 2018, 01 Apr.
  */
 #include "src/gl_canvas2d.h"
+#include "src/File.h"
+
+short y_max = 100, y_min = -100;
 
 void render() {
     // P(0,0) está no canto inferior esquerdo
@@ -31,7 +34,24 @@ void mouse(int button, int state, int x, int y) {
 }
 
 int main() {
+    cout << "Caminho completo do Arquivo: ";
+    string filePath;
+    cin >> filePath;
+
+    File *file = new File(filePath);
+
+    cout << "Vamos ler o arquivo " << filePath << endl;
+    auto v = file->read();
+
+    cout << "=================" << endl;
+
+    for (auto sig : v) {
+        cout << sig << endl;
+    }
+    cout << "=================" << endl;
+
     initCanvas(600, 400, "Plano Cartesiano");
     runCanvas();
+
     return 0;
 }
