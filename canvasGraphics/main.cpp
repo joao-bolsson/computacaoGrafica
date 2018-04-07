@@ -30,10 +30,35 @@ void drawButtons() {
     text(95, 15, "SAVE");
 }
 
+void drawGraphic() {
+    color(1, 0, 0);
+    rect(5, 60, 795, 695);
+    // TODO: desenhar linhas para o gŕafico e colocar uma "escala"
+}
+
+void drawCheckBox() {
+    color(1, 0, 0);
+    rectFill(800, 682, 815, 695); // enable
+    color(1, 1, 1);
+    text(820, 685, "DCT");
+
+    color(1, 0, 0);
+    rect(800, 664, 815, 677); // disable
+    color(1, 1, 1);
+    text(820, 667, "IDCT");
+
+    color(1, 0, 0);
+    rect(800, 646, 815, 659); // disable
+    color(1, 1, 1);
+    text(820, 649, "ORIGINAL");
+}
+
 void drawWindow() {
     clear(0, 0, 0); // tela com fundo preto
 
     drawButtons();
+    drawGraphic();
+    drawCheckBox();
 }
 
 void render() {
