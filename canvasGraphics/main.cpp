@@ -11,25 +11,23 @@
  */
 #define WIDTH 1000
 #define HEIGHT 700
-#define MARGIN_BUTTON_X 5
-#define MARGIN_BUTTON_Y 5
-// canvas use GLUT_BITMAP_8_BY_13 for draw text
-#define FONT_H 13
-#define FONT_W 8
-#define PIXEL_SCALE 3
 
 void drawButtons() {
-    const char *textLoad = "LOAD";
-    auto size = (short) strlen(textLoad);
-    int textWidth = size * FONT_W;
-
-    unsigned short x1 = 0, y1 = 0;
+    /**
+     * Load button
+     */
     color(1, 0, 0);
-    rect(PIXEL_SCALE * (x1 + MARGIN_BUTTON_X), PIXEL_SCALE * (y1 + MARGIN_BUTTON_Y),
-         PIXEL_SCALE * (x1 + textWidth), PIXEL_SCALE * (y1 + FONT_H));
+    rect(5, 5, 80, 50);
     color(1, 1, 1);
+    text(15, 15, "LOAD");
 
-    text(PIXEL_SCALE * (x1 + MARGIN_BUTTON_X), PIXEL_SCALE * (y1 + MARGIN_BUTTON_Y), textLoad);
+    /**
+     * Save button
+     */
+    color(1, 0, 0);
+    rect(85, 5, 160, 50);
+    color(1, 1, 1);
+    text(95, 15, "SAVE");
 }
 
 void drawWindow() {
