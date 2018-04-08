@@ -27,6 +27,11 @@ vector<signed short> File::read() {
 
     vector<signed short> signals(v, v + sizeof(v) / sizeof(signed short));
 
+    for (auto a : v) {
+        cout << a << endl;
+    }
+    cout << "--------------" << endl;
+
     return signals;
 }
 
@@ -43,8 +48,4 @@ void File::write() {
 
     file.flush();
     file.close();
-}
-
-File::~File() {
-    cout << "Fim da instância do Arquivo" << endl;
 }

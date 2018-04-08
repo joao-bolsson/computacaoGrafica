@@ -5,12 +5,20 @@
  * @since 2018, 01 Apr.
  */
 #include "src/gl_canvas2d.h"
+#include "src/File.h"
 
 /**
  * Initial values for width and hight of window.
  */
-#define WIDTH 1000
+#define WIDTH 900
 #define HEIGHT 700
+
+#define X_START_RECT_Y 50 // x coordinate where the y rect of cartesian plan starts on screen
+#define Y_START_RECT_Y 75 // y coordinate where the y rect of cartesian plan starts on screen
+#define Y_END_RECT_Y 685 // y coordinate where the y rect of cartesian plan ends on screen (height)
+#define X_END_RECT_X 790 // x coordinate where the x rect of cartesian plan ends on screen
+
+vector<signed short> samples;
 
 void drawButtons() {
     /**
@@ -30,6 +38,22 @@ void drawButtons() {
     text(95, 15, "SAVE");
 }
 
+/**
+ * Transalte a point from sample to the screen.
+ *
+ * @param signal Y Coordinate from sample.
+ * @param sampleNumber Sample number.
+ */
+void translatePoint(signed short signal, int sampleNumber) {
+    auto y = (signed short) (Y_END_RECT_Y * signal * 0.01);
+    auto size = static_cast<unsigned int>(samples.size());
+    auto x = sampleNumber * X_END_RECT_X * pow(size, -1);
+}
+
+void drawOriginalSamples() {
+
+}
+
 void drawGraphic() {
     /**
      * Graphic area
@@ -41,13 +65,14 @@ void drawGraphic() {
     /**
      * Cartesian plan
      */
-    rect(50, 75, 50, 685); // y
-    // y = 685 + 75
-    rect(50, (int) (760 * 0.5), 790, (int) (760 * 0.5)); // x
+    rect(X_START_RECT_Y, Y_START_RECT_Y, X_START_RECT_Y, Y_END_RECT_Y); // y
+    rect(X_START_RECT_Y, (int) (760 * 0.5), X_END_RECT_X, (int) (760 * 0.5)); // x
 
     text(20, 680, "100");
     text(10, 70, "-100");
     text(35, (int) (760 * 0.5) - 5, "0");
+
+    drawOriginalSamples();
 }
 
 void drawCheckBox() {
@@ -77,12 +102,6 @@ void drawWindow() {
 
 void render() {
     drawWindow();
-//    // P(0,0) está no canto inferior esquerdo
-//    clear(1, 1, 1);
-//    color(0, 0, 0);
-//
-//    // x rect
-//    rect(0, altura / 2, largura, altura / 2);
 }
 
 //funcao chamada toda vez que uma tecla for pressionada
@@ -101,23 +120,14 @@ void mouse(int button, int state, int x, int y) {
 }
 
 int main() {
-    /*
     cout << "Caminho completo do Arquivo: ";
-    string filePath;
-    cin >> filePath;
+    string filePath = "/home/joao/Downloads/samples.dct";
+//    cin >> filePath;
 
     File *file = new File(filePath);
 
     cout << "Vamos ler o arquivo " << filePath << endl;
-    auto v = file->read();
-
-    cout << "=================" << endl;
-
-    for (auto sig : v) {
-        cout << sig << endl;
-    }
-    cout << "=================" << endl;
-    */
+    samples = file->read();
 
     initCanvas(WIDTH, HEIGHT, "Plano Cartesiano");
     runCanvas();

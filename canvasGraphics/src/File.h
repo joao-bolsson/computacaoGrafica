@@ -13,6 +13,8 @@
 using namespace std;
 
 class File {
+
+private:
     string filePath;
     fstream file;
 
@@ -22,11 +24,6 @@ public:
      * @param filePath The file path.
      */
     File(string filePath);
-
-    /**
-     * Object destructor.
-     */
-    ~File();
 
     /**
      * Reads the file
