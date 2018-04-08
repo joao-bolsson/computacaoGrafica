@@ -6,6 +6,7 @@
  */
 #include "src/gl_canvas2d.h"
 #include "src/File.h"
+#include "src/Point.h"
 
 /**
  * Initial values for width and hight of window.
@@ -44,14 +45,26 @@ void drawButtons() {
  * @param signal Y Coordinate from sample.
  * @param sampleNumber Sample number.
  */
-void translatePoint(signed short signal, int sampleNumber) {
-    auto y = (signed short) (Y_END_RECT_Y * signal * 0.01);
+Point translatePoint(signed short signal, int sampleNumber) {
+    auto y = (signed short) (Y_END_RECT_Y * signal / 100);
     auto size = static_cast<unsigned int>(samples.size());
-    auto x = sampleNumber * X_END_RECT_X * pow(size, -1);
+    auto x = sampleNumber * X_END_RECT_X / size;
+
+    return Point(x, y);
 }
 
 void drawOriginalSamples() {
+    int i = 1;
+    for (auto s : samples) {
+        Point p = translatePoint(s, i++);
 
+        color(0, 1, 0);
+        point(p.getX(), p.getY());
+    }
+
+    color(0, 1, 0);
+    circleFill(790, 685, 5, 100);
+    color(1, 1, 1);
 }
 
 void drawGraphic() {
