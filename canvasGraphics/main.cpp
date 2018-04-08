@@ -41,9 +41,13 @@ void drawGraphic() {
     /**
      * Cartesian plan
      */
-    rect(40, 75, 40, 685); // y
+    rect(50, 75, 50, 685); // y
     // y = 685 + 75
-    rect(10, (int) (760 * 0.5), 790, (int) (760 * 0.5)); // x
+    rect(50, (int) (760 * 0.5), 790, (int) (760 * 0.5)); // x
+
+    text(20, 680, "100");
+    text(10, 70, "-100");
+    text(35, (int) (760 * 0.5) - 5, "0");
 }
 
 void drawCheckBox() {
