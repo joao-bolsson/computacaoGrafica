@@ -31,9 +31,19 @@ void drawButtons() {
 }
 
 void drawGraphic() {
+    /**
+     * Graphic area
+     */
     color(1, 0, 0);
     rect(5, 60, 795, 695);
-    // TODO: desenhar linhas para o gŕafico e colocar uma "escala"
+
+    color(1, 1, 1);
+    /**
+     * Cartesian plan
+     */
+    rect(40, 75, 40, 685); // y
+    // y = 685 + 75
+    rect(10, (int) (760 * 0.5), 790, (int) (760 * 0.5)); // x
 }
 
 void drawCheckBox() {
