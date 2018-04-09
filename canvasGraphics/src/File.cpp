@@ -25,10 +25,12 @@ vector<signed short> File::read() {
     file.read(reinterpret_cast<char *>(v), sizeof(v));
     file.close();
 
-    vector<signed short> signals(v, v + sizeof(v) / sizeof(signed short));
+    vector<short> signals;
+//    vector<signed short> signals(v, v + sizeof(v) / sizeof(signed short));
 
     for (auto a : v) {
         cout << a << endl;
+        signals.push_back(a);
     }
     cout << "--------------" << endl;
 

@@ -46,20 +46,30 @@ void drawButtons() {
  * @param sampleNumber Sample number.
  */
 Point translatePoint(signed short signal, int sampleNumber) {
-    auto y = (signed short) (Y_END_RECT_Y * signal / 100);
+    auto y = signal + 760 * 0.5;
     auto size = static_cast<unsigned int>(samples.size());
-    auto x = sampleNumber * X_END_RECT_X / size;
+    auto seg = (X_END_RECT_X - X_START_RECT_Y) / size;
+
+    auto x = sampleNumber + X_START_RECT_Y + seg * sampleNumber;
 
     return Point(x, y);
 }
 
+short test = 1;
+
 void drawOriginalSamples() {
-    int i = 1;
+    int i = 0;
     for (auto s : samples) {
         Point p = translatePoint(s, i++);
 
         color(0, 1, 0);
-        point(p.getX(), p.getY());
+        circleFill(p.getX(), p.getY(), 1, 5);
+
+        // TODO: eliminar esse código
+        if (test <= 32) {
+            cout << test << " " << s << "= P(" << p.getX() << ", " << p.getY() << ")" << endl;
+            test++;
+        }
     }
 
     color(0, 1, 0);
