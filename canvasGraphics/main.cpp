@@ -46,10 +46,27 @@ void drawButtons() {
  * @param sampleNumber Sample number.
  */
 Point translatePoint(signed short signal, int sampleNumber) {
-    auto y = signal + 760 * 0.5;
+    /**
+     * O eixo Y é uma reta de tamanho 200, que vai de -100 até 100 (intervalo das amostras)
+     * Precisamos dividir esse eixo em 200 para que ele passe a ter uma escala de 1 unidade.
+     * Exemplificando, uma reta que vai do ponto (na tela) de 75 até 685, através do cálculo
+     * acima, conseguimos "traduzir" ela para uma reta que vai de -100 até 100. Com o valor
+     * da unidade da reta Y multiplicamos o sinal para o obter a real "escala" na tela,
+     * e depois transladamos para o gráfico com origem em 380 (760*0.5).
+     */
+    short rectYHeight = Y_END_RECT_Y - Y_START_RECT_Y;
+    short factorY = 1;
+    if (signal != 0) {
+        factorY = (short) (rectYHeight / 200);
+    }
+    auto y = signal * factorY + 760 * 0.5;
     auto size = static_cast<unsigned int>(samples.size());
+    /**
+     * O eixo X está segmentado, conforme o número de amostras.
+     * Então, precisamos colocar cada amostra no seu devido lugar no gráfico
+     * através do cálculo a seguir.
+     */
     auto seg = (X_END_RECT_X - X_START_RECT_Y) / size;
-
     auto x = sampleNumber + X_START_RECT_Y + seg * sampleNumber;
 
     return Point(x, y);
@@ -63,7 +80,7 @@ void drawOriginalSamples() {
         Point p = translatePoint(s, i++);
 
         color(0, 1, 0);
-        circleFill(p.getX(), p.getY(), 1, 5);
+        circleFill(p.getX(), p.getY(), 2, 5);
 
         // TODO: eliminar esse código
         if (test <= 32) {
@@ -72,8 +89,6 @@ void drawOriginalSamples() {
         }
     }
 
-    color(0, 1, 0);
-    circleFill(790, 685, 5, 100);
     color(1, 1, 1);
 }
 
