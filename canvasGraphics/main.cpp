@@ -67,7 +67,7 @@ Point translatePoint(signed short signal, int sampleNumber) {
      * através do cálculo a seguir.
      */
     auto seg = (X_END_RECT_X - X_START_RECT_Y) / size;
-    auto x = sampleNumber + X_START_RECT_Y + seg * sampleNumber;
+    auto x = X_START_RECT_Y + seg * sampleNumber;
 
     return Point(x, y);
 }
