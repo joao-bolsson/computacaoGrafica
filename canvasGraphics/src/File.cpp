@@ -26,7 +26,6 @@ vector<signed short> File::read() {
     file.close();
 
     vector<short> signals;
-//    vector<signed short> signals(v, v + sizeof(v) / sizeof(signed short));
 
     for (auto a : v) {
         cout << a << endl;

@@ -19,11 +19,14 @@
 #define Y_END_RECT_Y 685 // y coordinate where the y rect of cartesian plan ends on screen (height)
 #define X_END_RECT_X 790 // x coordinate where the x rect of cartesian plan ends on screen
 
-vector<signed short> samples;
+vector<short> samples;
+vector<short> dctValues;
+vector<short> idctValues;
+vector<short> diffValues;
 
 // enable/disable (checkbox)
-bool dctState = false;
-short dctX1 = 800, dctY1 = 682, dctX2 = 815, dctY2 = 695;
+bool diffState = false;
+short diffX1 = 800, diffY1 = 682, diffX2 = 815, diffY2 = 695;
 
 bool idctState = false;
 short idctX1 = 800, idctY1 = 664, idctX2 = 815, idctY2 = 677;
@@ -82,8 +85,65 @@ Point translatePoint(signed short signal, int sampleNumber) {
     return Point(x, y);
 }
 
+void applyDiff() {
+    auto size = static_cast<unsigned short>(samples.size());
+    for (unsigned short n = 0; n < size; n++) {
+        diffValues.push_back(samples[n] - idctValues[n]);
+    }
+}
+
+void applyIDCT() {
+    auto size = static_cast<unsigned short>(samples.size());
+    short val;
+    for (unsigned short n = 0; n < size; n++) {
+        double sum = 0.;
+        for (short k = 0; k < size; ++k) {
+            double s = (k == 0) ? sqrt(.5) : 1.;
+            sum += s * dctValues[k] * cos(M_PI * (n + .5) * k / size);
+        }
+        val = (short) (sum * sqrt(2. / size));
+        idctValues.push_back(val);
+    }
+}
+
+void applyDCT() {
+    auto size = static_cast<unsigned short>(samples.size());
+    short val;
+    for (unsigned short k = 0; k < size; k++) {
+        double sum = 0.;
+        double s = (k == 0) ? sqrt(.5) : 1.;
+        for (int n = 0; n < size; n++) {
+            sum += s * samples[n] * cos(M_PI * (n + .5) * k / size);
+        }
+        val = (short) (sum * sqrt(2. / size));
+        dctValues.push_back(val);
+
+        cout << k << " DCT val: " << val << endl;
+    }
+}
+
+void drawDiff() {
+    unsigned short i = 0;
+    for (auto val : diffValues) {
+        Point p = translatePoint(val, i++);
+
+        color(0, 1, 1);
+        circleFill(p.getX(), p.getY(), 2, 5);
+    }
+}
+
+void drawIDCTValues() {
+    unsigned short i = 0;
+    for (auto val : idctValues) {
+        Point p = translatePoint(val, i++);
+
+        color(0, 0, 1);
+        circleFill(p.getX(), p.getY(), 2, 5);
+    }
+}
+
 void drawOriginalSamples() {
-    int i = 0;
+    unsigned short i = 0;
     for (auto s : samples) {
         Point p = translatePoint(s, i++);
 
@@ -115,17 +175,23 @@ void drawGraphic() {
     if (oriState) {
         drawOriginalSamples();
     }
+    if (idctState) {
+        drawIDCTValues();
+    }
+    if (diffState) {
+        drawDiff();
+    }
 }
 
 void drawCheckBox() {
     color(1, 0, 0);
-    if (dctState) {
-        rectFill(dctX1, dctY1, dctX2, dctY2);
+    if (diffState) {
+        rectFill(diffX1, diffY1, diffX2, diffY2);
     } else {
-        rect(dctX1, dctY1, dctX2, dctY2);
+        rect(diffX1, diffY1, diffX2, diffY2);
     }
     color(1, 1, 1);
-    text(820, 685, "DCT");
+    text(820, 685, "DIF");
 
     color(1, 0, 0);
     if (idctState) {
@@ -172,8 +238,8 @@ void keyboardUp(int key) {
 void mouse(int button, int state, int x, int y) {
     y = (y - altura) * -1;
     if (button == 0 && state == 0) {
-        if (x >= dctX1 && x <= dctX2 && y >= dctY1 && y <= dctY2) {
-            dctState = !dctState;
+        if (x >= diffX1 && x <= diffX2 && y >= diffY1 && y <= diffY2) {
+            diffState = !diffState;
         } else if (x >= idctX1 && x <= idctX2 && y >= idctY1 && y <= idctY2) {
             idctState = !idctState;
         } else if (x >= oriX1 && x <= oriX2 && y >= oriY1 && y <= oriY2) {
@@ -191,6 +257,9 @@ int main() {
 
     cout << "Vamos ler o arquivo " << filePath << endl;
     samples = file->read();
+    applyDCT();
+    applyIDCT();
+    applyDiff();
 
     initCanvas(WIDTH, HEIGHT, "Plano Cartesiano");
     runCanvas();
