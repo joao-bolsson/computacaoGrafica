@@ -21,6 +21,16 @@
 
 vector<signed short> samples;
 
+// enable/disable (checkbox)
+bool dctState = false;
+short dctX1 = 800, dctY1 = 682, dctX2 = 815, dctY2 = 695;
+
+bool idctState = false;
+short idctX1 = 800, idctY1 = 664, idctX2 = 815, idctY2 = 677;
+
+bool oriState = true;
+short oriX1 = 800, oriY1 = 646, oriX2 = 815, oriY2 = 659;
+
 void drawButtons() {
     /**
      * Load button
@@ -72,8 +82,6 @@ Point translatePoint(signed short signal, int sampleNumber) {
     return Point(x, y);
 }
 
-short test = 1;
-
 void drawOriginalSamples() {
     int i = 0;
     for (auto s : samples) {
@@ -81,12 +89,6 @@ void drawOriginalSamples() {
 
         color(0, 1, 0);
         circleFill(p.getX(), p.getY(), 2, 5);
-
-        // TODO: eliminar esse código
-        if (test <= 32) {
-            cout << test << " " << s << "= P(" << p.getX() << ", " << p.getY() << ")" << endl;
-            test++;
-        }
     }
 
     color(1, 1, 1);
@@ -110,22 +112,36 @@ void drawGraphic() {
     text(10, 70, "-100");
     text(35, (int) (760 * 0.5) - 5, "0");
 
-    drawOriginalSamples();
+    if (oriState) {
+        drawOriginalSamples();
+    }
 }
 
 void drawCheckBox() {
     color(1, 0, 0);
-    rectFill(800, 682, 815, 695); // enable
+    if (dctState) {
+        rectFill(dctX1, dctY1, dctX2, dctY2);
+    } else {
+        rect(dctX1, dctY1, dctX2, dctY2);
+    }
     color(1, 1, 1);
     text(820, 685, "DCT");
 
     color(1, 0, 0);
-    rect(800, 664, 815, 677); // disable
+    if (idctState) {
+        rectFill(idctX1, idctY1, idctX2, idctY2);
+    } else {
+        rect(idctX1, idctY1, idctX2, idctY2);
+    }
     color(1, 1, 1);
     text(820, 667, "IDCT");
 
     color(1, 0, 0);
-    rect(800, 646, 815, 659); // disable
+    if (oriState) {
+        rectFill(oriX1, oriY1, oriX2, oriY2);
+    } else {
+        rect(oriX1, oriY1, oriX2, oriY2);
+    }
     color(1, 1, 1);
     text(820, 649, "ORIGINAL");
 }
@@ -154,7 +170,16 @@ void keyboardUp(int key) {
 }
 
 void mouse(int button, int state, int x, int y) {
-//    printf("\nmouse %d %d %d %d", button, state, x, y);
+    y = (y - altura) * -1;
+    if (button == 0 && state == 0) {
+        if (x >= dctX1 && x <= dctX2 && y >= dctY1 && y <= dctY2) {
+            dctState = !dctState;
+        } else if (x >= idctX1 && x <= idctX2 && y >= idctY1 && y <= idctY2) {
+            idctState = !idctState;
+        } else if (x >= oriX1 && x <= oriX2 && y >= oriY1 && y <= oriY2) {
+            oriState = !oriState;
+        }
+    }
 }
 
 int main() {
