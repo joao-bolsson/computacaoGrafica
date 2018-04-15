@@ -1,0 +1,32 @@
+# depslib dependency file v1.0
+1523763824 source:/home/joao/Área de Trabalho/t1-jvmarques/main.cpp
+	"gl_canvas2d.h"
+	"File.h"
+	"Point.h"
+
+1523763641 /home/joao/Área de Trabalho/t1-jvmarques/include/gl_canvas2d.h
+	<cstdio>
+	<cstdlib>
+	<cmath>
+	<cstring>
+	<iostream>
+	<string>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+
+1523763575 /home/joao/Área de Trabalho/t1-jvmarques/include/File.h
+	<iostream>
+	<fstream>
+	<vector>
+
+1523763680 /home/joao/Área de Trabalho/t1-jvmarques/include/Point.h
+
+1523763583 source:/home/joao/Área de Trabalho/t1-jvmarques/src/File.cpp
+	"File.h"
+
+1523763650 source:/home/joao/Área de Trabalho/t1-jvmarques/src/gl_canvas2d.cpp
+	"gl_canvas2d.h"
+
+1523763692 source:/home/joao/Área de Trabalho/t1-jvmarques/src/Point.cpp
+	"Point.h"
+
