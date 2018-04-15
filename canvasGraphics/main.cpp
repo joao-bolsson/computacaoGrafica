@@ -29,15 +29,20 @@ vector<short> samples, dctValues, idctValues, diffValues;
 vector<short> vectorQuant;
 short quantFactor = 2; // quantization factor
 
+/**
+ * Checkbox
+ */
+short x1 = 800, x2 = 815;
+
 // enable/disable (checkbox)
 bool diffState = false;
-short diffX1 = 800, diffY1 = 682, diffX2 = 815, diffY2 = 695;
+short diffY1 = 682, diffY2 = 695;
 
 bool idctState = false;
-short idctX1 = 800, idctY1 = 664, idctX2 = 815, idctY2 = 677;
+short idctY1 = 664, idctY2 = 677;
 
 bool oriState = true;
-short oriX1 = 800, oriY1 = 646, oriX2 = 815, oriY2 = 659;
+short oriY1 = 646, oriY2 = 659;
 
 short loadX1 = 5, loadY1 = 5, loadX2 = 80, loadY2 = 50;
 short saveX1 = 85, saveY1 = loadY1, saveX2 = 160, saveY2 = loadY2;
@@ -201,32 +206,43 @@ void drawGraphic() {
 }
 
 void drawCheckBox() {
+    x1 = (short) (largura - 100), x2 = (short) (largura - 85);
+
+    diffY1 = (short) (altura - 18);
+    diffY2 = (short) (altura - 5);
+
     color(1, 0, 0);
     if (diffState) {
-        rectFill(diffX1, diffY1, diffX2, diffY2);
+        rectFill(x1, diffY1, x2, diffY2);
     } else {
-        rect(diffX1, diffY1, diffX2, diffY2);
+        rect(x1, diffY1, x2, diffY2);
     }
     color(1, 1, 1);
-    text(820, 685, "DIF");
+    text(x2 + 5, diffY1 + 3, "DIF");
+
+    idctY1 = (short) (altura - 36);
+    idctY2 = (short) (altura - 23);
 
     color(1, 0, 0);
     if (idctState) {
-        rectFill(idctX1, idctY1, idctX2, idctY2);
+        rectFill(x1, idctY1, x2, idctY2);
     } else {
-        rect(idctX1, idctY1, idctX2, idctY2);
+        rect(x1, idctY1, x2, idctY2);
     }
     color(1, 1, 1);
-    text(820, 667, "IDCT");
+    text(x2 + 5, idctY1 + 3, "IDCT");
+
+    oriY1 = (short) (altura - 54);
+    oriY2 = (short) (altura - 41);
 
     color(1, 0, 0);
     if (oriState) {
-        rectFill(oriX1, oriY1, oriX2, oriY2);
+        rectFill(x1, oriY1, x2, oriY2);
     } else {
-        rect(oriX1, oriY1, oriX2, oriY2);
+        rect(x1, oriY1, x2, oriY2);
     }
     color(1, 1, 1);
-    text(820, 649, "ORIGINAL");
+    text(x2 + 5, oriY1 + 3, "ORIGINAL");
 }
 
 void drawWindow() {
@@ -276,11 +292,11 @@ void save() {
 void mouse(int button, int state, int x, int y) {
     y = (y - altura) * -1;
     if (button == 0 && state == 0) {
-        if (x >= diffX1 && x <= diffX2 && y >= diffY1 && y <= diffY2) {
+        if (x >= x1 && x <= x2 && y >= diffY1 && y <= diffY2) {
             diffState = !diffState;
-        } else if (x >= idctX1 && x <= idctX2 && y >= idctY1 && y <= idctY2) {
+        } else if (x >= x1 && x <= x2 && y >= idctY1 && y <= idctY2) {
             idctState = !idctState;
-        } else if (x >= oriX1 && x <= oriX2 && y >= oriY1 && y <= oriY2) {
+        } else if (x >= x1 && x <= x2 && y >= oriY1 && y <= oriY2) {
             oriState = !oriState;
         } else if (x >= loadX1 && x <= loadX2 && y >= loadY1 && y <= loadY2) {
             load();
@@ -294,7 +310,7 @@ int main() {
     file = new File(FILE_PATH);
     load();
 
-    initCanvas(WIDTH, HEIGHT, "Plano Cartesiano");
+    initCanvas(WIDTH, HEIGHT, "Trabalho 1 - jvmarques");
     runCanvas();
 
     return 0;
