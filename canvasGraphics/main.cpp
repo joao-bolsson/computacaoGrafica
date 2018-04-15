@@ -19,10 +19,11 @@
 #define Y_END_RECT_Y 685 // y coordinate where the y rect of cartesian plan ends on screen (height)
 #define X_END_RECT_X 790 // x coordinate where the x rect of cartesian plan ends on screen
 
-vector<short> samples;
-vector<short> dctValues;
-vector<short> idctValues;
-vector<short> diffValues;
+#define FILE_PATH "/home/joao/Downloads/samples.dct"
+
+File *file;
+
+vector<short> samples, dctValues, idctValues, diffValues;
 
 // quantization matrix (line)
 vector<short> vectorQuant;
@@ -38,12 +39,15 @@ short idctX1 = 800, idctY1 = 664, idctX2 = 815, idctY2 = 677;
 bool oriState = true;
 short oriX1 = 800, oriY1 = 646, oriX2 = 815, oriY2 = 659;
 
+short loadX1 = 5, loadY1 = 5, loadX2 = 80, loadY2 = 50;
+short saveX1 = 85, saveY1 = loadY1, saveX2 = 160, saveY2 = loadY2;
+
 void drawButtons() {
     /**
      * Load button
      */
     color(1, 0, 0);
-    rect(5, 5, 80, 50);
+    rect(loadX1, loadY1, loadX2, loadY2);
     color(1, 1, 1);
     text(15, 15, "LOAD");
 
@@ -51,7 +55,7 @@ void drawButtons() {
      * Save button
      */
     color(1, 0, 0);
-    rect(85, 5, 160, 50);
+    rect(saveX1, saveY1, saveX2, saveY2);
     color(1, 1, 1);
     text(95, 15, "SAVE");
 }
@@ -90,11 +94,13 @@ Point translatePoint(signed short signal, int sampleNumber) {
 }
 
 void buildQuantizationMatrix() {
+    if (!vectorQuant.empty()) {
+        return;
+    }
     auto size = static_cast<unsigned short>(samples.size());
     for (unsigned short i = 0; i < size; i++) {
         // Q[i,j] = 1 + (1 + i + j) * factor
         vectorQuant.push_back((short) (1 + (1 + i) * quantFactor));
-//        vectorQuant[i] = (short) (1 + (1 + i) * quantFactor);
     }
 }
 
@@ -130,8 +136,6 @@ void applyDCT() {
         }
         val = (short) (sum * sqrt(2. / size));
         dctValues.push_back(val);
-
-        cout << k << " DCT val: " << val << endl;
     }
 }
 
@@ -248,6 +252,27 @@ void keyboardUp(int key) {
 //    printf("\nLiberou: %d", key);
 }
 
+void reset() {
+    samples.clear();
+    dctValues.clear();
+    idctValues.clear();
+    diffValues.clear();
+}
+
+void load() {
+    reset();
+    cout << "Vamos ler o arquivo " << file->getFilePath() << endl;
+    samples = file->read();
+    buildQuantizationMatrix();
+    applyDCT();
+    applyIDCT();
+    applyDiff();
+}
+
+void save() {
+    file->write(idctValues);
+}
+
 void mouse(int button, int state, int x, int y) {
     y = (y - altura) * -1;
     if (button == 0 && state == 0) {
@@ -257,23 +282,17 @@ void mouse(int button, int state, int x, int y) {
             idctState = !idctState;
         } else if (x >= oriX1 && x <= oriX2 && y >= oriY1 && y <= oriY2) {
             oriState = !oriState;
+        } else if (x >= loadX1 && x <= loadX2 && y >= loadY1 && y <= loadY2) {
+            load();
+        } else if (x >= saveX1 && x <= saveX2 && y >= saveY1 && y <= saveY2) {
+            save();
         }
     }
 }
 
 int main() {
-    cout << "Caminho completo do Arquivo: ";
-    string filePath = "/home/joao/Downloads/samples.dct";
-//    cin >> filePath;
-
-    File *file = new File(filePath);
-
-    cout << "Vamos ler o arquivo " << filePath << endl;
-    samples = file->read();
-    buildQuantizationMatrix();
-    applyDCT();
-    applyIDCT();
-    applyDiff();
+    file = new File(FILE_PATH);
+    load();
 
     initCanvas(WIDTH, HEIGHT, "Plano Cartesiano");
     runCanvas();

@@ -33,7 +33,12 @@ public:
     /**
      * Writes a default int vector in the file (for while).
      */
-    void write();
+    void write(vector<short> samples);
+
+    /**
+     * @return The file path.
+     */
+    const string &getFilePath() const;
 };
 
 
