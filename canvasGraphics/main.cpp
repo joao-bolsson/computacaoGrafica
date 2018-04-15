@@ -24,6 +24,10 @@ vector<short> dctValues;
 vector<short> idctValues;
 vector<short> diffValues;
 
+// quantization matrix (line)
+vector<short> vectorQuant;
+short quantFactor = 2; // quantization factor
+
 // enable/disable (checkbox)
 bool diffState = false;
 short diffX1 = 800, diffY1 = 682, diffX2 = 815, diffY2 = 695;
@@ -85,6 +89,15 @@ Point translatePoint(signed short signal, int sampleNumber) {
     return Point(x, y);
 }
 
+void buildQuantizationMatrix() {
+    auto size = static_cast<unsigned short>(samples.size());
+    for (unsigned short i = 0; i < size; i++) {
+        // Q[i,j] = 1 + (1 + i + j) * factor
+        vectorQuant.push_back((short) (1 + (1 + i) * quantFactor));
+//        vectorQuant[i] = (short) (1 + (1 + i) * quantFactor);
+    }
+}
+
 void applyDiff() {
     auto size = static_cast<unsigned short>(samples.size());
     for (unsigned short n = 0; n < size; n++) {
@@ -101,7 +114,7 @@ void applyIDCT() {
             double s = (k == 0) ? sqrt(.5) : 1.;
             sum += s * dctValues[k] * cos(M_PI * (n + .5) * k / size);
         }
-        val = (short) (sum * sqrt(2. / size));
+        val = (short) (sum * sqrt(2. / size) / vectorQuant[n]);
         idctValues.push_back(val);
     }
 }
@@ -257,6 +270,7 @@ int main() {
 
     cout << "Vamos ler o arquivo " << filePath << endl;
     samples = file->read();
+    buildQuantizationMatrix();
     applyDCT();
     applyIDCT();
     applyDiff();
