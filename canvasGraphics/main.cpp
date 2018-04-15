@@ -14,11 +14,6 @@
 #define WIDTH 900
 #define HEIGHT 700
 
-#define X_START_RECT_Y 50 // x coordinate where the y rect of cartesian plan starts on screen
-#define Y_START_RECT_Y 75 // y coordinate where the y rect of cartesian plan starts on screen
-#define Y_END_RECT_Y 685 // y coordinate where the y rect of cartesian plan ends on screen (height)
-#define X_END_RECT_X 790 // x coordinate where the x rect of cartesian plan ends on screen
-
 #define FILE_PATH "/home/joao/Downloads/samples.dct"
 
 File *file;
@@ -28,6 +23,21 @@ vector<short> samples, dctValues, idctValues, diffValues;
 // quantization matrix (line)
 vector<short> vectorQuant;
 short quantFactor = 2; // quantization factor
+
+/**
+ * Graphic.
+ */
+short areaX1 = 5, areaY1 = 60, areaX2 = 795, areaY2 = 695;
+
+/**
+ * Axis y
+ */
+short xRectY = 50, y1RectY = 75, y2RectY = 685;
+
+/**
+ * Axis x
+ */
+short x2RectX = 790, yRectX = 380;
 
 /**
  * Checkbox
@@ -44,15 +54,19 @@ short idctY1 = 664, idctY2 = 677;
 bool oriState = true;
 short oriY1 = 646, oriY2 = 659;
 
-short loadX1 = 5, loadY1 = 5, loadX2 = 80, loadY2 = 50;
-short saveX1 = 85, saveY1 = loadY1, saveX2 = 160, saveY2 = loadY2;
+/**
+ * Buttons
+ */
+short btnY1 = 5, btnY2 = 50;
+short loadX1 = 5, loadX2 = 80;
+short saveX1 = 85, saveX2 = 160;
 
 void drawButtons() {
     /**
      * Load button
      */
     color(1, 0, 0);
-    rect(loadX1, loadY1, loadX2, loadY2);
+    rect(loadX1, btnY1, loadX2, btnY2);
     color(1, 1, 1);
     text(15, 15, "LOAD");
 
@@ -60,7 +74,7 @@ void drawButtons() {
      * Save button
      */
     color(1, 0, 0);
-    rect(saveX1, saveY1, saveX2, saveY2);
+    rect(saveX1, btnY1, saveX2, btnY2);
     color(1, 1, 1);
     text(95, 15, "SAVE");
 }
@@ -80,20 +94,20 @@ Point translatePoint(signed short signal, int sampleNumber) {
      * da unidade da reta Y multiplicamos o sinal para o obter a real "escala" na tela,
      * e depois transladamos para o gráfico com origem em 380 (760*0.5).
      */
-    short rectYHeight = Y_END_RECT_Y - Y_START_RECT_Y;
+    short rectYHeight = y2RectY - y1RectY;
     short factorY = 1;
     if (signal != 0) {
         factorY = (short) (rectYHeight / 200);
     }
-    auto y = signal * factorY + 760 * 0.5;
+    auto y = signal * factorY + yRectX;
     auto size = static_cast<unsigned int>(samples.size());
     /**
      * O eixo X está segmentado, conforme o número de amostras.
      * Então, precisamos colocar cada amostra no seu devido lugar no gráfico
      * através do cálculo a seguir.
      */
-    auto seg = (X_END_RECT_X - X_START_RECT_Y) / size;
-    auto x = X_START_RECT_Y + seg * sampleNumber;
+    auto seg = (x2RectX - xRectY) / size;
+    auto x = xRectY + seg * sampleNumber;
 
     return Point(x, y);
 }
@@ -180,19 +194,28 @@ void drawGraphic() {
     /**
      * Graphic area
      */
-    color(1, 0, 0);
-    rect(5, 60, 795, 695);
+    areaX2 = (short) (largura - 105);
+    areaY2 = (short) (altura - 5);
 
-    color(1, 1, 1);
+    color(1, 0, 0);
+    rect(areaX1, areaY1, areaX2, areaY2);
+
     /**
      * Cartesian plan
      */
-    rect(X_START_RECT_Y, Y_START_RECT_Y, X_START_RECT_Y, Y_END_RECT_Y); // y
-    rect(X_START_RECT_Y, (int) (760 * 0.5), X_END_RECT_X, (int) (760 * 0.5)); // x
+    xRectY = (short) (areaX1 + 45);
+    y1RectY = (short) (areaY1 + 15);
+    y2RectY = (short) (areaY2 - 10);
 
-    text(20, 680, "100");
-    text(10, 70, "-100");
-    text(35, (int) (760 * 0.5) - 5, "0");
+    x2RectX = (short) (areaX2 - 5), yRectX = (short) (((y2RectY - y1RectY) / 2) + y1RectY);
+
+    color(1, 1, 1);
+    rect(xRectY, y1RectY, xRectY, y2RectY); // y
+    rect(xRectY, yRectX, x2RectX, yRectX); // x
+
+    text(areaX1 + 15, y2RectY - 5, "100");
+    text(areaX1 + 5, y1RectY - 5, "-100");
+    text(areaX1 + 30, yRectX - 5, "0");
 
     if (oriState) {
         drawOriginalSamples();
@@ -298,9 +321,9 @@ void mouse(int button, int state, int x, int y) {
             idctState = !idctState;
         } else if (x >= x1 && x <= x2 && y >= oriY1 && y <= oriY2) {
             oriState = !oriState;
-        } else if (x >= loadX1 && x <= loadX2 && y >= loadY1 && y <= loadY2) {
+        } else if (x >= loadX1 && x <= loadX2 && y >= btnY1 && y <= btnY2) {
             load();
-        } else if (x >= saveX1 && x <= saveX2 && y >= saveY1 && y <= saveY2) {
+        } else if (x >= saveX1 && x <= saveX2 && y >= btnY1 && y <= btnY2) {
             save();
         }
     }
