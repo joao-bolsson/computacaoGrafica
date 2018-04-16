@@ -92,24 +92,23 @@ Point translatePoint(signed short signal, int sampleNumber) {
      * Exemplificando, uma reta que vai do ponto (na tela) de 75 até 685, através do cálculo
      * acima, conseguimos "traduzir" ela para uma reta que vai de -100 até 100. Com o valor
      * da unidade da reta Y multiplicamos o sinal para o obter a real "escala" na tela,
-     * e depois transladamos para o gráfico com origem em 380 (760*0.5).
+     * e depois transladamos para o gráfico com origem em 380.
      */
-    short rectYHeight = y2RectY - y1RectY;
-    short factorY = 1;
+    float factorY = 1.0f;
     if (signal != 0) {
-        factorY = (short) (rectYHeight / 200);
+        factorY = (y2RectY - y1RectY) / 200.0f;
     }
-    auto y = signal * factorY + yRectX;
+    float y = signal * factorY + yRectX;
     auto size = static_cast<unsigned int>(samples.size());
     /**
      * O eixo X está segmentado, conforme o número de amostras.
      * Então, precisamos colocar cada amostra no seu devido lugar no gráfico
      * através do cálculo a seguir.
      */
-    auto seg = (x2RectX - xRectY) / size;
-    auto x = xRectY + seg * sampleNumber;
+    float seg = (x2RectX - xRectY) / (float) size;
+    float x = xRectY + seg * sampleNumber;
 
-    return Point(x, y);
+    return Point((short) x, (short) y);
 }
 
 void buildQuantizationMatrix() {
