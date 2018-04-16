@@ -216,3 +216,4 @@ void initCanvas(int w, int h, string title) {
 void runCanvas() {
     glutMainLoop();
 }
+

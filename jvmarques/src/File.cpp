@@ -36,17 +36,30 @@ vector<signed short> File::read() {
     return signals;
 }
 
-void File::write() {
-    int v[] = {54, 43, 76, 32, 87};
+void File::write(vector<short> samples) {
+    auto size = (unsigned int) samples.size();
 
-    int size = sizeof(v) / sizeof(int);
+    short v[size];
+    unsigned short i = 0;
+    for (auto s : samples) {
+        cout << s << endl;
+        v[i++] = s;
+    }
 
     file.open(filePath, ios::out | ios::binary);
 
     if (!file) exit(1);
 
-    file.write(reinterpret_cast<char *>(v), size * sizeof(int));
+    // grava o número de amostras
+    file.write(reinterpret_cast<char *>(&size), sizeof(size));
+
+    // grava as amostras
+    file.write(reinterpret_cast<char *>(v), size * sizeof(short));
 
     file.flush();
     file.close();
+}
+
+const string &File::getFilePath() const {
+    return filePath;
 }
