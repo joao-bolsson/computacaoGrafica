@@ -25,10 +25,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    glcanvas2d.cpp \
+    mycanvas.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    glcanvas2d.h
 
 FORMS += \
         mainwindow.ui

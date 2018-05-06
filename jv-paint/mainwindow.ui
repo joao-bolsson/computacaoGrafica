@@ -138,7 +138,7 @@
      </rect>
     </property>
     <property name="title">
-     <string>GroupBox</string>
+     <string>Opções</string>
     </property>
     <widget class="QPushButton" name="pushButton_7">
      <property name="geometry">
