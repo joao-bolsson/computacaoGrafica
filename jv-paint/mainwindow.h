@@ -3,6 +3,19 @@
 
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QVariant>
+#include <QAction>
+#include <QApplication>
+#include <QButtonGroup>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QHeaderView>
+#include <QMenuBar>
+#include <QOpenGLWidget>
+#include <QPushButton>
+#include <QStatusBar>
+#include <QToolBar>
+#include <QWidget>
 #include "glCanvas2d.h"
 
 QT_FORWARD_DECLARE_CLASS(QOpenGLWidget)
@@ -16,11 +29,29 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    QWidget *centralWidget;
+    QOpenGLWidget *canvas;
+    QGroupBox *boxTools;
+    QGridLayout *gridLayout_2;
+    QPushButton *btnQuad;
+    QPushButton *btnRectangle;
+    QPushButton *btnLine;
+    QPushButton *btnCurve;
+    QGroupBox *boxRotation;
+    QGridLayout *gridLayout;
+    QPushButton *pushButton_5;
+    QPushButton *pushButton_6;
+    QGroupBox *boxOptions;
+    QGridLayout *gridLayout_3;
+    QPushButton *btnClear;
+    QPushButton *btnOpen;
+    QPushButton *btnSave;
+    QMenuBar *menuBar;
+    QToolBar *mainToolBar;
+    QStatusBar *statusBar;
 
-private:
-    Ui::MainWindow *ui;
+    MainWindow();
+    ~MainWindow();
 
 //Callbacks de Widgets
 private slots:
