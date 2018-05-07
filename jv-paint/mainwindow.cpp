@@ -12,3 +12,25 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::checkBoxChanged(bool enabled)
+{
+    qDebug("Checkbox: %d", enabled );
+}
+
+void MainWindow::sliderChanged(int i)
+{
+    qDebug("Slider: %d", i );
+}
+
+void MainWindow::showMsg()
+{
+    QMessageBox* msg = new QMessageBox(this);
+    msg->setText("Msg MainWindow\n Metodo showMsg()");
+    msg->show();
+}
+
+void MainWindow::updateIntervalChanged(int value)
+{
+   qDebug("update interval changed: %d", value);
+}

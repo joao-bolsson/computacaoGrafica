@@ -49,60 +49,60 @@ Canvas2D::~Canvas2D()
 
 void Canvas2D::point(int x, int y)
 {
-    glBegin(GL_POINTS);
-    glVertex2d(x, y);
-    glEnd();
+   glBegin(GL_POINTS);
+      glVertex2d(x, y);
+   glEnd();
 }
 
 void Canvas2D::line( int x1, int y1, int x2, int y2 )
 {
-    glBegin(GL_LINES);
-    glVertex2d(x1, y1);
-    glVertex2d(x2, y2);
-    glEnd();
+   glBegin(GL_LINES);
+      glVertex2d(x1, y1);
+      glVertex2d(x2, y2);
+   glEnd();
 }
 
 void Canvas2D::rect( int x1, int y1, int x2, int y2 )
 {
-    glBegin(GL_LINE_LOOP);
-    glVertex2d(x1, y1);
-    glVertex2d(x1, y2);
-    glVertex2d(x2, y2);
-    glVertex2d(x2, y1);
-    glEnd();
+   glBegin(GL_LINE_LOOP);
+      glVertex2d(x1, y1);
+      glVertex2d(x1, y2);
+      glVertex2d(x2, y2);
+      glVertex2d(x2, y1);
+   glEnd();
 }
 
 void Canvas2D::rectFill( int x1, int y1, int x2, int y2 )
 {
-    glBegin(GL_QUADS);
-    glVertex2d(x1, y1);
-    glVertex2d(x1, y2);
-    glVertex2d(x2, y2);
-    glVertex2d(x2, y1);
-    glEnd();
+   glBegin(GL_QUADS);
+      glVertex2d(x1, y1);
+      glVertex2d(x1, y2);
+      glVertex2d(x2, y2);
+      glVertex2d(x2, y1);
+   glEnd();
 }
 
 void Canvas2D::polygon(float vx[], float vy[], int elems)
 {
-    int cont;
-    glBegin(GL_LINE_LOOP);
-    for(cont=0; cont<elems; cont++)
-    {
-        glVertex2d(vx[cont], vy[cont]);
-    }
-    glEnd();
+   int cont;
+   glBegin(GL_LINE_LOOP);
+      for(cont=0; cont<elems; cont++)
+      {
+         glVertex2d(vx[cont], vy[cont]);
+      }
+   glEnd();
 
 }
 
 void Canvas2D::polygonFill(float vx[], float vy[], int elems)
 {
-    int cont;
-    glBegin(GL_POLYGON);
-    for(cont=0; cont<elems; cont++)
-    {
-        glVertex2d(vx[cont], vy[cont]);
-    }
-    glEnd();
+   int cont;
+   glBegin(GL_POLYGON);
+      for(cont=0; cont<elems; cont++)
+      {
+         glVertex2d(vx[cont], vy[cont]);
+      }
+   glEnd();
 
 }
 
@@ -120,40 +120,40 @@ void Canvas2D::text(int x, int y, const char *t)
 
 void Canvas2D::clear(float r, float g, float b)
 {
-    glClearColor( r, g, b, 1 );
+   glClearColor( r, g, b, 1 );
 }
 
 void Canvas2D::circle( int x, int y, int raio, int div )
 {
-    float ang, x1, y1;
-    float inc = PI_2/div;
-    glBegin(GL_LINE_LOOP);
-    for(ang=0; ang<6.27; ang+=inc) //nao vai ateh PI_2 pois o ultimo ponto eh fechado automaticamente com o primeiro, pois tem o tipo LINE_LOOP
-    {
-        x1 = (cos(ang)*raio);
-        y1 = (sin(ang)*raio);
-        glVertex2d(x1+x, y1+y);
-    }
-    glEnd();
+   float ang, x1, y1;
+   float inc = PI_2/div;
+   glBegin(GL_LINE_LOOP);
+      for(ang=0; ang<6.27; ang+=inc) //nao vai ateh PI_2 pois o ultimo ponto eh fechado automaticamente com o primeiro, pois tem o tipo LINE_LOOP
+      {
+         x1 = (cos(ang)*raio);
+         y1 = (sin(ang)*raio);
+         glVertex2d(x1+x, y1+y);
+      }
+   glEnd();
 }
 
 void Canvas2D::circleFill( int x, int y, int raio, int div )
 {
-    float ang, x1, y1;
-    float inc = PI_2/div;
-    glBegin(GL_POLYGON);
-    for(ang=0; ang<6.27; ang+=inc)
-    {
-        x1 = (cos(ang)*raio);
-        y1 = (sin(ang)*raio);
-        glVertex2d(x1+x, y1+y);
-    }
-    glEnd();
+   float ang, x1, y1;
+   float inc = PI_2/div;
+   glBegin(GL_POLYGON);
+      for(ang=0; ang<6.27; ang+=inc)
+      {
+         x1 = (cos(ang)*raio);
+         y1 = (sin(ang)*raio);
+         glVertex2d(x1+x, y1+y);
+      }
+   glEnd();
 }
 
 void Canvas2D::color(float r, float g, float b)
 {
-    glColor3d(r, g, b  );
+   glColor3d(r, g, b  );
 }
 
 
@@ -170,6 +170,7 @@ void Canvas2D::resizeGL(int w, int h)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity ();
 }
+
 
 void Canvas2D::initializeGL()
 {
