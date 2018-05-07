@@ -21,43 +21,17 @@
 
 float global = 0;
 
-
 // *******************************************************************************
 //Coloque seu codigo aqui, usando as funcoes da Canvas2D defindas na classe Canvas2D (arquivo glCanvas2d.h).
 // *******************************************************************************
 void Canvas2D::paintGL() //callback de desenho na canvas. Chamado pelo Timer definido em mainWindow.cpp
 {
-    clear(0.8, 0.8, 0.8);
-
-    color(1,0,0);
-    line(10,10,100,100);
-
-    float x=0, y;
-    color(0, 1, 0);
-    for(float i=0; i < 68; i+=0.001)
-    {
-       y = sin(i)*50;
-       point((int)x, (int)y+100);
-       x+=0.01;
-    }
-
-    text(30,30, "Isso eh um teste de escrita");
-
-    circleFill(200,200, 30, 18);
-
-    //desenha um relogio
-    color(0,0,0);
-    float raio = 200;
-    x = (int)(cos(global) * raio);
-    y = (int)(sin(global) * raio);
-    line(200,200, x+200, y+200);
     global-= 0.01;
 }
 
 
 void Canvas2D::wheelEvent(QWheelEvent *event) //callback de mouse
 {
-    //printf("\nMouse Wheel event: %d", event->delta() );
     qDebug("Mouse Wheel event %d", event->delta() );
 }
 

@@ -23,13 +23,8 @@
 #include <QListWidget>
 #include <QGridLayout>
 
-
 MainWindow::MainWindow()
 {
-    //****************************************************
-    //cria os Widgets
-    //****************************************************
-
     Canvas2D *canvas = new Canvas2D(this);
 
     QLabel *label = new QLabel(this);
@@ -64,13 +59,18 @@ MainWindow::MainWindow()
 
     QGroupBox *updateGroupBox = new QGroupBox(this);
     updateGroupBox->setLayout(horizontalLayout);
-    updateGroupBox->setTitle("QGroupBox Horizontal");
+    updateGroupBox->setTitle("Ferramentas");
 
+    QGridLayout *gridCanvas = new QGridLayout;
+    gridCanvas->addWidget(canvas, 0, 0, 1, 1);
+
+    QGroupBox *boxCanvas = new QGroupBox(this);
+    boxCanvas->setLayout(gridCanvas);
+    boxCanvas->setTitle("Canvas");
 
     QGridLayout *gridLayout = new QGridLayout;// Pozzer: aqui estava QGridLayout(groupBox);
-    gridLayout->addWidget(canvas,       0, 0, 3, 1);
-    gridLayout->addWidget(updateGroupBox, 3, 0, 1, 2); //row, column, rowSpan, colSpan
-    gridLayout->addWidget(slider,         4, 0, 1, 1);
+    gridLayout->addWidget(boxCanvas, 0, 0, 2, 1);
+    gridLayout->addWidget(updateGroupBox, 2, 0, 1, 1); //row, column, rowSpan, colSpan
 
     QGroupBox * groupBox = new QGroupBox(this);
     groupBox->setLayout(gridLayout);
@@ -80,8 +80,8 @@ MainWindow::MainWindow()
     QMenu *fileMenu = menuBar()->addMenu("&File");
     QMenu *showMenu = menuBar()->addMenu("&Show");
 
-    QAction *actExit        = new QAction("E&xit", fileMenu);
-    QAction *actShowMsgGL   = new QAction("Show Msg na Canvas", showMenu);
+    QAction *actExit = new QAction("E&xit", fileMenu);
+    QAction *actShowMsgGL = new QAction("Show Msg na Canvas", showMenu);
     QAction *actShowMsgThis = new QAction("Show Msg na MainWindow", showMenu);
 
     fileMenu->addAction(actExit);
@@ -119,7 +119,6 @@ void MainWindow::sliderChanged(int i)
     qDebug("Slider: %d", i );
 }
 
-
 void MainWindow::showMsg()
 {
     QMessageBox* msg = new QMessageBox(this);
@@ -136,5 +135,5 @@ void MainWindow::updateIntervalChanged(int value)
 
 void MainWindow::resizeEvent(QResizeEvent *e)
 {
-     qDebug("janela redimensionada ");
+    qDebug("janela redimensionada ");
 }
