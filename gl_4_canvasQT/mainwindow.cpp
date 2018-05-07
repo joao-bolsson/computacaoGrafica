@@ -12,14 +12,7 @@
 #include <QApplication>
 #include <QGroupBox>
 #include <QGridLayout>
-#include <QVariant>
-#include <QButtonGroup>
-#include <QGridLayout>
-#include <QGroupBox>
-#include <QHeaderView>
-#include <QMenuBar>
 #include <QPushButton>
-#include <QWidget>
 
 MainWindow::MainWindow()
 {
