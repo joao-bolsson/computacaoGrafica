@@ -10,7 +10,6 @@
 
 #include <QMainWindow>
 #include <QTimer>
-#include <QListWidget>
 #include <QSpinBox>
 
 #include "glCanvas2d.h"
@@ -29,8 +28,6 @@ public:
 
     QTimer   *m_timer;
     QSpinBox *refreshRate;
-    QListWidget *list;
-
 
 //Callbacks de Widgets
 private slots:

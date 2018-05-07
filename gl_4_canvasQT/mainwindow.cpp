@@ -36,9 +36,6 @@ MainWindow::MainWindow()
     label->setText("A scrollable QOpenGLWidget");
     label->setAlignment(Qt::AlignHCenter);
 
-    list = new QListWidget(this);
-    list->setMaximumWidth(170);
-
     QSlider *slider = new QSlider(this);
     slider->setOrientation(Qt::Horizontal);
     slider->setRange(0, 50);
@@ -54,10 +51,6 @@ MainWindow::MainWindow()
     timerBased->setChecked(true);
     timerBased->setToolTip("Toggles using a timer to trigger update()");
 
-    QPushButton *button1 = new QPushButton("Button 1 - Status Bar");
-    QPushButton *button2 = new QPushButton("Button 2 - Dummy");
-    QPushButton *button3 = new QPushButton("Button 3 - Dummy");
-
     QLabel *updateLabel = new QLabel("Tempo de Espera entre updates da Canvas");
 
     //****************************************************
@@ -68,7 +61,6 @@ MainWindow::MainWindow()
     horizontalLayout->addWidget(updateLabel);
     horizontalLayout->addWidget(refreshRate);
     horizontalLayout->addWidget(timerBased);
-    horizontalLayout->addWidget(button1);
 
     QGroupBox *updateGroupBox = new QGroupBox(this);
     updateGroupBox->setLayout(horizontalLayout);
@@ -77,9 +69,6 @@ MainWindow::MainWindow()
 
     QGridLayout *gridLayout = new QGridLayout;// Pozzer: aqui estava QGridLayout(groupBox);
     gridLayout->addWidget(canvas,       0, 0, 3, 1);
-    gridLayout->addWidget(button2,        0, 1, 1, 1);
-    gridLayout->addWidget(list,           1, 1, 1, 1);
-    gridLayout->addWidget(button3,        2, 1, 1, 1);
     gridLayout->addWidget(updateGroupBox, 3, 0, 1, 2); //row, column, rowSpan, colSpan
     gridLayout->addWidget(slider,         4, 0, 1, 1);
 
@@ -88,14 +77,8 @@ MainWindow::MainWindow()
     groupBox->setTitle("QGroupBox Grid");
     setCentralWidget(groupBox);
 
-
-    //QScrollArea *scrollArea = new QScrollArea;
-    //scrollArea->setWidget(canvas);
-    //gridLayout->addWidget(scrollArea,1,0,8,1);
-
     QMenu *fileMenu = menuBar()->addMenu("&File");
     QMenu *showMenu = menuBar()->addMenu("&Show");
-    statusBar()->addWidget(button1);
 
     QAction *actExit        = new QAction("E&xit", fileMenu);
     QAction *actShowMsgGL   = new QAction("Show Msg na Canvas", showMenu);
@@ -105,19 +88,16 @@ MainWindow::MainWindow()
     showMenu->addAction(actShowMsgGL);
     showMenu->addAction(actShowMsgThis);
 
-
     //o timer eh usado para controlar o refresh de tela, via SLOT(update()) abaixo. Ele nao faz controle de FPS
     m_timer = new QTimer(this);
     m_timer->setInterval(10);
     m_timer->start();
-
 
     //tratamento de eventos de menu, checkbox, timer, botao, slider e QSpinBox (e etc)
     connect(m_timer,        SIGNAL(timeout()),         canvas, SLOT(update()));
     connect(actExit,        SIGNAL(triggered(bool)),   this,   SLOT(close())   );
     connect(actShowMsgGL,   SIGNAL(triggered(bool)),   canvas, SLOT(showMsg()) );
     connect(actShowMsgThis, SIGNAL(triggered(bool)),   this,   SLOT(showMsg()) );
-    connect(button1,        SIGNAL(released()) ,       canvas, SLOT(showMsg()) );
     connect(refreshRate,    SIGNAL(valueChanged(int)), this,   SLOT(updateIntervalChanged(int)) );
     connect(slider,         SIGNAL(valueChanged(int)), this,   SLOT(sliderChanged(int)) );
     connect(timerBased,     SIGNAL(clicked(bool)),     this,   SLOT(checkBoxChanged(bool)));
@@ -156,5 +136,5 @@ void MainWindow::updateIntervalChanged(int value)
 
 void MainWindow::resizeEvent(QResizeEvent *e)
 {
-     qDebug("janela redimensionada" );
+     qDebug("janela redimensionada ");
 }

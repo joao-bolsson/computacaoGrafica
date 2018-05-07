@@ -59,7 +59,6 @@ void Canvas2D::wheelEvent(QWheelEvent *event) //callback de mouse
 {
     //printf("\nMouse Wheel event: %d", event->delta() );
     qDebug("Mouse Wheel event %d", event->delta() );
-    mw->list->addItem("Mouse Wheel event");
 }
 
 void Canvas2D::mousePressEvent(QMouseEvent *event) //callback de mouse
@@ -70,7 +69,6 @@ void Canvas2D::mousePressEvent(QMouseEvent *event) //callback de mouse
     qDebug("\nMouse Press: %d %d", event->x(), event->y() );
     if(event->buttons() == Qt::RightButton)
         qDebug( "Only right button" );
-    mw->list->addItem("Mouse Click event");
 }
 
 void Canvas2D::mouseReleaseEvent(QMouseEvent *event) //callback de mouse
@@ -81,7 +79,6 @@ void Canvas2D::mouseReleaseEvent(QMouseEvent *event) //callback de mouse
 void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
 {
     qDebug("\nMouse Move: %d %d", event->x(), event->y());
-    mw->list->addItem("Mouse Move event");
 }
 
 //callback para botao definido na mainWindow.
