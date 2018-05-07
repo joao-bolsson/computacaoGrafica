@@ -10,7 +10,6 @@
 
 #include <QMainWindow>
 #include <QTimer>
-#include <QSpinBox>
 
 #include "glCanvas2d.h"
 
@@ -24,17 +23,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow();
     bool timerEnabled() const { return m_timer->isActive(); }
-    void resizeEvent(QResizeEvent *);
 
     QTimer   *m_timer;
-    QSpinBox *refreshRate;
-
-//Callbacks de Widgets
-private slots:
-    void updateIntervalChanged(int value);
-    void showMsg();
-    void sliderChanged(int i);
-    void checkBoxChanged(bool b);
 
 };
 

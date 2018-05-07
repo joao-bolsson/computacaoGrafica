@@ -26,6 +26,7 @@ float global = 0;
 // *******************************************************************************
 void Canvas2D::paintGL() //callback de desenho na canvas. Chamado pelo Timer definido em mainWindow.cpp
 {
+    qDebug("paint GL!");
     global-= 0.01;
 }
 
