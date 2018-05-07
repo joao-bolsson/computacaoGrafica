@@ -13,7 +13,6 @@
 
 #include "glCanvas2d.h"
 
-
 QT_FORWARD_DECLARE_CLASS(QOpenGLWidget)
 
 class MainWindow : public QMainWindow

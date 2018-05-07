@@ -12,6 +12,14 @@
 #include <QApplication>
 #include <QGroupBox>
 #include <QGridLayout>
+#include <QVariant>
+#include <QButtonGroup>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QHeaderView>
+#include <QMenuBar>
+#include <QPushButton>
+#include <QWidget>
 
 MainWindow::MainWindow()
 {
@@ -21,11 +29,60 @@ MainWindow::MainWindow()
     //cria os Layouts
     //****************************************************
 
-    QHBoxLayout *horizontalLayout = new QHBoxLayout;
+    QGroupBox * groupBox = new QGroupBox(this);
 
-    QGroupBox *updateGroupBox = new QGroupBox(this);
-    updateGroupBox->setLayout(horizontalLayout);
-    updateGroupBox->setTitle("Ferramentas");
+    QGroupBox *boxTools = new QGroupBox(this);
+    boxTools->setTitle("Ferramentas");
+    QGridLayout *gridLayout_2= new QGridLayout(boxTools);
+    gridLayout_2->setSpacing(6);
+    gridLayout_2->setContentsMargins(11, 11, 11, 11);
+
+    QPushButton *btnQuad = new QPushButton(boxTools);
+    QPushButton *btnRectangle = new QPushButton(boxTools);
+    QPushButton *btnLine = new QPushButton(boxTools);
+    QPushButton *btnCurve = new QPushButton(boxTools);
+
+    gridLayout_2->addWidget(btnQuad, 0, 0, 1, 1);
+    gridLayout_2->addWidget(btnRectangle, 0, 1, 1, 1);
+    gridLayout_2->addWidget(btnLine, 0, 2, 1, 1);
+    gridLayout_2->addWidget(btnCurve, 0, 3, 1, 1);
+
+    QGroupBox *boxRotation = new QGroupBox(this);
+    QGridLayout *gridRotation = new QGridLayout(boxRotation);
+    gridRotation->setSpacing(6);
+    gridRotation->setContentsMargins(11, 11, 11, 11);
+
+    QPushButton *pushButton_5 = new QPushButton(boxRotation);
+    QPushButton *pushButton_6 = new QPushButton(boxRotation);
+
+    gridRotation->addWidget(pushButton_5, 0, 0, 1, 1);
+    gridRotation->addWidget(pushButton_6, 0, 1, 1, 1);
+
+    QGroupBox *boxOptions = new QGroupBox(this);
+    QGridLayout *gridLayout_3 = new QGridLayout(boxOptions);
+    gridLayout_3->setSpacing(6);
+    gridLayout_3->setContentsMargins(11, 11, 11, 11);
+
+    QPushButton *btnClear = new QPushButton(boxOptions);
+    QPushButton *btnOpen = new QPushButton(boxOptions);
+    QPushButton *btnSave = new QPushButton(boxOptions);
+
+    gridLayout_3->addWidget(btnClear, 0, 0, 1, 1);
+    gridLayout_3->addWidget(btnOpen, 0, 1, 1, 1);
+    gridLayout_3->addWidget(btnSave, 0, 2, 1, 1);
+
+    boxTools->setTitle("Ferramentas");
+    btnQuad->setText("Quadrado");
+    btnRectangle->setText("Retângulo");
+    btnLine->setText("Linha");
+    btnCurve->setText("Curva");
+    boxRotation->setTitle("Rotação");
+    pushButton_5->setText("Esquerda");
+    pushButton_6->setText("Direita");
+    boxOptions->setTitle("Opções");
+    btnClear->setText("Limpar");
+    btnOpen->setText("Abrir");
+    btnSave->setText("Salvar");
 
     QGridLayout *gridCanvas = new QGridLayout;
     gridCanvas->addWidget(canvas, 0, 0, 1, 1);
@@ -35,10 +92,11 @@ MainWindow::MainWindow()
     boxCanvas->setTitle("Canvas");
 
     QGridLayout *gridLayout = new QGridLayout;
-    gridLayout->addWidget(boxCanvas, 0, 0, 2, 1);
-    gridLayout->addWidget(updateGroupBox, 2, 0, 1, 1); //row, column, rowSpan, colSpan
+    gridLayout->addWidget(boxCanvas, 0, 0, 5, 3);
+    gridLayout->addWidget(boxTools, 5, 0, 1, 1);
+    gridLayout->addWidget(boxRotation, 5, 1, 1, 1);
+    gridLayout->addWidget(boxOptions, 5, 2, 1, 1);
 
-    QGroupBox * groupBox = new QGroupBox(this);
     groupBox->setLayout(gridLayout);
     setCentralWidget(groupBox);
 

@@ -17,7 +17,7 @@ int main( int argc, char ** argv )
 
     MainWindow mw;
     mw.setMinimumSize(400,400);
-    mw.resize(600,600);
+    mw.resize(765,600);
 
     mw.show();
 
