@@ -7,14 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>576</height>
+    <height>581</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QOpenGLWidget" name="openGLWidget">
+   <widget class="QOpenGLWidget" name="canvas">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -24,161 +24,113 @@
      </rect>
     </property>
    </widget>
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QGroupBox" name="boxTools">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>460</y>
-      <width>341</width>
+      <width>338</width>
       <height>61</height>
      </rect>
     </property>
     <property name="title">
      <string>Ferramentas</string>
     </property>
-    <widget class="QPushButton" name="pushButton">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Quadrado</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_2">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>20</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Retângulo</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_3">
-     <property name="geometry">
-      <rect>
-       <x>170</x>
-       <y>20</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Linha</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_4">
-     <property name="geometry">
-      <rect>
-       <x>250</x>
-       <y>20</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Curva</string>
-     </property>
-    </widget>
+    <layout class="QGridLayout" name="gridTools">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="btnQuad">
+       <property name="text">
+        <string>Quadrado</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="btnRectangle">
+       <property name="text">
+        <string>Retângulo</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="btnLine">
+       <property name="text">
+        <string>Linha</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="btnCurve">
+       <property name="text">
+        <string>Curva</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
-   <widget class="QGroupBox" name="groupBox_2">
+   <widget class="QGroupBox" name="boxRotation">
     <property name="geometry">
      <rect>
       <x>360</x>
       <y>460</y>
-      <width>171</width>
-      <height>61</height>
+      <width>176</width>
+      <height>56</height>
      </rect>
     </property>
     <property name="title">
      <string>Rotação</string>
     </property>
-    <widget class="QPushButton" name="pushButton_5">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Esquerda</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_6">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>20</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Direita</string>
-     </property>
-    </widget>
+    <layout class="QGridLayout" name="gridRotation">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="btnLeft">
+       <property name="text">
+        <string>Esquerda</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="btnRight">
+       <property name="text">
+        <string>Direita</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
-   <widget class="QGroupBox" name="groupBox_3">
+   <widget class="QGroupBox" name="boxOptions">
     <property name="geometry">
      <rect>
       <x>540</x>
       <y>460</y>
-      <width>251</width>
-      <height>61</height>
+      <width>257</width>
+      <height>56</height>
      </rect>
     </property>
     <property name="title">
      <string>Opções</string>
     </property>
-    <widget class="QPushButton" name="pushButton_7">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>20</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Abrir</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_8">
-     <property name="geometry">
-      <rect>
-       <x>170</x>
-       <y>20</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Salvar</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_9">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Limpar</string>
-     </property>
-    </widget>
+    <layout class="QGridLayout" name="gridOptions">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="btnClear">
+       <property name="text">
+        <string>Limpar</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="btnOpen">
+       <property name="text">
+        <string>Abrir</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="btnSave">
+       <property name="text">
+        <string>Salvar</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">

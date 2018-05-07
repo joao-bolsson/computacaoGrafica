@@ -4,8 +4,6 @@
 #include <QMainWindow>
 #include "glCanvas2d.h"
 
-QT_FORWARD_DECLARE_CLASS(QOpenGLWidget)
-
 namespace Ui {
 class MainWindow;
 }
