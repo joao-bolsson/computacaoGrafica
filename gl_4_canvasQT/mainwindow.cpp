@@ -96,4 +96,5 @@ MainWindow::MainWindow()
 
     //tratamento de eventos de menu, checkbox, timer, botao, slider e QSpinBox (e etc)
     connect(m_timer, SIGNAL(timeout()), canvas, SLOT(update()));
+    connect(btnLine, SIGNAL(pressed()), canvas, SLOT(btnLine()));
 }

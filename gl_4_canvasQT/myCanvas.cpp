@@ -20,6 +20,7 @@
 #include <QWheelEvent>
 
 float global = 0;
+bool drawLine = false;
 
 // *******************************************************************************
 //Coloque seu codigo aqui, usando as funcoes da Canvas2D defindas na classe Canvas2D (arquivo glCanvas2d.h).
@@ -28,7 +29,6 @@ void Canvas2D::paintGL() //callback de desenho na canvas. Chamado pelo Timer def
 {
     global-= 0.01;
 }
-
 
 void Canvas2D::wheelEvent(QWheelEvent *event) //callback de mouse
 {
@@ -66,4 +66,9 @@ void Canvas2D::showMsg()
 void Canvas2D::keyPressEvent(QKeyEvent* event)
 {
     qDebug("\nTecla pessionada  %d", event->key() );
+}
+
+void Canvas2D::btnLine() {
+    drawLine = !drawLine;
+    qDebug("draw line: " + drawLine);
 }
