@@ -117,8 +117,6 @@ void clearSelection() {
 
 void Canvas2D::mouseReleaseEvent(QMouseEvent *event) //callback de mouse
 {
-    qDebug("points: %d", points.size());
-
     shapeCopy = new Shape();
     if (!mouseMoved && !drawCurve) {
         stopDrawing();
