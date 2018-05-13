@@ -7,7 +7,8 @@ SOURCES += main.cpp \
     point.cpp \
     line.cpp \
     shape.cpp \
-    rectangle.cpp
+    rectangle.cpp \
+    curve.cpp
 
 HEADERS += \
            mainwindow.h \
@@ -15,7 +16,8 @@ HEADERS += \
     point.h \
     line.h \
     shape.h \
-    rectangle.h
+    rectangle.h \
+    curve.h
 
 target.path = $$[QT_INSTALL_EXAMPLES]/opengl/qopenglwidget
 

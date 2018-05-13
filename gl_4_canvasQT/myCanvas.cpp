@@ -19,12 +19,12 @@
 #include <QMessageBox>
 #include <QWheelEvent>
 #include <list>
-#include <vector>
 #include "rectangle.h"
+#include "curve.h"
 
 using namespace std;
 
-bool drawLine = false, drawRectangle = false;
+bool drawLine = false, drawRectangle = false, drawCurve = false;
 bool mouseMoved = false;
 list<Shape*> shapes;
 
@@ -51,11 +51,29 @@ void Canvas2D::paintGL() //callback de desenho na canvas. Chamado pelo Timer def
     demo->draw(this);
     demo->drawSelectionBox(this);
     selectedShape->drawSelectionBox(this);
+
+    if (drawCurve) {
+        // desenha os pontos de controle
+        for (unsigned int i = 0; i < points.size(); i++) {
+            color(1, 0, 0);
+            circleFill(points[i].getX(), points[i].getY(), 5, 10);
+        }
+    }
 }
 
 void Canvas2D::wheelEvent(QWheelEvent *event) //callback de mouse
 {
     qDebug("Mouse Wheel event %d", event->delta() );
+}
+
+void stopDrawing() {
+    points.clear();
+    drawLine = false;
+    drawRectangle = false;
+    mouseMoved = false;
+    drawCurve = false;
+    demo = new Shape();
+    shapeCopy = new Shape();
 }
 
 void Canvas2D::mousePressEvent(QMouseEvent *event) //callback de mouse
@@ -65,8 +83,19 @@ void Canvas2D::mousePressEvent(QMouseEvent *event) //callback de mouse
 
     Point point = Point(event->x(), (event->y() - height()) * -1);
     // apenas adiciona pontos se tiver alguma coisa sendo desenhada
-    if (drawLine || drawRectangle) {
+    if (drawLine || drawRectangle || drawCurve) {
         points.push_back(point);
+
+        if (drawCurve && points.size() == 4) {
+            Curve *curve = new Curve();
+
+            for (unsigned int i = 0; i < points.size(); i++) {
+                curve->addPoint(new Point(points[i].getX(), points[i].getY()));
+            }
+
+            shapes.push_back(curve);
+            stopDrawing();
+        }
     } else {
         selectedShape = new Shape();
         mousePointPressed = point;
@@ -86,19 +115,12 @@ void clearSelection() {
     selectedShape = new Shape();
 }
 
-void stopDrawing() {
-    points.clear();
-    drawLine = false;
-    drawRectangle = false;
-    mouseMoved = false;
-    demo = new Shape();
-    shapeCopy = new Shape();
-}
-
 void Canvas2D::mouseReleaseEvent(QMouseEvent *event) //callback de mouse
 {
+    qDebug("points: %d", points.size());
+
     shapeCopy = new Shape();
-    if (!mouseMoved) {
+    if (!mouseMoved && !drawCurve) {
         stopDrawing();
     }
 
@@ -117,8 +139,7 @@ void Canvas2D::mouseReleaseEvent(QMouseEvent *event) //callback de mouse
             stopDrawing();
         }
     }
-
-    qDebug("\nMouse Release: %d %d", event->x(), event->y());
+    qDebug("points: %d", points.size());
 }
 
 void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
@@ -187,6 +208,7 @@ void Canvas2D::btnClear() {
 void Canvas2D::btnRectangle() {
     drawRectangle = true;
     drawLine = false;
+    drawCurve = false;
     clearSelection();
 }
 
@@ -195,6 +217,7 @@ void Canvas2D::btnRotateLeft() {
     clearSelection();
     drawLine = false;
     drawRectangle = false;
+    drawCurve = false;
 }
 
 void Canvas2D::btnRotateRight() {
@@ -202,4 +225,12 @@ void Canvas2D::btnRotateRight() {
     clearSelection();
     drawLine = false;
     drawRectangle = false;
+    drawCurve = false;
+}
+
+void Canvas2D::btnCurve() {
+    clearSelection();
+    drawLine = false;
+    drawRectangle = false;
+    drawCurve = true;
 }
