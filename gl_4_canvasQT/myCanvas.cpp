@@ -24,7 +24,7 @@
 
 using namespace std;
 
-bool drawLine = false;
+bool drawLine = false, mouseMoved = false;
 list<Shape*> shapes;
 
 // pressed point on canvas
@@ -61,8 +61,19 @@ void Canvas2D::mousePressEvent(QMouseEvent *event) //callback de mouse
     }
 }
 
+void stopDrawing() {
+    points.clear();
+    drawLine = false;
+    mouseMoved = false;
+    demo = new Shape();
+}
+
 void Canvas2D::mouseReleaseEvent(QMouseEvent *event) //callback de mouse
 {
+    if (!mouseMoved) {
+        stopDrawing();
+    }
+
     // apenas adiciona pontos se tiver alguma coisa sendo desenhada
     if (drawLine) {
         points.push_back(Point(event->x(), (event->y() - height()) * -1));
@@ -71,9 +82,7 @@ void Canvas2D::mouseReleaseEvent(QMouseEvent *event) //callback de mouse
             Point p1 = points[0];
             Point p2 = points[1];
             shapes.push_back(new Line(p1, p2));
-            points.clear();
-            drawLine = false;
-            demo = new Shape();
+            stopDrawing();
         }
     }
 
@@ -82,6 +91,7 @@ void Canvas2D::mouseReleaseEvent(QMouseEvent *event) //callback de mouse
 
 void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
 {
+    mouseMoved = true;
     // desenha uma previa
     if (drawLine && points.size() > 0) {
         Point p1 = points[0];
