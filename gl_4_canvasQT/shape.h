@@ -13,6 +13,7 @@
 #include "point.h"
 
 class Shape {
+
 public:
 
     /**
@@ -21,9 +22,22 @@ public:
     Shape();
 
     /**
-     * Draw the shape
+     * Draw the shape.
+     * @param canvas Referenced canvas to draw.
      */
     virtual void draw(Canvas2D *canvas);
+
+    /**
+     * Draw the selection box of the shape.
+     * @param canvas Referenced canvas.
+     */
+    virtual void drawSelectionBox(Canvas2D *canvas);
+
+    /**
+     * @param x Clicked point.
+     * @return If the point is inside of the selection box - true, else - false.
+     */
+    virtual bool isSelected(Point x);
 };
 
 #endif // SHAPE_H

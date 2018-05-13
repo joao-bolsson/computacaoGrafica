@@ -15,3 +15,12 @@ void RectangleC::draw(Canvas2D *canvas) {
     canvas->color(1, 0, 0);
     canvas->rect(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 }
+
+void RectangleC::drawSelectionBox(Canvas2D *canvas) {
+    // TODO
+}
+
+bool RectangleC::isSelected(Point x) {
+    //  TODO
+    return false;
+}

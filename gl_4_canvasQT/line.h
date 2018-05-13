@@ -41,6 +41,10 @@ public:
     Point getP2();
 
     void draw(Canvas2D *canvas);
+
+    void drawSelectionBox(Canvas2D *canvas);
+
+    bool isSelected(Point x);
 };
 
 #endif // LINE_H
