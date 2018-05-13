@@ -32,6 +32,7 @@ list<Shape*> shapes;
 vector<Point> points;
 
 Shape* demo = new Shape();
+Shape* selectedShape = new Shape();
 
 Point mousePointPressed = Point(-1, -1);
 
@@ -45,12 +46,13 @@ void Canvas2D::paintGL() //callback de desenho na canvas. Chamado pelo Timer def
         Shape *shape = (*it);
         shape->draw(this);
         if (shape->isSelected(mousePointPressed)) {
-            shape->drawSelectionBox(this);
+            selectedShape = shape;
         }
     }
 
     demo->draw(this);
     demo->drawSelectionBox(this);
+    selectedShape->drawSelectionBox(this);
 }
 
 void Canvas2D::wheelEvent(QWheelEvent *event) //callback de mouse
@@ -68,8 +70,14 @@ void Canvas2D::mousePressEvent(QMouseEvent *event) //callback de mouse
     if (drawLine || drawRectangle) {
         points.push_back(point);
     } else {
+        selectedShape = new Shape();
         mousePointPressed = point;
     }
+}
+
+void clearSelection() {
+    mousePointPressed = Point(-1, -1);
+    selectedShape = new Shape();
 }
 
 void stopDrawing() {
@@ -137,31 +145,31 @@ void Canvas2D::keyPressEvent(QKeyEvent* event)
 void Canvas2D::btnLine() {
     drawLine = true;
     drawRectangle = false;
-    mousePointPressed = Point(-1, -1);
+    clearSelection();
 }
 
 void Canvas2D::btnClear() {
     stopDrawing();
     shapes.clear();
-    mousePointPressed = Point(-1, -1);
+    clearSelection();
 }
 
 void Canvas2D::btnRectangle() {
     drawRectangle = true;
     drawLine = false;
-    mousePointPressed = Point(-1, -1);
+    clearSelection();
 }
 
 void Canvas2D::btnRotateLeft() {
     // TODO
-    mousePointPressed = Point(-1, -1);
+    clearSelection();
     drawLine = false;
     drawRectangle = false;
 }
 
 void Canvas2D::btnRotateRight() {
     // TODO
-    mousePointPressed = Point(-1, -1);
+    clearSelection();
     drawLine = false;
     drawRectangle = false;
 }
