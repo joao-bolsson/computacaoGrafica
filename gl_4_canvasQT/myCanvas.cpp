@@ -217,6 +217,10 @@ void translate(Shape *shape, int x, int y) {
     }
 }
 
+/**
+ * @param d If true - rotate to the left, false - right.
+ * @param shape
+ */
 void rotate(bool d, Shape *shape) {
     if (Line* line = dynamic_cast<Line*>(shape)) {
         Point p1 = line->getP1(); // pivo
@@ -224,9 +228,14 @@ void rotate(bool d, Shape *shape) {
         translate(shape, -p1.getX(), -p1.getY());
 
         Point p2 = line->getP2();
-        // rotaciona
-        double x = p2.getX() * cos(0.08) + p2.getY() * sin(0.08);
-        double y = -p2.getX() * sin(0.08) + p2.getY() * cos(0.08);
+
+        int factor = -1;
+        if (d) {
+            factor = 1;
+        }
+
+        double x = p2.getX() * cos(0.08) - factor * p2.getY() * sin(0.08);
+        double y = factor * p2.getX() * sin(0.08) + p2.getY() * cos(0.08);
 
         line->setP2(Point(x, y));
 
@@ -243,10 +252,10 @@ void Canvas2D::btnRotateLeft() {
 }
 
 void Canvas2D::btnRotateRight() {
-    // TODO
     drawLine = false;
     drawRectangle = false;
     drawCurve = false;
+    rotate(false, selectedShape);
 }
 
 void Canvas2D::btnCurve() {
