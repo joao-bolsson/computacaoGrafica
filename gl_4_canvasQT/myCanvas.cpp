@@ -30,6 +30,8 @@ list<Shape*> shapes;
 // pressed point on canvas
 vector<Point> points;
 
+Shape* demo = new Shape();
+
 // *******************************************************************************
 //Coloque seu codigo aqui, usando as funcoes da Canvas2D defindas na classe Canvas2D (arquivo glCanvas2d.h).
 // *******************************************************************************
@@ -39,6 +41,8 @@ void Canvas2D::paintGL() //callback de desenho na canvas. Chamado pelo Timer def
     for (it = shapes.begin(); it != shapes.end(); it++) {
         (*it)->draw(this);
     }
+
+    demo->draw(this);
 }
 
 void Canvas2D::wheelEvent(QWheelEvent *event) //callback de mouse
@@ -51,27 +55,39 @@ void Canvas2D::mousePressEvent(QMouseEvent *event) //callback de mouse
     //seta o foco para a canvas2D, desse modo pode-se pegar eventos de teclado dentro da canvas.
     setFocus();
 
-    qDebug("\nMouse Press: %d %d", event->x(), event->y());
-
-    points.push_back(Point(event->x(), (event->y() - height()) * -1));
-
-    if (drawLine && points.size() == 2) {
-        Point p1 = points[0];
-        Point p2 = points[1];
-        shapes.push_back(new Line(p1, p2));
-        points.clear();
-
-        qDebug("Points size: %d", points.size());
+    // apenas adiciona pontos se tiver alguma coisa sendo desenhada
+    if (drawLine) {
+        points.push_back(Point(event->x(), (event->y() - height()) * -1));
     }
 }
 
 void Canvas2D::mouseReleaseEvent(QMouseEvent *event) //callback de mouse
 {
+    // apenas adiciona pontos se tiver alguma coisa sendo desenhada
+    if (drawLine) {
+        points.push_back(Point(event->x(), (event->y() - height()) * -1));
+
+        if (drawLine && points.size() == 2) {
+            Point p1 = points[0];
+            Point p2 = points[1];
+            shapes.push_back(new Line(p1, p2));
+            points.clear();
+            drawLine = false;
+            demo = new Shape();
+        }
+    }
+
     qDebug("\nMouse Release: %d %d", event->x(), event->y());
 }
 
 void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
 {
+    // desenha uma previa
+    if (drawLine && points.size() > 0) {
+        Point p1 = points[0];
+
+        demo = new Line(p1, Point(event->x(), (event->y() - height()) * -1));
+    }
     qDebug("\nMouse Move: %d %d", event->x(), event->y());
 }
 

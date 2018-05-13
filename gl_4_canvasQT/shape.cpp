@@ -5,5 +5,5 @@ Shape::Shape() {
 }
 
 void Shape::draw(Canvas2D *canvas) {
-    qDebug("draw shape"); // never must happen
+    // do nothing
 }
