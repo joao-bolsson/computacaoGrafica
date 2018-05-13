@@ -33,6 +33,7 @@ vector<Point> points;
 
 Shape* demo = new Shape();
 Shape* selectedShape = new Shape();
+Shape* shapeCopy = new Shape();
 
 Point mousePointPressed = Point(-1, -1);
 
@@ -86,10 +87,12 @@ void stopDrawing() {
     drawRectangle = false;
     mouseMoved = false;
     demo = new Shape();
+    shapeCopy = new Shape();
 }
 
 void Canvas2D::mouseReleaseEvent(QMouseEvent *event) //callback de mouse
 {
+    shapeCopy = new Shape();
     if (!mouseMoved) {
         stopDrawing();
     }
@@ -116,17 +119,39 @@ void Canvas2D::mouseReleaseEvent(QMouseEvent *event) //callback de mouse
 void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
 {
     mouseMoved = true;
+    Point mousePoint = Point(event->x(), (event->y() - height()) * -1);
     // desenha uma previa
     if (points.size() > 0) {
         Point p1 = points[0];
 
         if (drawLine) {
-            demo = new Line(p1, Point(event->x(), (event->y() - height()) * -1));
+            demo = new Line(p1, mousePoint);
         } else if (drawRectangle) {
             demo = new RectangleC(p1, Point(event->x(), (event->y() - height()) * -1));
         }
+    } else {
+        // move figura selecionada
+
+        // por enquanto, retangulo e linha podem ser tratados da mesma forma
+        if (Line* line = dynamic_cast<Line*>(selectedShape)) {
+
+            Line* shapeCp = dynamic_cast<Line*>(shapeCopy);
+
+            if (!shapeCp) {
+                shapeCopy = new Line(line->getP1(), line->getP2());
+                shapeCp = new Line(line->getP1(), line->getP2());
+            }
+
+            Point p1 = shapeCp->getP1();
+            Point p2 = shapeCp->getP2();
+
+            int width = mousePointPressed.getX() - mousePoint.getX();
+            int height = mousePointPressed.getY() - mousePoint.getY();
+
+            line->setP1(Point(p1.getX() - width, p1.getY() - height));
+            line->setP2(Point(p2.getX() - width, p2.getY() - height));
+        }
     }
-    qDebug("\nMouse Move: %d %d", event->x(), event->y());
 }
 
 //callback para botao definido na mainWindow.

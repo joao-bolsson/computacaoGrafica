@@ -25,6 +25,12 @@ public:
     Line(Point p1, Point p2);
 
     /**
+     * Sets the start point.
+     * @param p1 Point to set.
+     */
+    void setP1(Point p1);
+
+    /**
      * Sets the end point.
      * @param p2 Point to set.
      */
