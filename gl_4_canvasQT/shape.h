@@ -14,6 +14,8 @@
 
 class Shape {
 
+protected:
+    byte r = 5, div = 10;
 public:
 
     /**

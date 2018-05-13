@@ -11,6 +11,9 @@
 
 class RectangleC : public Line {
 
+private:
+    Point p3, p4;
+
 public:
 
     /**
@@ -21,7 +24,13 @@ public:
      */
     RectangleC(Point p1, Point p2);
 
+    void setP3(Point p3);
+
+    void setP4(Point p4);
+
     void draw(Canvas2D *canvas);
+
+    void drawSelectionBox(Canvas2D *canvas);
 };
 
 #endif // RECTANGLE_H

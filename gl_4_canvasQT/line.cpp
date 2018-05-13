@@ -37,8 +37,6 @@ void Line::drawSelectionBox(Canvas2D *canvas) {
     short width = p1.getX() - p2.getX();
     short height = p1.getY() - p2.getY();
 
-    byte r = 5, div = 10;
-
     canvas->circleFill(p1.getX(), p1.getY(), r, div);
     canvas->circleFill(p2.getX(), p2.getY(), r, div);
     canvas->circleFill(p1.getX() - width, p1.getY(), r, div);

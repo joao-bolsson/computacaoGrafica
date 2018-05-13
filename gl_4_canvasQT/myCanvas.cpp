@@ -150,7 +150,7 @@ void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
         if (drawLine) {
             demo = new Line(p1, mousePoint);
         } else if (drawRectangle) {
-            demo = new RectangleC(p1, Point(event->x(), (event->y() - height()) * -1));
+            demo = new RectangleC(p1, mousePoint);
         }
     } else {
         // move figura selecionada
@@ -173,6 +173,16 @@ void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
 
             line->setP1(Point(p1.getX() - width, p1.getY() - height));
             line->setP2(Point(p2.getX() - width, p2.getY() - height));
+
+            if (RectangleC* rect = dynamic_cast<RectangleC*>(line)) {
+                p1 = line->getP1();
+                p2 = line->getP2();
+                short width = p1.getX() - p2.getX();
+                short height = p1.getY() - p2.getY();
+
+                rect->setP3(Point(p1.getX() - width, p1.getY()));
+                rect->setP4(Point(p1.getX(), p1.getY() - height));
+            }
         }
     }
 }
