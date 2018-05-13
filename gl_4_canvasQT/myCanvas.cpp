@@ -46,9 +46,6 @@ void Canvas2D::paintGL() //callback de desenho na canvas. Chamado pelo Timer def
     for (it = shapes.begin(); it != shapes.end(); it++) {
         Shape *shape = (*it);
         shape->draw(this);
-        if (shape->isSelected(mousePointPressed)) {
-            selectedShape = shape;
-        }
     }
 
     demo->draw(this);
@@ -73,6 +70,14 @@ void Canvas2D::mousePressEvent(QMouseEvent *event) //callback de mouse
     } else {
         selectedShape = new Shape();
         mousePointPressed = point;
+
+        list<Shape*>::iterator it;
+        for (it = shapes.begin(); it != shapes.end(); it++) {
+            Shape *shape = (*it);
+            if (shape->isSelected(mousePointPressed)) {
+                selectedShape = shape;
+            }
+        }
     }
 }
 
