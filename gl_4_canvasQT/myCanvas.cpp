@@ -33,6 +33,8 @@ vector<Point> points;
 
 Shape* demo = new Shape();
 
+Point mousePointPressed = Point(-1, -1);
+
 // *******************************************************************************
 //Coloque seu codigo aqui, usando as funcoes da Canvas2D defindas na classe Canvas2D (arquivo glCanvas2d.h).
 // *******************************************************************************
@@ -40,10 +42,15 @@ void Canvas2D::paintGL() //callback de desenho na canvas. Chamado pelo Timer def
 {
     list<Shape*>::iterator it;
     for (it = shapes.begin(); it != shapes.end(); it++) {
-        (*it)->draw(this);
+        Shape *shape = (*it);
+        shape->draw(this);
+        if (shape->isSelected(mousePointPressed)) {
+            shape->drawSelectionBox(this);
+        }
     }
 
     demo->draw(this);
+    demo->drawSelectionBox(this);
 }
 
 void Canvas2D::wheelEvent(QWheelEvent *event) //callback de mouse
@@ -56,9 +63,12 @@ void Canvas2D::mousePressEvent(QMouseEvent *event) //callback de mouse
     //seta o foco para a canvas2D, desse modo pode-se pegar eventos de teclado dentro da canvas.
     setFocus();
 
+    Point point = Point(event->x(), (event->y() - height()) * -1);
     // apenas adiciona pontos se tiver alguma coisa sendo desenhada
     if (drawLine || drawRectangle) {
-        points.push_back(Point(event->x(), (event->y() - height()) * -1));
+        points.push_back(point);
+    } else {
+        mousePointPressed = point;
     }
 }
 
@@ -127,22 +137,31 @@ void Canvas2D::keyPressEvent(QKeyEvent* event)
 void Canvas2D::btnLine() {
     drawLine = true;
     drawRectangle = false;
+    mousePointPressed = Point(-1, -1);
 }
 
 void Canvas2D::btnClear() {
     stopDrawing();
     shapes.clear();
+    mousePointPressed = Point(-1, -1);
 }
 
 void Canvas2D::btnRectangle() {
     drawRectangle = true;
     drawLine = false;
+    mousePointPressed = Point(-1, -1);
 }
 
 void Canvas2D::btnRotateLeft() {
     // TODO
+    mousePointPressed = Point(-1, -1);
+    drawLine = false;
+    drawRectangle = false;
 }
 
 void Canvas2D::btnRotateRight() {
     // TODO
+    mousePointPressed = Point(-1, -1);
+    drawLine = false;
+    drawRectangle = false;
 }

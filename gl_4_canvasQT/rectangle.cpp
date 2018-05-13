@@ -21,7 +21,7 @@ void RectangleC::drawSelectionBox(Canvas2D *canvas) {
     short width = p1.getX() - p2.getX();
     short height = p1.getY() - p2.getY();
 
-    byte r = 10, div = 10;
+    byte r = 5, div = 10;
 
     canvas->circleFill(p1.getX(), p1.getY(), r, div);
     canvas->circleFill(p2.getX(), p2.getY(), r, div);
@@ -30,12 +30,12 @@ void RectangleC::drawSelectionBox(Canvas2D *canvas) {
 }
 
 bool RectangleC::isSelected(Point x) {
-    if ((p1.getX() > x.getX() && p2.getX() < x.getX())
-            || (p1.getX() < x.getX() && p2.getX() > x.getX())) {
+    if ((p1.getX() >= x.getX() && p2.getX() <= x.getX())
+            || (p1.getX() <= x.getX() && p2.getX() >= x.getX())) {
 
         // compara os y
-        if ((p1.getY() > x.getY() && p2.getY() < x.getY())
-                || (p1.getY() < x.getY() && p2.getY() > x.getY())) {
+        if ((p1.getY() >= x.getY() && p2.getY() <= x.getY())
+                || (p1.getY() <= x.getY() && p2.getY() >= x.getY())) {
             return true;
         }
     }
