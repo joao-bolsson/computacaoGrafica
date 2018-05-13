@@ -138,3 +138,11 @@ void Canvas2D::btnRectangle() {
     drawRectangle = true;
     drawLine = false;
 }
+
+void Canvas2D::btnRotateLeft() {
+    // TODO
+}
+
+void Canvas2D::btnRotateRight() {
+    // TODO
+}

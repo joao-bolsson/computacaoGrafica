@@ -31,6 +31,8 @@ public slots:
     void btnLine();
     void btnClear();
     void btnRectangle();
+    void btnRotateLeft();
+    void btnRotateRight();
 
 public:
     void resizeGL(int w, int h) Q_DECL_OVERRIDE;

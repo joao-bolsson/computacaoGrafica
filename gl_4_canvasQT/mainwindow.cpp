@@ -99,4 +99,6 @@ MainWindow::MainWindow()
     connect(btnLine, SIGNAL(pressed()), canvas, SLOT(btnLine()));
     connect(btnClear, SIGNAL(pressed()), canvas, SLOT(btnClear()));
     connect(btnRectangle, SIGNAL(pressed()), canvas, SLOT(btnRectangle()));
+    connect(rotationLeft, SIGNAL(pressed()), canvas, SLOT(btnRotateLeft()));
+    connect(rotationRight, SIGNAL(pressed()), canvas, SLOT(btnRotateRight()));
 }
