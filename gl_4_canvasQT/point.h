@@ -10,7 +10,7 @@
 
 class Point {
 private:
-    short x, y;
+    int x, y;
 
 public:
 
@@ -25,17 +25,17 @@ public:
      * @param x X coordinate.
      * @param y Y coordinate.
      */
-    Point(short x, short y);
+    Point(int x, int y);
 
     /**
      * @return The x coordinate.
      */
-    short getX() const;
+    int getX() const;
 
     /**
      * @return The y coordinate.
      */
-    short getY() const;
+    int getY() const;
 };
 
 

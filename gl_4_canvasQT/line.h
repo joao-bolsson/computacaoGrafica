@@ -8,7 +8,6 @@
 #ifndef LINE_H
 #define LINE_H
 
-#include "point.h"
 #include "shape.h"
 
 class Line : public Shape {
@@ -40,6 +39,8 @@ public:
      * @return The end point of line.
      */
     Point getP2();
+
+    void draw(Canvas2D *canvas);
 };
 
 #endif // LINE_H

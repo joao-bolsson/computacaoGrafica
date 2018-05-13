@@ -11,15 +11,15 @@ Point::Point() {
     Point(0, 0);
 }
 
-Point::Point(short x, short y) {
+Point::Point(int x, int y) {
     this->x = x;
     this->y = y;
 }
 
-short Point::getX() const {
+int Point::getX() const {
     return x;
 }
 
-short Point::getY() const {
+int Point::getY() const {
     return y;
 }

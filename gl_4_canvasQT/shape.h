@@ -9,6 +9,8 @@
 #define SHAPE_H
 
 #include <QDebug>
+#include "glCanvas2d.h"
+#include "point.h"
 
 class Shape {
 public:
@@ -21,7 +23,7 @@ public:
     /**
      * Draw the shape
      */
-    virtual void draw();
+    virtual void draw(Canvas2D *canvas);
 };
 
 #endif // SHAPE_H

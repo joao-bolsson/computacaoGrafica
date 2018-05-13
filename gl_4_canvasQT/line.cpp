@@ -23,6 +23,9 @@ void Line::setP2(Point p2) {
     this->p2 = p2;
 }
 
-void Shape::draw() {
-    qDebug("Draw the line");
+void Line::draw(Canvas2D *canvas) {
+    qDebug("draw a line");
+
+    canvas->color(1, 0, 0);
+    canvas->line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 }
