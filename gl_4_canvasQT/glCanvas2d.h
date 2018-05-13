@@ -30,6 +30,7 @@ public slots:
     void showMsg(); //metodo chamado quando o botao eh pressionado
     void btnLine();
     void btnClear();
+    void btnRectangle();
 
 public:
     void resizeGL(int w, int h) Q_DECL_OVERRIDE;

@@ -20,11 +20,12 @@
 #include <QWheelEvent>
 #include <list>
 #include <vector>
-#include "line.h"
+#include "rectangle.h"
 
 using namespace std;
 
-bool drawLine = false, mouseMoved = false;
+bool drawLine = false, drawRectangle = false;
+bool mouseMoved = false;
 list<Shape*> shapes;
 
 // pressed point on canvas
@@ -56,7 +57,7 @@ void Canvas2D::mousePressEvent(QMouseEvent *event) //callback de mouse
     setFocus();
 
     // apenas adiciona pontos se tiver alguma coisa sendo desenhada
-    if (drawLine) {
+    if (drawLine || drawRectangle) {
         points.push_back(Point(event->x(), (event->y() - height()) * -1));
     }
 }
@@ -64,6 +65,7 @@ void Canvas2D::mousePressEvent(QMouseEvent *event) //callback de mouse
 void stopDrawing() {
     points.clear();
     drawLine = false;
+    drawRectangle = false;
     mouseMoved = false;
     demo = new Shape();
 }
@@ -75,13 +77,17 @@ void Canvas2D::mouseReleaseEvent(QMouseEvent *event) //callback de mouse
     }
 
     // apenas adiciona pontos se tiver alguma coisa sendo desenhada
-    if (drawLine) {
+    if (drawLine || drawRectangle) {
         points.push_back(Point(event->x(), (event->y() - height()) * -1));
 
-        if (drawLine && points.size() == 2) {
+        if (points.size() == 2) {
             Point p1 = points[0];
             Point p2 = points[1];
-            shapes.push_back(new Line(p1, p2));
+            if (drawLine) {
+                shapes.push_back(new Line(p1, p2));
+            } else if (drawRectangle) {
+                shapes.push_back(new RectangleC(p1, p2));
+            }
             stopDrawing();
         }
     }
@@ -93,10 +99,14 @@ void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
 {
     mouseMoved = true;
     // desenha uma previa
-    if (drawLine && points.size() > 0) {
+    if (points.size() > 0) {
         Point p1 = points[0];
 
-        demo = new Line(p1, Point(event->x(), (event->y() - height()) * -1));
+        if (drawLine) {
+            demo = new Line(p1, Point(event->x(), (event->y() - height()) * -1));
+        } else if (drawRectangle) {
+            demo = new RectangleC(p1, Point(event->x(), (event->y() - height()) * -1));
+        }
     }
     qDebug("\nMouse Move: %d %d", event->x(), event->y());
 }
@@ -115,10 +125,16 @@ void Canvas2D::keyPressEvent(QKeyEvent* event)
 }
 
 void Canvas2D::btnLine() {
-    drawLine = !drawLine;
+    drawLine = true;
+    drawRectangle = false;
 }
 
 void Canvas2D::btnClear() {
     stopDrawing();
     shapes.clear();
+}
+
+void Canvas2D::btnRectangle() {
+    drawRectangle = true;
+    drawLine = false;
 }

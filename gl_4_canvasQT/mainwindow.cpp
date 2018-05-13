@@ -98,4 +98,5 @@ MainWindow::MainWindow()
     connect(m_timer, SIGNAL(timeout()), canvas, SLOT(update()));
     connect(btnLine, SIGNAL(pressed()), canvas, SLOT(btnLine()));
     connect(btnClear, SIGNAL(pressed()), canvas, SLOT(btnClear()));
+    connect(btnRectangle, SIGNAL(pressed()), canvas, SLOT(btnRectangle()));
 }

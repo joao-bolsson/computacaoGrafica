@@ -12,7 +12,7 @@
 
 class Line : public Shape {
 
-private:
+protected:
     Point p1, p2;
 public:
 
