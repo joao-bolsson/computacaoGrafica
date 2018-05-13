@@ -35,7 +35,6 @@ vector<Point> points;
 // *******************************************************************************
 void Canvas2D::paintGL() //callback de desenho na canvas. Chamado pelo Timer definido em mainWindow.cpp
 {
-    this->color(0, 0, 0);
     list<Shape*>::iterator it;
     for (it = shapes.begin(); it != shapes.end(); it++) {
         (*it)->draw(this);
@@ -54,7 +53,7 @@ void Canvas2D::mousePressEvent(QMouseEvent *event) //callback de mouse
 
     qDebug("\nMouse Press: %d %d", event->x(), event->y());
 
-    points.push_back(Point(event->x(), event->y()));
+    points.push_back(Point(event->x(), (event->y() - height()) * -1));
 
     if (drawLine && points.size() == 2) {
         Point p1 = points[0];
