@@ -22,10 +22,6 @@ public:
     RectangleC(Point p1, Point p2);
 
     void draw(Canvas2D *canvas);
-
-    void drawSelectionBox(Canvas2D *canvas);
-
-    bool isSelected(Point x);
 };
 
 #endif // RECTANGLE_H
