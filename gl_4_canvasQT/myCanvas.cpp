@@ -116,5 +116,9 @@ void Canvas2D::keyPressEvent(QKeyEvent* event)
 
 void Canvas2D::btnLine() {
     drawLine = !drawLine;
-    qDebug("draw line: %s", (drawLine ? "true" : "false"));
+}
+
+void Canvas2D::btnClear() {
+    stopDrawing();
+    shapes.clear();
 }
