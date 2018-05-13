@@ -137,7 +137,6 @@ void Canvas2D::mouseReleaseEvent(QMouseEvent *event) //callback de mouse
             stopDrawing();
         }
     }
-    qDebug("points: %d", points.size());
 }
 
 void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
@@ -210,17 +209,41 @@ void Canvas2D::btnRectangle() {
     clearSelection();
 }
 
+void translate(Shape *shape, int x, int y) {
+    // nao precisa transladar o pivo pois nele nada se altera
+    if (Line* line = dynamic_cast<Line*>(shape)) {
+        Point p2 = line->getP2();
+        line->setP2(Point(p2.getX() + x, p2.getY() + y));
+    }
+}
+
+void rotate(bool d, Shape *shape) {
+    if (Line* line = dynamic_cast<Line*>(shape)) {
+        Point p1 = line->getP1(); // pivo
+        // leva para a origem
+        translate(shape, -p1.getX(), -p1.getY());
+
+        Point p2 = line->getP2();
+        // rotaciona
+        double x = p2.getX() * cos(0.08) + p2.getY() * sin(0.08);
+        double y = -p2.getX() * sin(0.08) + p2.getY() * cos(0.08);
+
+        line->setP2(Point(x, y));
+
+        // leva de volta
+        translate(shape, p1.getX(), p1.getY());
+    }
+}
+
 void Canvas2D::btnRotateLeft() {
-    // TODO
-    clearSelection();
     drawLine = false;
     drawRectangle = false;
     drawCurve = false;
+    rotate(true, selectedShape);
 }
 
 void Canvas2D::btnRotateRight() {
     // TODO
-    clearSelection();
     drawLine = false;
     drawRectangle = false;
     drawCurve = false;
