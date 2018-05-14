@@ -153,7 +153,6 @@ void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
         // move figura selecionada
 
         if (Curve *curve = dynamic_cast<Curve*>(selectedShape)) {
-            qDebug("move curve");
             Curve* shapeCp = dynamic_cast<Curve*>(shapeCopy);
 
             if (!shapeCp) {
@@ -253,7 +252,15 @@ void Canvas2D::btnRectangle() {
 
 void translate(Shape *shape, int x, int y) {
     // nao precisa transladar o pivo pois nele nada se altera
-    if (Line* line = dynamic_cast<Line*>(shape)) {
+    if (Curve* curve = dynamic_cast<Curve*>(shape)) {
+        vector<Point*> pts = curve->getControlPts();
+
+        for (unsigned int i = 1; i < pts.size(); i++) {
+            Point *p = pts[i];
+
+            curve->changePoint(i, p->getX() + x, p->getY() + y);
+        }
+    } else if (Line* line = dynamic_cast<Line*>(shape)) {
         Point p2 = line->getP2();
         line->setP2(Point(p2.getX() + x, p2.getY() + y));
 
@@ -272,7 +279,40 @@ void translate(Shape *shape, int x, int y) {
  * @param shape
  */
 void rotate(bool d, Shape *shape) {
-    if (Line* line = dynamic_cast<Line*>(shape)) {
+    int factor = -1;
+    if (d) {
+        factor = 1;
+    }
+
+    if (Curve* curve = dynamic_cast<Curve*>(shape)) {
+        vector<Point*> pts = curve->getControlPts();
+        Point *p1 = pts[0];
+
+        // leva para a origem
+        translate(shape, -p1->getX(), -p1->getY());
+
+        for (unsigned int i = 1; i < pts.size(); i++) {
+            Point p = Point(pts[i]->getX(), pts[i]->getY());
+
+            double x = p.getX() * cos(0.08) - factor * p.getY() * sin(0.08);
+            double y = factor * p.getX() * sin(0.08) + p.getY() * cos(0.08);
+
+            curve->changePoint(i, x, y);
+        }
+
+        // leva de volta
+        translate(shape, p1->getX(), p1->getY());
+
+        // faz a mesma coisa para as copias
+        if (Curve* curveCopy = dynamic_cast<Curve*>(shapeCopy)) {
+            vector<Point*> ctrlPts = curve->getControlPts();
+            for (unsigned int i = 0; i < ctrlPts.size(); i++) {
+                Point *p = ctrlPts[i];
+                curveCopy->changePoint(i, p->getX(), p->getY());
+            }
+        }
+
+    } else if (Line* line = dynamic_cast<Line*>(shape)) {
         Point p1 = line->getP1(); // pivo
         // leva para a origem
         translate(shape, -p1.getX(), -p1.getY());
@@ -283,11 +323,6 @@ void rotate(bool d, Shape *shape) {
         if (RectangleC* rect = dynamic_cast<RectangleC*>(line)) {
             shapePoints.push_back(rect->getP3());
             shapePoints.push_back(rect->getP4());
-        }
-
-        int factor = -1;
-        if (d) {
-            factor = 1;
         }
 
         for (unsigned int i = 0; i < shapePoints.size(); i++) {
@@ -309,7 +344,7 @@ void rotate(bool d, Shape *shape) {
         // leva de volta
         translate(shape, p1.getX(), p1.getY());
 
-        // faz a mesma coisa para as copias (pode mover objeto rotacionado, apenas linha)
+        // faz a mesma coisa para as copias
         if (Line* lineCopy = dynamic_cast<Line*>(shapeCopy)) {
             lineCopy->setP2(line->getP2());
         }
