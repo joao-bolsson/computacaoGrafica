@@ -311,26 +311,66 @@ string filePath = "./teste.jv";
 fstream file;
 
 void Canvas2D::btnOpen() {
+    btnClear();
+
     file.open(filePath, ios::in | ios::binary);
 
-        if (!file) exit(2);
+    if (!file) exit(2);
 
-        unsigned int size;
-        file.read(reinterpret_cast<char *>(&size), sizeof(size));
+    unsigned int size;
+    file.read(reinterpret_cast<char *>(&size), sizeof(size));
 
-        qDebug("Shapes: %d", size);
+    for (unsigned int i = 0; i < size; i++) {
+        byte id;
+        file.read(reinterpret_cast<char *>(&id), sizeof(id));
 
-//        signed short v[size];
+        Shape *shape;
+        switch(id) {
+        case LINE: {
+            int p[4];
+            file.read(reinterpret_cast<char *>(p), sizeof(p));
 
-//        file.read(reinterpret_cast<char *>(v), sizeof(v));
-        file.close();
+            shape = new Line(Point(p[0], p[1]), Point(p[2], p[3]));
+            break;
+        }
+        case RECTANGLE: {
+            int p[8];
+            file.read(reinterpret_cast<char *>(p), sizeof(p));
 
-//        vector<short> signals;
+            RectangleC *rect = new RectangleC(Point(p[0], p[1]), Point(p[2], p[3]));
+            rect->setP3(Point(p[4], p[5]));
+            rect->setP4(Point(p[6], p[7]));
 
-//        for (auto a : v) {
-//            cout << a << endl;
-//            signals.push_back(a);
-//        }
+            shape = rect;
+            break;
+        }
+        case CURVE: {
+            // numero de pontos de controle da curva
+            unsigned int sizeCtrl;
+            file.read(reinterpret_cast<char *>(&sizeCtrl), sizeof(sizeCtrl));
+
+            // a cada dois int eh um point
+            int pAux[sizeCtrl * 2];
+
+            file.read(reinterpret_cast<char *>(pAux), sizeCtrl * 2 * sizeof(int));
+
+            Curve* curve = new Curve();
+
+            for (unsigned int j = 0; j < (sizeCtrl * 2); j++) {
+                int x = pAux[j];
+                int y = pAux[++j];
+
+                curve->addPoint(new Point(x, y));
+            }
+
+            shape = curve;
+            break;
+        }
+        }
+        shapes.push_back(shape);
+    }
+
+    file.close();
 }
 
 void Canvas2D::btnSave() {
