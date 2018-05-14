@@ -155,14 +155,18 @@ void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
     } else {
         // move figura selecionada
 
-        // por enquanto, retangulo e linha podem ser tratados da mesma forma
         if (Line* line = dynamic_cast<Line*>(selectedShape)) {
 
             Line* shapeCp = dynamic_cast<Line*>(shapeCopy);
 
             if (!shapeCp) {
-                shapeCopy = new Line(line->getP1(), line->getP2());
-                shapeCp = new Line(line->getP1(), line->getP2());
+                if (RectangleC* rect = dynamic_cast<RectangleC*>(line)) {
+                    shapeCopy = new RectangleC(rect->getP1(), rect->getP2());
+                    shapeCp = new RectangleC(rect->getP1(), rect->getP2());
+                } else {
+                    shapeCopy = new Line(line->getP1(), line->getP2());
+                    shapeCp = new Line(line->getP1(), line->getP2());
+                }
             }
 
             Point p1 = shapeCp->getP1();
@@ -173,6 +177,17 @@ void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
 
             line->setP1(Point(p1.getX() - width, p1.getY() - height));
             line->setP2(Point(p2.getX() - width, p2.getY() - height));
+
+            if (RectangleC* rect = dynamic_cast<RectangleC*>(line)) {
+                if (RectangleC* rectCopy = dynamic_cast<RectangleC*>(shapeCp)) {
+                    Point p3 = rectCopy->getP3();
+                    Point p4 = rectCopy->getP4();
+
+                    rect->setP3(Point(p3.getX() - width, p3.getY() - height));
+                    rect->setP4(Point(p4.getX() - width, p4.getY() - height));
+                }
+            }
+
         }
     }
 }
