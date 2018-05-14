@@ -12,16 +12,25 @@
 #include "glCanvas2d.h"
 #include "point.h"
 
+const byte LINE = 1;
+const byte RECTANGLE = 2;
+const byte CURVE = 3;
+
 class Shape {
 
 protected:
-    byte r = 5, div = 10;
+    byte r = 5, div = 10, id;
 public:
 
     /**
      * Default construct
      */
     Shape();
+
+    /**
+     * @return The shape identifier.
+     */
+    byte getId();
 
     /**
      * Draw the shape.

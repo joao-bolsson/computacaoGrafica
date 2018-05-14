@@ -15,3 +15,7 @@ void Shape::drawSelectionBox(Canvas2D *canvas) {
 bool Shape::isSelected(Point x) {
     return false;
 }
+
+byte Shape::getId() {
+    return id;
+}

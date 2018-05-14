@@ -8,11 +8,15 @@
 #include "curve.h"
 
 Curve::Curve() {
-    // empty
+    id = CURVE;
 }
 
 void Curve::addPoint(Point *p) {
     controlPoints.push_back(p);
+}
+
+vector<Point*> Curve::getControlPts() {
+    return controlPoints;
 }
 
 void Curve::draw(Canvas2D *canvas) {

@@ -20,6 +20,8 @@ private:
 public:
     Curve();
 
+    vector<Point*> getControlPts();
+
     void addPoint(Point *p);
 
     void draw(Canvas2D *canvas);

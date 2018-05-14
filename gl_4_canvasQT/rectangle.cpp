@@ -13,6 +13,7 @@ RectangleC::RectangleC(Point p1, Point p2):Line(p1, p2) {
 
     p3 = Point(p1.getX() - width, p1.getY());
     p4 = Point(p1.getX(), p1.getY() - height);
+    id = RECTANGLE;
 }
 
 void RectangleC::setP3(Point p3) {
