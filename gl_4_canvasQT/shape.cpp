@@ -27,3 +27,7 @@ Point Shape::getPivo() {
 void Shape::translate(int x, int y) {
    // empty
 }
+
+void Shape::rotate(bool d) {
+    // empty
+}

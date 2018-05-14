@@ -9,7 +9,6 @@
 #define CURVE_H
 
 #include "shape.h"
-#include <vector>
 
 using namespace std;
 
@@ -50,6 +49,8 @@ public:
     bool isSelected(Point x);
 
     void translate(int x, int y);
+
+    void rotate(bool d);
 };
 
 #endif // CURVE_H

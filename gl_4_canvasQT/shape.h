@@ -11,11 +11,13 @@
 #include <QDebug>
 #include "glCanvas2d.h"
 #include "point.h"
+#include <vector>
 
 const byte SHAPE = 0;
 const byte LINE = 1;
 const byte RECTANGLE = 2;
 const byte CURVE = 3;
+const float ROTATE = 0.08;
 
 class Shape {
 
@@ -63,6 +65,12 @@ public:
      * @return Return the pivo.
      */
     Point getPivo();
+
+    /**
+     * Rotate the shape.
+     * @param d If true - rotate to the left, false - right.
+     */
+    virtual void rotate(bool d);
 };
 
 #endif // SHAPE_H

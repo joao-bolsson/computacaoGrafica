@@ -100,3 +100,19 @@ void Curve::translate(int x, int y) {
     }
 }
 
+void Curve::rotate(bool d) {
+    int factor = -1;
+    if (d) {
+        factor = 1;
+    }
+
+    for (unsigned int i = 1; i < controlPoints.size(); i++) {
+        Point p = Point(controlPoints[i]->getX(), controlPoints[i]->getY());
+
+        double x = p.getX() * cos(ROTATE) - factor * p.getY() * sin(ROTATE);
+        double y = factor * p.getX() * sin(ROTATE) + p.getY() * cos(ROTATE);
+
+        changePoint(i, x, y);
+    }
+}
+

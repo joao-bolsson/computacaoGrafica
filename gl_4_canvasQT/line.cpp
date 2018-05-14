@@ -63,3 +63,17 @@ void Line::translate(int x, int y) {
     // nao translada o pivo
     p2 = Point(p2.getX() + x, p2.getY() + y);
 }
+
+void Line::rotate(bool d) {
+    int factor = -1;
+    if (d) {
+        factor = 1;
+    }
+
+    Point p = p2;
+
+    double x = p.getX() * cos(ROTATE) - factor * p.getY() * sin(ROTATE);
+    double y = factor * p.getX() * sin(ROTATE) + p.getY() * cos(ROTATE);
+
+    p2 = Point(x, y);
+}

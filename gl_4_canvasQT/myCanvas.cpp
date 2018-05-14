@@ -263,19 +263,11 @@ void rotate(bool d, Shape *shape) {
     Point pivo = shape->getPivo();
 
     if (Curve* curve = dynamic_cast<Curve*>(shape)) {
-        vector<Point*> pts = curve->getControlPts();
-
         // leva para a origem
         shape->translate(-pivo.getX(), -pivo.getY());
 
-        for (unsigned int i = 1; i < pts.size(); i++) {
-            Point p = Point(pts[i]->getX(), pts[i]->getY());
-
-            double x = p.getX() * cos(0.08) - factor * p.getY() * sin(0.08);
-            double y = factor * p.getX() * sin(0.08) + p.getY() * cos(0.08);
-
-            curve->changePoint(i, x, y);
-        }
+        // rotaciona
+        shape->rotate(d);
 
         // leva de volta
         shape->translate(pivo.getX(), pivo.getY());
@@ -292,29 +284,7 @@ void rotate(bool d, Shape *shape) {
     } else if (Line* line = dynamic_cast<Line*>(shape)) {
         shape->translate(-pivo.getX(), -pivo.getY());
 
-        vector<Point> shapePoints;
-        shapePoints.push_back(line->getP2());
-
-        if (RectangleC* rect = dynamic_cast<RectangleC*>(line)) {
-            shapePoints.push_back(rect->getP3());
-            shapePoints.push_back(rect->getP4());
-        }
-
-        for (unsigned int i = 0; i < shapePoints.size(); i++) {
-            Point p = shapePoints[i];
-
-            double x = p.getX() * cos(0.08) - factor * p.getY() * sin(0.08);
-            double y = factor * p.getX() * sin(0.08) + p.getY() * cos(0.08);
-
-            shapePoints[i] = Point(x, y);
-        }
-
-        line->setP2(shapePoints[0]);
-
-        if (RectangleC* rect = dynamic_cast<RectangleC*>(line)) {
-            rect->setP3(shapePoints[1]);
-            rect->setP4(shapePoints[2]);
-        }
+        shape->rotate(d);
 
         shape->translate(pivo.getX(), pivo.getY());
 

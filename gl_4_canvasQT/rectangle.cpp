@@ -7,6 +7,8 @@
 
 #include "rectangle.h"
 
+using namespace std;
+
 RectangleC::RectangleC(Point p1, Point p2):Line(p1, p2) {
     short width = p1.getX() - p2.getX();
     short height = p1.getY() - p2.getY();
@@ -55,4 +57,29 @@ void RectangleC::translate(int x, int y) {
     p2 = Point(p2.getX() + x, p2.getY() + y);
     p3 = Point(p3.getX() + x, p3.getY() + y);
     p4 = Point(p4.getX() + x, p4.getY() + y);
+}
+
+void RectangleC::rotate(bool d) {
+    int factor = -1;
+    if (d) {
+        factor = 1;
+    }
+
+    vector<Point> shapePoints;
+    shapePoints.push_back(p2);
+    shapePoints.push_back(p3);
+    shapePoints.push_back(p4);
+
+    for (unsigned int i = 0; i < shapePoints.size(); i++) {
+        Point p = shapePoints[i];
+
+        double x = p.getX() * cos(ROTATE) - factor * p.getY() * sin(ROTATE);
+        double y = factor * p.getX() * sin(ROTATE) + p.getY() * cos(ROTATE);
+
+        shapePoints[i] = Point(x, y);
+    }
+
+    p2 = shapePoints[0];
+    p3 = shapePoints[1];
+    p4 = shapePoints[2];
 }
