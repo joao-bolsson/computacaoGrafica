@@ -13,6 +13,9 @@ Curve::Curve() {
 
 void Curve::addPoint(Point *p) {
     controlPoints.push_back(p);
+    if (controlPoints.size() == 1) {
+        pivo = Point(p->getX(), p->getY());
+    }
 }
 
 vector<Point*> Curve::getControlPts() {
@@ -24,6 +27,10 @@ void Curve::changePoint(int i, int x, int y) {
 
     p->setX(x);
     p->setY(y);
+
+    if (i == 0) {
+        pivo = Point(x, y);
+    }
 }
 
 void Curve::draw(Canvas2D *canvas) {
@@ -82,5 +89,14 @@ bool Curve::isSelected(Point point) {
 
     return (point.getX() >= left && point.getX() <= right
             && point.getY() >= bottom && point.getY() <= top);
+}
+
+void Curve::translate(int x, int y) {
+    // nao translada o pivo
+    for (unsigned int i = 1; i < controlPoints.size(); i++) {
+        Point *p = controlPoints[i];
+
+        changePoint(i, p->getX() + x, p->getY() + y);
+    }
 }
 

@@ -48,6 +48,8 @@ public:
     void drawSelectionBox(Canvas2D *canvas);
 
     bool isSelected(Point x);
+
+    void translate(int x, int y);
 };
 
 #endif // CURVE_H

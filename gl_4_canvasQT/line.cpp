@@ -9,6 +9,7 @@
 Line::Line(Point p1, Point p2) {
     this->p1 = p1;
     this->p2 = p2;
+    pivo = p1;
     id = LINE;
 }
 
@@ -22,6 +23,7 @@ Point Line::getP2() {
 
 void Line::setP1(Point p1) {
     this->p1 = p1;
+    pivo = p1;
 }
 
 void Line::setP2(Point p2) {
@@ -55,4 +57,9 @@ bool Line::isSelected(Point x) {
         }
     }
     return false;
+}
+
+void Line::translate(int x, int y) {
+    // nao translada o pivo
+    p2 = Point(p2.getX() + x, p2.getY() + y);
 }

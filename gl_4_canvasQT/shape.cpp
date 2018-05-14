@@ -19,3 +19,11 @@ bool Shape::isSelected(Point x) {
 byte Shape::getId() {
     return id;
 }
+
+Point Shape::getPivo() {
+    return pivo;
+}
+
+void Shape::translate(int x, int y) {
+   // empty
+}

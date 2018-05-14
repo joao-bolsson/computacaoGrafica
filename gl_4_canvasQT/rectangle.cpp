@@ -49,3 +49,10 @@ void RectangleC::drawSelectionBox(Canvas2D *canvas) {
     canvas->circleFill(p3.getX(), p3.getY(), r, div);
     canvas->circleFill(p4.getX(), p4.getY(), r, div);
 }
+
+void RectangleC::translate(int x, int y) {
+    // nao translada o pivo
+    p2 = Point(p2.getX() + x, p2.getY() + y);
+    p3 = Point(p3.getX() + x, p3.getY() + y);
+    p4 = Point(p4.getX() + x, p4.getY() + y);
+}

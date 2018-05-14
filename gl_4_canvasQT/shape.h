@@ -21,6 +21,7 @@ class Shape {
 
 protected:
     byte r = 5, div = 10, id;
+    Point pivo;
 public:
 
     /**
@@ -50,6 +51,18 @@ public:
      * @return If the point is inside of the selection box - true, else - false.
      */
     virtual bool isSelected(Point x);
+
+    /**
+     * Translate the shape.
+     * @param x Translate on axis x.
+     * @param y Translate on axis y.
+     */
+    virtual void translate(int x, int y);
+
+    /**
+     * @return Return the pivo.
+     */
+    Point getPivo();
 };
 
 #endif // SHAPE_H

@@ -250,30 +250,6 @@ void Canvas2D::btnRectangle() {
     clearSelection();
 }
 
-void translate(Shape *shape, int x, int y) {
-    // nao precisa transladar o pivo pois nele nada se altera
-    if (Curve* curve = dynamic_cast<Curve*>(shape)) {
-        vector<Point*> pts = curve->getControlPts();
-
-        for (unsigned int i = 1; i < pts.size(); i++) {
-            Point *p = pts[i];
-
-            curve->changePoint(i, p->getX() + x, p->getY() + y);
-        }
-    } else if (Line* line = dynamic_cast<Line*>(shape)) {
-        Point p2 = line->getP2();
-        line->setP2(Point(p2.getX() + x, p2.getY() + y));
-
-        if (RectangleC* rect = dynamic_cast<RectangleC*>(line)) {
-            Point p3 = rect->getP3();
-            Point p4 = rect->getP4();
-
-            rect->setP3(Point(p3.getX() + x, p3.getY() + y));
-            rect->setP4(Point(p4.getX() + x, p4.getY() + y));
-        }
-    }
-}
-
 /**
  * @param d If true - rotate to the left, false - right.
  * @param shape
@@ -284,12 +260,13 @@ void rotate(bool d, Shape *shape) {
         factor = 1;
     }
 
+    Point pivo = shape->getPivo();
+
     if (Curve* curve = dynamic_cast<Curve*>(shape)) {
         vector<Point*> pts = curve->getControlPts();
-        Point *p1 = pts[0];
 
         // leva para a origem
-        translate(shape, -p1->getX(), -p1->getY());
+        shape->translate(-pivo.getX(), -pivo.getY());
 
         for (unsigned int i = 1; i < pts.size(); i++) {
             Point p = Point(pts[i]->getX(), pts[i]->getY());
@@ -301,7 +278,7 @@ void rotate(bool d, Shape *shape) {
         }
 
         // leva de volta
-        translate(shape, p1->getX(), p1->getY());
+        shape->translate(pivo.getX(), pivo.getY());
 
         // faz a mesma coisa para as copias
         if (Curve* curveCopy = dynamic_cast<Curve*>(shapeCopy)) {
@@ -313,9 +290,7 @@ void rotate(bool d, Shape *shape) {
         }
 
     } else if (Line* line = dynamic_cast<Line*>(shape)) {
-        Point p1 = line->getP1(); // pivo
-        // leva para a origem
-        translate(shape, -p1.getX(), -p1.getY());
+        shape->translate(-pivo.getX(), -pivo.getY());
 
         vector<Point> shapePoints;
         shapePoints.push_back(line->getP2());
@@ -341,8 +316,7 @@ void rotate(bool d, Shape *shape) {
             rect->setP4(shapePoints[2]);
         }
 
-        // leva de volta
-        translate(shape, p1.getX(), p1.getY());
+        shape->translate(pivo.getX(), pivo.getY());
 
         // faz a mesma coisa para as copias
         if (Line* lineCopy = dynamic_cast<Line*>(shapeCopy)) {

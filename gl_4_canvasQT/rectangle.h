@@ -49,6 +49,8 @@ public:
     void draw(Canvas2D *canvas);
 
     void drawSelectionBox(Canvas2D *canvas);
+
+    void translate(int x, int y);
 };
 
 #endif // RECTANGLE_H
