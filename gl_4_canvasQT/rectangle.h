@@ -24,12 +24,26 @@ public:
      */
     RectangleC(Point p1, Point p2);
 
+    /**
+     * Sets the point 3.
+     * @param p3 Point to set.
+     */
     void setP3(Point p3);
 
+    /**
+     * Sets the point 4.
+     * @param p4 Point to set.
+     */
     void setP4(Point p4);
 
+    /**
+     * @return The point 3.
+     */
     Point getP3();
 
+    /**
+     * @return The point 4.
+     */
     Point getP4();
 
     void draw(Canvas2D *canvas);

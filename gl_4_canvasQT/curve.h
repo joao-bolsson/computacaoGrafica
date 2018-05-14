@@ -18,10 +18,21 @@ class Curve : public Shape {
 private:
     vector<Point*> controlPoints;
 public:
+
+    /**
+     * Creates a curve.
+     */
     Curve();
 
+    /**
+     * @return The curve control points.
+     */
     vector<Point*> getControlPts();
 
+    /**
+     * Adds a control point.
+     * @param p Control point to add.
+     */
     void addPoint(Point *p);
 
     void draw(Canvas2D *canvas);
