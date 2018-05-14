@@ -158,8 +158,11 @@ void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
 
             if (!shapeCp) {
                 if (RectangleC* rect = dynamic_cast<RectangleC*>(line)) {
-                    shapeCopy = new RectangleC(rect->getP1(), rect->getP2());
-                    shapeCp = new RectangleC(rect->getP1(), rect->getP2());
+                    RectangleC *rectCp = new RectangleC(rect->getP1(), rect->getP2());
+                    rectCp->setP3(rect->getP3());
+                    rectCp->setP4(rect->getP4());
+                    shapeCopy = rectCp;
+                    shapeCp = rectCp;
                 } else {
                     shapeCopy = new Line(line->getP1(), line->getP2());
                     shapeCp = new Line(line->getP1(), line->getP2());
@@ -283,6 +286,13 @@ void rotate(bool d, Shape *shape) {
         if (Line* lineCopy = dynamic_cast<Line*>(shapeCopy)) {
             lineCopy->setP2(line->getP2());
         }
+
+        if (RectangleC* rectCopy = dynamic_cast<RectangleC*>(shapeCopy)) {
+            if (RectangleC* rect = dynamic_cast<RectangleC*>(line)) {
+                rectCopy->setP3(rect->getP3());
+                rectCopy->setP4(rect->getP4());
+            }
+        }
     }
 }
 
@@ -328,14 +338,14 @@ void Canvas2D::btnOpen() {
         switch(id) {
         case LINE: {
             int p[4];
-            file.read(reinterpret_cast<char *>(p), sizeof(p));
+            file.read(reinterpret_cast<char *>(p), 4 * sizeof(int));
 
             shape = new Line(Point(p[0], p[1]), Point(p[2], p[3]));
             break;
         }
         case RECTANGLE: {
             int p[8];
-            file.read(reinterpret_cast<char *>(p), sizeof(p));
+            file.read(reinterpret_cast<char *>(p), 8 * sizeof(int));
 
             RectangleC *rect = new RectangleC(Point(p[0], p[1]), Point(p[2], p[3]));
             rect->setP3(Point(p[4], p[5]));
