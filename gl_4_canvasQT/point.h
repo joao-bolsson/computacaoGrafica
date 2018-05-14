@@ -33,6 +33,18 @@ public:
     int getX() const;
 
     /**
+     * Sets the x coordinate.
+     * @param x coordinate to sets.
+     */
+    void setX(int x);
+
+    /**
+     * Sets the y coordinate.
+     * @param y coordinate to sets.
+     */
+    void setY(int y);
+
+    /**
      * @return The y coordinate.
      */
     int getY() const;

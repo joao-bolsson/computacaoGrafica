@@ -152,7 +152,34 @@ void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
     } else {
         // move figura selecionada
 
-        if (Line* line = dynamic_cast<Line*>(selectedShape)) {
+        if (Curve *curve = dynamic_cast<Curve*>(selectedShape)) {
+            qDebug("move curve");
+            Curve* shapeCp = dynamic_cast<Curve*>(shapeCopy);
+
+            if (!shapeCp) {
+                Curve *curveCp = new Curve();
+
+                vector<Point*> ctrlPts = curve->getControlPts();
+                for (unsigned int i = 0; i < ctrlPts.size(); i++) {
+                    Point *p = new Point(ctrlPts[i]->getX(), ctrlPts[i]->getY());
+                    curveCp->addPoint(p);
+                }
+
+                shapeCopy = curveCp;
+                shapeCp = curveCp;
+            }
+
+            int width = mousePointPressed.getX() - mousePoint.getX();
+            int height = mousePointPressed.getY() - mousePoint.getY();
+
+            if (Curve* curveCopy = dynamic_cast<Curve*>(shapeCp)) {
+                vector<Point*> ptsCp = curveCopy->getControlPts();
+                for (unsigned int i = 0; i < ptsCp.size(); i++) {
+                    Point *p = ptsCp[i];
+                    curve->changePoint(i, p->getX() - width, p->getY() - height);
+                }
+            }
+        } else if (Line* line = dynamic_cast<Line*>(selectedShape)) {
 
             Line* shapeCp = dynamic_cast<Line*>(shapeCopy);
 

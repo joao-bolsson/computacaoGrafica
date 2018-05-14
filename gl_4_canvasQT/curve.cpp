@@ -19,6 +19,13 @@ vector<Point*> Curve::getControlPts() {
     return controlPoints;
 }
 
+void Curve::changePoint(int i, int x, int y) {
+    Point *p = controlPoints[i];
+
+    p->setX(x);
+    p->setY(y);
+}
+
 void Curve::draw(Canvas2D *canvas) {
     canvas->color(1, 0, 0);
 

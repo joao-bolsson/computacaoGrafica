@@ -35,6 +35,14 @@ public:
      */
     void addPoint(Point *p);
 
+    /**
+     * Changes a control point.
+     * @param i Control point number.
+     * @param x New x coordinate.
+     * @param y New y coordinate
+     */
+    void changePoint(int i, int x, int y);
+
     void draw(Canvas2D *canvas);
 
     void drawSelectionBox(Canvas2D *canvas);
