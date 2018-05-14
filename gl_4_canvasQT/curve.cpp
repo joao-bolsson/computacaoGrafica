@@ -17,11 +17,14 @@ void Curve::addPoint(Point *p) {
 
 void Curve::draw(Canvas2D *canvas) {
     canvas->color(1, 0, 0);
-    // desenha os pontos de controle
-    for (unsigned int i = 0; i < controlPoints.size(); i++) {
-        Point *p = controlPoints[i];
-        canvas->circleFill(p->getX(), p->getY(), 5, 10);
-    }
+
+    unsigned int lastIndex = controlPoints.size() - 1;
+    Point *first = controlPoints[0];
+    Point *last = controlPoints[lastIndex];
+
+    // desenha o primeiro e ultimo ponto de controle
+    canvas->circleFill(first->getX(), first->getY(), r, div);
+    canvas->circleFill(last->getX(), last->getY(), r, div);
 
     // desenha a curva
     for(float t = 0; t <= 1; t+= 0.001){
@@ -32,7 +35,11 @@ void Curve::draw(Canvas2D *canvas) {
 }
 
 void Curve::drawSelectionBox(Canvas2D *canvas) {
-    // TODO
+    // desenha os pontos de controle
+    for (unsigned int i = 0; i < controlPoints.size(); i++) {
+        Point *p = controlPoints[i];
+        canvas->circleFill(p->getX(), p->getY(), 5, 10);
+    }
 }
 
 bool Curve::isSelected(Point x) {

@@ -28,6 +28,10 @@ public:
 
     void setP4(Point p4);
 
+    Point getP3();
+
+    Point getP4();
+
     void draw(Canvas2D *canvas);
 
     void drawSelectionBox(Canvas2D *canvas);

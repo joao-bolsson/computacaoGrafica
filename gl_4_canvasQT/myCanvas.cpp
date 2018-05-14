@@ -173,16 +173,6 @@ void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
 
             line->setP1(Point(p1.getX() - width, p1.getY() - height));
             line->setP2(Point(p2.getX() - width, p2.getY() - height));
-
-            if (RectangleC* rect = dynamic_cast<RectangleC*>(line)) {
-                p1 = line->getP1();
-                p2 = line->getP2();
-                short width = p1.getX() - p2.getX();
-                short height = p1.getY() - p2.getY();
-
-                rect->setP3(Point(p1.getX() - width, p1.getY()));
-                rect->setP4(Point(p1.getX(), p1.getY() - height));
-            }
         }
     }
 }
@@ -224,6 +214,14 @@ void translate(Shape *shape, int x, int y) {
     if (Line* line = dynamic_cast<Line*>(shape)) {
         Point p2 = line->getP2();
         line->setP2(Point(p2.getX() + x, p2.getY() + y));
+
+        if (RectangleC* rect = dynamic_cast<RectangleC*>(line)) {
+            Point p3 = rect->getP3();
+            Point p4 = rect->getP4();
+
+            rect->setP3(Point(p3.getX() + x, p3.getY() + y));
+            rect->setP4(Point(p4.getX() + x, p4.getY() + y));
+        }
     }
 }
 
@@ -237,20 +235,42 @@ void rotate(bool d, Shape *shape) {
         // leva para a origem
         translate(shape, -p1.getX(), -p1.getY());
 
-        Point p2 = line->getP2();
+        vector<Point> shapePoints;
+        shapePoints.push_back(line->getP2());
+
+        if (RectangleC* rect = dynamic_cast<RectangleC*>(line)) {
+            shapePoints.push_back(rect->getP3());
+            shapePoints.push_back(rect->getP4());
+        }
 
         int factor = -1;
         if (d) {
             factor = 1;
         }
 
-        double x = p2.getX() * cos(0.08) - factor * p2.getY() * sin(0.08);
-        double y = factor * p2.getX() * sin(0.08) + p2.getY() * cos(0.08);
+        for (unsigned int i = 0; i < shapePoints.size(); i++) {
+            Point p = shapePoints[i];
 
-        line->setP2(Point(x, y));
+            double x = p.getX() * cos(0.08) - factor * p.getY() * sin(0.08);
+            double y = factor * p.getX() * sin(0.08) + p.getY() * cos(0.08);
+
+            shapePoints[i] = Point(x, y);
+        }
+
+        line->setP2(shapePoints[0]);
+
+        if (RectangleC* rect = dynamic_cast<RectangleC*>(line)) {
+            rect->setP3(shapePoints[1]);
+            rect->setP4(shapePoints[2]);
+        }
 
         // leva de volta
         translate(shape, p1.getX(), p1.getY());
+
+        // faz a mesma coisa para as copias (pode mover objeto rotacionado, apenas linha)
+        if (Line* lineCopy = dynamic_cast<Line*>(shapeCopy)) {
+            lineCopy->setP2(line->getP2());
+        }
     }
 }
 

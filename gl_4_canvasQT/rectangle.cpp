@@ -23,6 +23,14 @@ void RectangleC::setP4(Point p4) {
     this->p4 = p4;
 }
 
+Point RectangleC::getP3() {
+    return p3;
+}
+
+Point RectangleC::getP4() {
+    return p4;
+}
+
 void RectangleC::draw(Canvas2D *canvas) {
     canvas->color(1, 0, 0);
 
