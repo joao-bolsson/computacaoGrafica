@@ -464,3 +464,16 @@ void Canvas2D::btnSave() {
     file.close();
 }
 
+void Canvas2D::btnDelete() {
+    if (selectedShape->getId() != SHAPE) {
+        for (unsigned int i = 0; i < shapes.size(); i++) {
+            if (shapes[i] == selectedShape) {
+                shapes.erase(shapes.begin() + i);
+                stopDrawing();
+                clearSelection();
+                return;
+            }
+        }
+    }
+}
+

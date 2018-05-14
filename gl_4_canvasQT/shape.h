@@ -12,6 +12,7 @@
 #include "glCanvas2d.h"
 #include "point.h"
 
+const byte SHAPE = 0;
 const byte LINE = 1;
 const byte RECTANGLE = 2;
 const byte CURVE = 3;

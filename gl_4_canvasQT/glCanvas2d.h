@@ -36,6 +36,7 @@ public slots:
     void btnCurve();
     void btnSave();
     void btnOpen();
+    void btnDelete();
 
 public:
     void resizeGL(int w, int h) Q_DECL_OVERRIDE;

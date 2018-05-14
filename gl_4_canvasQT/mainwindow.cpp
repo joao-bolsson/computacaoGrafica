@@ -26,15 +26,13 @@ MainWindow::MainWindow()
     gridTools->setSpacing(6);
     gridTools->setContentsMargins(11, 11, 11, 11);
 
-    QPushButton *btnQuad = new QPushButton(boxTools);
     QPushButton *btnRectangle = new QPushButton(boxTools);
     QPushButton *btnLine = new QPushButton(boxTools);
     QPushButton *btnCurve = new QPushButton(boxTools);
 
-    gridTools->addWidget(btnQuad, 0, 0, 1, 1);
-    gridTools->addWidget(btnRectangle, 0, 1, 1, 1);
-    gridTools->addWidget(btnLine, 0, 2, 1, 1);
-    gridTools->addWidget(btnCurve, 0, 3, 1, 1);
+    gridTools->addWidget(btnRectangle, 0, 0, 1, 1);
+    gridTools->addWidget(btnLine, 0, 1, 1, 1);
+    gridTools->addWidget(btnCurve, 0, 2, 1, 1);
 
     QGroupBox *boxRotation = new QGroupBox(this);
     QGridLayout *gridRotation = new QGridLayout(boxRotation);
@@ -55,13 +53,15 @@ MainWindow::MainWindow()
     QPushButton *btnClear = new QPushButton(boxOptions);
     QPushButton *btnOpen = new QPushButton(boxOptions);
     QPushButton *btnSave = new QPushButton(boxOptions);
+    QPushButton *btnDelete = new QPushButton(boxOptions);
 
     gridOptions->addWidget(btnClear, 0, 0, 1, 1);
     gridOptions->addWidget(btnOpen, 0, 1, 1, 1);
     gridOptions->addWidget(btnSave, 0, 2, 1, 1);
+    gridOptions->addWidget(btnDelete, 0, 3, 1, 1);
 
     boxTools->setTitle("Ferramentas");
-    btnQuad->setText("Quadrado");
+    btnDelete->setText("Excluir");
     btnRectangle->setText("Retângulo");
     btnLine->setText("Linha");
     btnCurve->setText("Curva");
@@ -104,4 +104,5 @@ MainWindow::MainWindow()
     connect(btnCurve, SIGNAL(pressed()), canvas, SLOT(btnCurve()));
     connect(btnSave, SIGNAL(pressed()), canvas, SLOT(btnSave()));
     connect(btnOpen, SIGNAL(pressed()), canvas, SLOT(btnOpen()));
+    connect(btnDelete, SIGNAL(pressed()), canvas, SLOT(btnDelete()));
 }
