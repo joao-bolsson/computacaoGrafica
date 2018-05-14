@@ -18,7 +18,6 @@
 #include <math.h>
 #include <QMessageBox>
 #include <QWheelEvent>
-#include <list>
 #include "rectangle.h"
 #include "curve.h"
 
@@ -26,7 +25,7 @@ using namespace std;
 
 bool drawLine = false, drawRectangle = false, drawCurve = false;
 bool mouseMoved = false;
-list<Shape*> shapes;
+vector<Shape*> shapes;
 
 // pressed point on canvas
 vector<Point> points;
@@ -42,10 +41,8 @@ Point mousePointPressed = Point(-1, -1);
 // *******************************************************************************
 void Canvas2D::paintGL() //callback de desenho na canvas. Chamado pelo Timer definido em mainWindow.cpp
 {
-    list<Shape*>::iterator it;
-    for (it = shapes.begin(); it != shapes.end(); it++) {
-        Shape *shape = (*it);
-        shape->draw(this);
+    for (unsigned int i = 0; i < shapes.size(); i++) {
+        shapes[i]->draw(this);
     }
 
     demo->draw(this);
@@ -100,11 +97,9 @@ void Canvas2D::mousePressEvent(QMouseEvent *event) //callback de mouse
         selectedShape = new Shape();
         mousePointPressed = point;
 
-        list<Shape*>::iterator it;
-        for (it = shapes.begin(); it != shapes.end(); it++) {
-            Shape *shape = (*it);
-            if (shape->isSelected(mousePointPressed)) {
-                selectedShape = shape;
+        for (unsigned int i = 0; i < shapes.size(); i++) {
+            if (shapes[i]->isSelected(mousePointPressed)) {
+                selectedShape = shapes[i];
             }
         }
     }
@@ -308,4 +303,26 @@ void Canvas2D::btnCurve() {
     drawLine = false;
     drawRectangle = false;
     drawCurve = true;
+}
+
+void Canvas2D::btnSave() {
+    string rootPath = "", //Raiz do projeto
+           fName    = ""; //Nome do arquivo
+
+    string pathFile = rootPath + fName; //Caminho completo
+
+    QFile fSave(pathFile.c_str());
+    if (!fSave.open(QIODevice::WriteOnly)) {
+        //Erro na abertura do arquivo
+    } else {
+        //Sucesso na abertura do arquivo
+
+        QDataStream dataStreamWriter(&fSave);
+        dataStreamWriter.setByteOrder(QDataStream::LittleEndian);
+
+        unsigned short nrPrimitivas = (unsigned short) shapes.size();
+        dataStreamWriter << nrPrimitivas; // Escreve o total de primitivas
+
+        fSave.close();
+    }
 }

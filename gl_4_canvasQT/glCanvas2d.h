@@ -34,6 +34,7 @@ public slots:
     void btnRotateLeft();
     void btnRotateRight();
     void btnCurve();
+    void btnSave();
 
 public:
     void resizeGL(int w, int h) Q_DECL_OVERRIDE;

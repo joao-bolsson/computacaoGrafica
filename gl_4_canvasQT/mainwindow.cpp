@@ -102,4 +102,5 @@ MainWindow::MainWindow()
     connect(rotationLeft, SIGNAL(pressed()), canvas, SLOT(btnRotateLeft()));
     connect(rotationRight, SIGNAL(pressed()), canvas, SLOT(btnRotateRight()));
     connect(btnCurve, SIGNAL(pressed()), canvas, SLOT(btnCurve()));
+    connect(btnSave, SIGNAL(pressed()), canvas, SLOT(btnSave()));
 }
