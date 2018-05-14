@@ -307,93 +307,110 @@ void Canvas2D::btnCurve() {
     drawCurve = true;
 }
 
+string filePath = "./teste.jv";
+fstream file;
+
+void Canvas2D::btnOpen() {
+    file.open(filePath, ios::in | ios::binary);
+
+        if (!file) exit(2);
+
+        unsigned int size;
+        file.read(reinterpret_cast<char *>(&size), sizeof(size));
+
+        qDebug("Shapes: %d", size);
+
+//        signed short v[size];
+
+//        file.read(reinterpret_cast<char *>(v), sizeof(v));
+        file.close();
+
+//        vector<short> signals;
+
+//        for (auto a : v) {
+//            cout << a << endl;
+//            signals.push_back(a);
+//        }
+}
+
 void Canvas2D::btnSave() {
-    QMessageBox* msg = new QMessageBox(this);
-    string rootPath = "", //Raiz do projeto
-           fName    = "teste.jv"; //Nome do arquivo
+    auto size = (unsigned int) shapes.size();
+    file.open(filePath, ios::out | ios::binary);
 
-    string pathFile = rootPath + fName; //Caminho completo
+    if (!file) exit(1);
 
-    QFile fSave(pathFile.c_str());
-    if (!fSave.open(QIODevice::WriteOnly)) {
-        msg->setText("Erro na leitura do arquivo");
-    } else {
-        //Sucesso na abertura do arquivo
+    // grava o número de shapes
+    file.write(reinterpret_cast<char *>(&size), sizeof(size));
 
-        QDataStream out(&fSave);
-        out.setByteOrder(QDataStream::LittleEndian);
+    for (unsigned int i = 0; i < shapes.size(); i++) {
+        Shape *shape = shapes[i];
 
-        unsigned int shapesSize = shapes.size();
-        out << (qint32)shapesSize;
+        // grava o id da shape
+        byte id = shape->getId();
+        file.write(reinterpret_cast<char *>(&id), sizeof(id));
 
-        for (unsigned int i = 0; i < shapes.size(); i++) {
-            Shape *shape = shapes[i];
+        switch(id) {
+        case LINE: {
+            Line* line = dynamic_cast<Line*>(shape);
 
-            out << (qint8)shape->getId();
+            int p[4];
 
-            switch(shape->getId()) {
-            case LINE: {
-                Line* line = dynamic_cast<Line*>(shape);
+            p[0] = line->getP1().getX();
+            p[1] = line->getP1().getY();
+            p[2] = line->getP2().getX();
+            p[3] = line->getP1().getX();
 
-                // escreve p1(x,y) e p2(x,y)
-//                out << line->getP1().getX();
-//                out << line->getP1().getY();
-//                out << line->getP2().getX();
-//                out << line->getP2().getY();
+            file.write(reinterpret_cast<char *>(p), 4 * sizeof(int));
+            break;
+        }
+        case RECTANGLE: {
+            RectangleC* rect = dynamic_cast<RectangleC*>(shape);
 
-                break;
+            // escreve os 4 pontos do retangulo
+
+            int p[8];
+            p[0] = rect->getP1().getX();
+            p[1] = rect->getP1().getY();
+
+            p[2] = rect->getP2().getX();
+            p[3] = rect->getP2().getY();
+
+            p[4] = rect->getP3().getX();
+            p[5] = rect->getP3().getY();
+
+            p[6] = rect->getP4().getX();
+            p[7] = rect->getP4().getY();
+
+            file.write(reinterpret_cast<char *>(p), 8 * sizeof(int));
+            break;
+        }
+        case CURVE: {
+            Curve* curve = dynamic_cast<Curve*>(shape);
+
+            vector<Point*> ctrlPoints = curve->getControlPts();
+            // numero de pontos de controle
+            unsigned int sizeCtrl = ctrlPoints.size();
+
+            file.write(reinterpret_cast<char *>(&sizeCtrl), sizeof(sizeCtrl));
+
+            int pAux[sizeCtrl * 2];
+            int index = 0;
+            // insere pontos de controle
+            for (unsigned int j = 0; j < ctrlPoints.size(); j++) {
+                Point *p = ctrlPoints[j];
+
+                pAux[index] = p->getX();
+                pAux[++index] = p->getY();
+                index++;
             }
-            case RECTANGLE: {
-                RectangleC* rect = dynamic_cast<RectangleC*>(shape);
-
-                // escreve os 4 pontos do retangulo
-//                out << rect->getP1().getX();
-//                out << rect->getP1().getY();
-
-//                out << rect->getP2().getX();
-//                out << rect->getP2().getY();
-
-//                out << rect->getP3().getX();
-//                out << rect->getP3().getY();
-
-//                out << rect->getP4().getX();
-//                out << rect->getP4().getY();
-                // Escrever os 4 pontos ao inves de 2 facilita se o rect tiver rotacionado (ainda nao esta implementada a rotacao no rect).
-                break;
-            }
-
-            case CURVE: {
-                Curve* curve = dynamic_cast<Curve*>(shape);
-
-//                vector<Point*> ctrlPoints = curve->getControlPts();
-//                // numero de pontos de controle
-//                out << ctrlPoints.size();
-
-//                // insere pontos de controle
-//                for (unsigned int j = 0; j < ctrlPoints.size(); j++) {
-//                    Point *p = ctrlPoints[j];
-
-//                    out << p->getX();
-//                    out << p->getY();
-//                }
-                break;
-            }
-
-            default: { break; }
-            }
-
+            file.write(reinterpret_cast<char *>(pAux), sizeCtrl * 2 * sizeof(int));
+            break;
+        }
         }
 
-        fSave.close();
-        msg->setText("Salvo!");
-
-        QFile file(pathFile.c_str());
-        file.open(QIODevice::ReadOnly);
-        QDataStream in(&file);    // read the data serialized from the file
-        unsigned int a;
-        in >> a;
-
-        qDebug("size: %d", a);
     }
-    msg->show();
+
+    file.flush();
+    file.close();
 }
+
