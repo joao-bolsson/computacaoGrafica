@@ -46,8 +46,34 @@ void Curve::drawSelectionBox(Canvas2D *canvas) {
     }
 }
 
-bool Curve::isSelected(Point x) {
-    // TODO
-    return false;
+bool Curve::isSelected(Point point) {
+    int left = 0, right = 0, top = 0, bottom = 0;
+
+    // varre os pontos de controle para encontrar as extremidades
+    for (unsigned int i = 0; i < controlPoints.size(); i++) {
+        Point *p = controlPoints[i];
+
+        int x = p->getX();
+        int y = p->getY();
+
+        if (x < left) {
+            left = x;
+        }
+
+        if (x > right) {
+            right = x;
+        }
+
+        if (y < bottom) {
+            bottom = y;
+        }
+
+        if (y > top) {
+            top = y;
+        }
+    }
+
+    return (point.getX() >= left && point.getX() <= right
+            && point.getY() >= bottom && point.getY() <= top);
 }
 
