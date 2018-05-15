@@ -83,3 +83,11 @@ void RectangleC::rotate(bool d) {
     p3 = shapePoints[1];
     p4 = shapePoints[2];
 }
+
+Shape* RectangleC::copy() {
+    RectangleC *rect = new RectangleC(p1, p2);
+    rect->setP3(p3);
+    rect->setP4(p4);
+
+    return rect;
+}

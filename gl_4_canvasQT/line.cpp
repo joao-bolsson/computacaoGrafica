@@ -77,3 +77,7 @@ void Line::rotate(bool d) {
 
     p2 = Point(x, y);
 }
+
+Shape* Line::copy() {
+    return new Line(p1, p2);
+}

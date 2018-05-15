@@ -53,6 +53,8 @@ public:
     void translate(int x, int y);
 
     void rotate(bool d);
+
+    Shape* copy();
 };
 
 #endif // RECTANGLE_H

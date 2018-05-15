@@ -116,3 +116,15 @@ void Curve::rotate(bool d) {
     }
 }
 
+Shape* Curve::copy() {
+    Curve *curve = new Curve();
+
+    // adiciona pontos de controle
+    for (unsigned int i = 0; i < controlPoints.size(); i++) {
+        Point *p = new Point(controlPoints[i]->getX(), controlPoints[i]->getY());
+
+        curve->addPoint(p);
+    }
+    return curve;
+}
+

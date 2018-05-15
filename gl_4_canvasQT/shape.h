@@ -71,6 +71,11 @@ public:
      * @param d If true - rotate to the left, false - right.
      */
     virtual void rotate(bool d);
+
+    /**
+     * @return A copy of this shape.
+     */
+    virtual Shape* copy();
 };
 
 #endif // SHAPE_H

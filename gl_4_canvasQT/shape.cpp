@@ -31,3 +31,7 @@ void Shape::translate(int x, int y) {
 void Shape::rotate(bool d) {
     // empty
 }
+
+Shape* Shape::copy() {
+    return new Shape();
+}
