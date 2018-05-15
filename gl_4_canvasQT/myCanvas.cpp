@@ -152,21 +152,16 @@ void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
     } else {
         // move figura selecionada
 
+        // shapeCopy é feita com base na shape selecionada onde o mouse foi clicado
+        // shapeCp é usada como auxiliar para fazer o calculo de translacao
+        // shapeCopy soh eh sobrescrito quando o mouse for largado
+        if (shapeCopy->getId() == SHAPE) {
+            Shape *cp = selectedShape->copy();
+            shapeCopy = cp;
+        }
+
         if (Curve *curve = dynamic_cast<Curve*>(selectedShape)) {
             Curve* shapeCp = dynamic_cast<Curve*>(shapeCopy);
-
-            if (!shapeCp) {
-                Curve *curveCp = new Curve();
-
-                vector<Point*> ctrlPts = curve->getControlPts();
-                for (unsigned int i = 0; i < ctrlPts.size(); i++) {
-                    Point *p = new Point(ctrlPts[i]->getX(), ctrlPts[i]->getY());
-                    curveCp->addPoint(p);
-                }
-
-                shapeCopy = curveCp;
-                shapeCp = curveCp;
-            }
 
             int width = mousePointPressed.getX() - mousePoint.getX();
             int height = mousePointPressed.getY() - mousePoint.getY();
@@ -179,23 +174,7 @@ void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
                 }
             }
         } else if (Line* line = dynamic_cast<Line*>(selectedShape)) {
-
             Line* shapeCp = dynamic_cast<Line*>(shapeCopy);
-
-            if (!shapeCp) {
-                if (RectangleC* rect = dynamic_cast<RectangleC*>(line)) {
-                    RectangleC *rectCp = new RectangleC(rect->getP1(), rect->getP2());
-                    rectCp->setP3(rect->getP3());
-                    rectCp->setP4(rect->getP4());
-                    shapeCopy = rectCp;
-                    shapeCp = rectCp;
-                } else {
-                    Line *lineCp = new Line(line->getP1(), line->getP2());
-
-                    shapeCopy = lineCp;
-                    shapeCp = lineCp;
-                }
-            }
 
             Point p1 = shapeCp->getP1();
             Point p2 = shapeCp->getP2();
