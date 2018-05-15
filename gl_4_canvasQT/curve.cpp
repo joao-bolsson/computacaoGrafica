@@ -61,7 +61,7 @@ void Curve::drawSelectionBox(Canvas2D *canvas) {
 }
 
 bool Curve::isSelected(Point point) {
-    int left = 0, right = 0, top = 0, bottom = 0;
+    int left = 20000, right = 0, top = 0, bottom = 2000000;
 
     // varre os pontos de controle para encontrar as extremidades
     for (unsigned int i = 0; i < controlPoints.size(); i++) {
