@@ -38,6 +38,11 @@ Shape* shapeCopy = new Shape();
 
 Point mousePointPressed = Point(-1, -1);
 
+Point selectedPointCopy = Point(-1, -1);
+
+// index do ponto de controle da curva que esta sendo editado -2: nenhum sendo editado
+int index = -2;
+
 // *******************************************************************************
 //Coloque seu codigo aqui, usando as funcoes da Canvas2D defindas na classe Canvas2D (arquivo glCanvas2d.h).
 // *******************************************************************************
@@ -73,6 +78,8 @@ void stopDrawing() {
     drawCurve = false;
     demo = new Shape();
     shapeCopy = new Shape();
+    selectedPointCopy = Point(-1, -1);
+    index = -2;
 }
 
 void Canvas2D::mousePressEvent(QMouseEvent *event) //callback de mouse
@@ -110,11 +117,15 @@ void Canvas2D::mousePressEvent(QMouseEvent *event) //callback de mouse
 void clearSelection() {
     mousePointPressed = Point(-1, -1);
     selectedShape = new Shape();
+    selectedPointCopy = Point(-1, -1);
+    index = -2;
 }
 
 void Canvas2D::mouseReleaseEvent(QMouseEvent *event) //callback de mouse
 {
     shapeCopy = new Shape();
+    selectedPointCopy = Point(-1, -1);
+    index = -2;
     if (!mouseMoved && !drawCurve) {
         stopDrawing();
     }
@@ -166,11 +177,29 @@ void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
             int width = mousePointPressed.getX() - mousePoint.getX();
             int height = mousePointPressed.getY() - mousePoint.getY();
 
-            if (Curve* curveCopy = dynamic_cast<Curve*>(shapeCp)) {
-                vector<Point*> ptsCp = curveCopy->getControlPts();
-                for (unsigned int i = 0; i < ptsCp.size(); i++) {
-                    Point *p = ptsCp[i];
-                    curve->changePoint(i, p->getX() - width, p->getY() - height);
+            // verifica se nao ta editando um ponto de control
+
+            if (index == -2) {
+                // verifica apenas se nao tiver editando um ponto de controle
+                index = curve->isSelectedPointCtrl(mousePointPressed);
+            }
+
+            if (index != -1) {
+                // move ponto de controle
+                if (selectedPointCopy.getX() == -1 && selectedPointCopy.getY() == -1) {
+                    Point *p = curve->getControlPts()[index];
+
+                    selectedPointCopy = Point(p->getX(), p->getY());
+                }
+
+                curve->changePoint(index, selectedPointCopy.getX() - width, selectedPointCopy.getY() - height);
+            } else {
+                if (Curve* curveCopy = dynamic_cast<Curve*>(shapeCp)) {
+                    vector<Point*> ptsCp = curveCopy->getControlPts();
+                    for (unsigned int i = 0; i < ptsCp.size(); i++) {
+                        Point *p = ptsCp[i];
+                        curve->changePoint(i, p->getX() - width, p->getY() - height);
+                    }
                 }
             }
         } else if (Line* line = dynamic_cast<Line*>(selectedShape)) {

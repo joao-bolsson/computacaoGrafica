@@ -128,3 +128,23 @@ Shape* Curve::copy() {
     return curve;
 }
 
+int Curve::isSelectedPointCtrl(Point point) {
+    for (unsigned int i = 0; i < controlPoints.size(); i++) {
+        Point *p = controlPoints[i];
+
+        int x1 = p->getX() - r;
+        int y1 = p->getY() + r;
+
+        int x2 = p->getX() + r;
+        int y2 = p->getY() - r;
+
+        int x = point.getX();
+        int y = point.getY();
+
+        if (x >= x1 && x <= x2 && y >= y2 && y <= y1) {
+            return i;
+        }
+    }
+    return -1;
+}
+

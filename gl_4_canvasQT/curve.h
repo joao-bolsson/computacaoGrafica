@@ -53,6 +53,12 @@ public:
     void rotate(bool d);
 
     Shape* copy();
+
+    /**
+     * @param p Selected point.
+     * @return if p is  a control point - index of control point, else : -1.
+     */
+    int isSelectedPointCtrl(Point point);
 };
 
 #endif // CURVE_H
