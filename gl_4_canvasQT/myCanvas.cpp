@@ -190,8 +190,10 @@ void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
                     shapeCopy = rectCp;
                     shapeCp = rectCp;
                 } else {
-                    shapeCopy = new Line(line->getP1(), line->getP2());
-                    shapeCp = new Line(line->getP1(), line->getP2());
+                    Line *lineCp = new Line(line->getP1(), line->getP2());
+
+                    shapeCopy = lineCp;
+                    shapeCp = lineCp;
                 }
             }
 
@@ -255,51 +257,18 @@ void Canvas2D::btnRectangle() {
  * @param shape
  */
 void rotate(bool d, Shape *shape) {
-    int factor = -1;
-    if (d) {
-        factor = 1;
-    }
-
     Point pivo = shape->getPivo();
 
-    if (Curve* curve = dynamic_cast<Curve*>(shape)) {
-        // leva para a origem
-        shape->translate(-pivo.getX(), -pivo.getY());
+    // leva para a origem
+    shape->translate(-pivo.getX(), -pivo.getY());
 
-        // rotaciona
-        shape->rotate(d);
+    // rotaciona
+    shape->rotate(d);
 
-        // leva de volta
-        shape->translate(pivo.getX(), pivo.getY());
+    // leva de volta
+    shape->translate(pivo.getX(), pivo.getY());
 
-        // faz a mesma coisa para as copias
-        if (Curve* curveCopy = dynamic_cast<Curve*>(shapeCopy)) {
-            vector<Point*> ctrlPts = curve->getControlPts();
-            for (unsigned int i = 0; i < ctrlPts.size(); i++) {
-                Point *p = ctrlPts[i];
-                curveCopy->changePoint(i, p->getX(), p->getY());
-            }
-        }
-
-    } else if (Line* line = dynamic_cast<Line*>(shape)) {
-        shape->translate(-pivo.getX(), -pivo.getY());
-
-        shape->rotate(d);
-
-        shape->translate(pivo.getX(), pivo.getY());
-
-        // faz a mesma coisa para as copias
-        if (Line* lineCopy = dynamic_cast<Line*>(shapeCopy)) {
-            lineCopy->setP2(line->getP2());
-        }
-
-        if (RectangleC* rectCopy = dynamic_cast<RectangleC*>(shapeCopy)) {
-            if (RectangleC* rect = dynamic_cast<RectangleC*>(line)) {
-                rectCopy->setP3(rect->getP3());
-                rectCopy->setP4(rect->getP4());
-            }
-        }
-    }
+    shapeCopy = shape->copy();
 }
 
 void Canvas2D::btnRotateLeft() {
