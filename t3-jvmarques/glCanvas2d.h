@@ -30,7 +30,7 @@ public:
 public slots:
     void showMsg(); //metodo chamado quando o botao eh pressionado
 
-protected:
+public:
     void resizeGL(int w, int h) Q_DECL_OVERRIDE;
     void initializeGL() Q_DECL_OVERRIDE;
     void paintGL() Q_DECL_OVERRIDE;

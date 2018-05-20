@@ -18,15 +18,18 @@
 #include <math.h>
 #include <QMessageBox>
 #include <QWheelEvent>
+#include <vector>
+#include "cube.h"
 
-float global = 0;
+using namespace std;
 
-// *******************************************************************************
-//Coloque seu codigo aqui, usando as funcoes da Canvas2D defindas na classe Canvas2D (arquivo glCanvas2d.h).
-// *******************************************************************************
+vector<Solid*> solids;
+
 void Canvas2D::paintGL() //callback de desenho na canvas. Chamado pelo Timer definido em mainWindow.cpp
 {
-    global-= 0.01;
+    for (auto s : solids) {
+        s->draw(this);
+    }
 }
 
 
@@ -40,19 +43,20 @@ void Canvas2D::mousePressEvent(QMouseEvent *event) //callback de mouse
     //seta o foco para a canvas2D, desse modo pode-se pegar eventos de teclado dentro da canvas.
     setFocus();
 
-    qDebug("\nMouse Press: %d %d", event->x(), event->y() );
-    if(event->buttons() == Qt::RightButton)
-        qDebug( "Only right button" );
+    Point *mousePoint = new Point(event->x(), (event->y() - height()) * -1);
+
+    Cube *cube = new Cube(50, mousePoint);
+    solids.push_back(cube);
 }
 
 void Canvas2D::mouseReleaseEvent(QMouseEvent *event) //callback de mouse
 {
-    qDebug("\nMouse Release: %d %d", event->x(), event->y());
+    // empty
 }
 
 void Canvas2D::mouseMoveEvent(QMouseEvent * event) //callback de mouse
 {
-    qDebug("\nMouse Move: %d %d", event->x(), event->y());
+    // empty
 }
 
 //callback para botao definido na mainWindow.
@@ -65,5 +69,5 @@ void Canvas2D::showMsg()
 
 void Canvas2D::keyPressEvent(QKeyEvent* event)
 {
-    qDebug("\nTecla pessionada  %d", event->key() );
+    // empty
 }
