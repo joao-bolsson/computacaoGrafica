@@ -45,7 +45,7 @@ void Canvas2D::mousePressEvent(QMouseEvent *event) //callback de mouse
 
     Point *mousePoint = new Point(event->x(), (event->y() - height()) * -1);
 
-    Cube *cube = new Cube(50, mousePoint);
+    Cube *cube = new Cube(100, mousePoint);
     solids.push_back(cube);
 }
 
