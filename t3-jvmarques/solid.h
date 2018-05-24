@@ -9,14 +9,24 @@
 #define SOLID_H
 
 #include "glCanvas2d.h"
+#include <vector>
+#include "point.h"
 
+using namespace std;
 class Solid {
+protected:
+    vector<Point*> points;
 public:
 
     /**
      * Default construct.
      */
     Solid();
+
+    /**
+     * @return The points that defines this solid.
+     */
+    vector<Point*> getPoints();
 
     /**
      * Draw the solid object.

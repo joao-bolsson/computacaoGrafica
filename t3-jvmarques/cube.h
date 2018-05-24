@@ -9,7 +9,6 @@
 #define CUBE_H
 
 #include "solid.h"
-#include "point.h"
 
 class Cube: public Solid {
 

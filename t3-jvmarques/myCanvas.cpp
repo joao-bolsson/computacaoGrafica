@@ -18,35 +18,28 @@
 #include <math.h>
 #include <QMessageBox>
 #include <QWheelEvent>
-#include <vector>
 #include "cube.h"
 
 using namespace std;
 
 vector<Solid*> solids;
 
+Cube *cube = new Cube(200, new Point(100, 100));
+
 void Canvas2D::paintGL() //callback de desenho na canvas. Chamado pelo Timer definido em mainWindow.cpp
 {
-    for (auto s : solids) {
-        s->draw(this);
-    }
+    cube->draw(this);
 }
-
 
 void Canvas2D::wheelEvent(QWheelEvent *event) //callback de mouse
 {
-    qDebug("Mouse Wheel event %d", event->delta() );
+    // empty
 }
 
 void Canvas2D::mousePressEvent(QMouseEvent *event) //callback de mouse
 {
     //seta o foco para a canvas2D, desse modo pode-se pegar eventos de teclado dentro da canvas.
     setFocus();
-
-    Point *mousePoint = new Point(event->x(), (event->y() - height()) * -1);
-
-    Cube *cube = new Cube(100, mousePoint);
-    solids.push_back(cube);
 }
 
 void Canvas2D::mouseReleaseEvent(QMouseEvent *event) //callback de mouse

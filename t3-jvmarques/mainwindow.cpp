@@ -21,12 +21,6 @@ MainWindow::MainWindow()
     //cria os Layouts
     //****************************************************
 
-    QHBoxLayout *horizontalLayout = new QHBoxLayout;
-
-    QGroupBox *updateGroupBox = new QGroupBox(this);
-    updateGroupBox->setLayout(horizontalLayout);
-    updateGroupBox->setTitle("Ferramentas");
-
     QGridLayout *gridCanvas = new QGridLayout;
     gridCanvas->addWidget(canvas, 0, 0, 1, 1);
 
@@ -35,8 +29,7 @@ MainWindow::MainWindow()
     boxCanvas->setTitle("Canvas");
 
     QGridLayout *gridLayout = new QGridLayout;
-    gridLayout->addWidget(boxCanvas, 0, 0, 2, 1);
-    gridLayout->addWidget(updateGroupBox, 2, 0, 1, 1); //row, column, rowSpan, colSpan
+    gridLayout->addWidget(boxCanvas, 0, 0, 1, 1);
 
     QGroupBox * groupBox = new QGroupBox(this);
     groupBox->setLayout(gridLayout);
