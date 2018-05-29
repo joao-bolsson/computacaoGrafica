@@ -14,15 +14,15 @@ class Cube: public Solid {
 
 private:
     int l;
-    Point *p1;
+    Point *c;
 public:
 
     /**
      * Default construct.
      * @param l Cube side size.
-     * @param p1 First point.
+     * @param p1 Cube center point.
      */
-    Cube(int l, Point *p1);
+    Cube(int l, Point *c);
 
     void draw(Canvas2D *canvas);
 };

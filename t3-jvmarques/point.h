@@ -8,14 +8,16 @@
 #ifndef POINT_H
 #define POINT_H
 
+const short D = 100;
+
 class Point {
 private:
-    int x, y;
+    int x, y, z;
 
 public:
 
     /**
-     * Default point (0, 0).
+     * Default point (0, 0, 0).
      */
     Point();
 
@@ -24,8 +26,9 @@ public:
      *
      * @param x X coordinate.
      * @param y Y coordinate.
+     * @param z Z coordinate.
      */
-    Point(int x, int y);
+    Point(int x, int y, int z);
 
     /**
      * @return The x coordinate.
@@ -33,21 +36,24 @@ public:
     int getX() const;
 
     /**
-     * Sets the x coordinate.
-     * @param x coordinate to sets.
-     */
-    void setX(int x);
-
-    /**
-     * Sets the y coordinate.
-     * @param y coordinate to sets.
-     */
-    void setY(int y);
-
-    /**
      * @return The y coordinate.
      */
     int getY() const;
+
+    /**
+     * @return The x coordinate on 2d context.
+     */
+    int getX2d() const;
+
+    /**
+     * @return The y coordinate on 2d context.
+     */
+    int getY2d() const;
+
+    /**
+     * @return The z coordinate.
+     */
+    int getZ() const;
 };
 
 

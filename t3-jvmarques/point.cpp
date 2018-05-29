@@ -6,14 +6,14 @@
  */
 
 #include "point.h"
-
 Point::Point() {
-    Point(0, 0);
+    Point(0, 0, 0);
 }
 
-Point::Point(int x, int y) {
+Point::Point(int x, int y, int z) {
     this->x = x;
     this->y = y;
+    this->z = z;
 }
 
 int Point::getX() const {
@@ -24,10 +24,14 @@ int Point::getY() const {
     return y;
 }
 
-void Point::setX(int x) {
-    this->x = x;
+int Point::getZ() const {
+    return z;
 }
 
-void Point::setY(int y) {
-    this->y = y;
+int Point::getX2d() const {
+    return x / ((z/D) + 1);
+}
+
+int Point::getY2d() const {
+    return y / ((z/D) + 1);
 }
