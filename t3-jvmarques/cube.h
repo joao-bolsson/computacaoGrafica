@@ -14,7 +14,6 @@ class Cube: public Solid {
 
 private:
     int l;
-    Point *c;
 public:
 
     /**

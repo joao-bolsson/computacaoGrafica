@@ -1,8 +1,7 @@
 #include "cube.h"
 
-Cube::Cube(int l, Point *c) {
+Cube::Cube(int l, Point *c):Solid(c) {
     this->l = l;
-    this->c = c;
 
     // front face
     points.push_back(new Point(c->getX() - l/2, c->getY() + l/2, c->getZ() + l/2));

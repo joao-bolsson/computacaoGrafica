@@ -54,6 +54,40 @@ public:
      * @return The z coordinate.
      */
     int getZ() const;
+
+    /**
+     * Sets new x.
+     * @param x X to set.
+     */
+    void setX(int x);
+
+    /**
+     * Sets new y.
+     * @param y Y to set.
+     */
+    void setY(int y);
+
+    /**
+     * Sets new z.
+     * @param z Z to set.
+     */
+    void setZ(int z);
+
+    /**
+     * Translate the point.
+     * @param x Units to add to x coordinate.
+     * @param y Units to add to y coordinate.
+     * @param z Units to add to z coordinate.
+     */
+    void translate(int x, int y, int z);
+
+    /**
+     * Rotate the point.
+     * @param x Rotate factor on axis X.
+     * @param y Rotate factor on axis Y.
+     * @param z Rotate factor on axis Z.
+     */
+    void rotate(float x, float y, float z);
 };
 
 

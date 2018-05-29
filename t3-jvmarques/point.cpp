@@ -35,3 +35,25 @@ int Point::getX2d() const {
 int Point::getY2d() const {
     return y / ((z/D) + 1);
 }
+
+void Point::setX(int x) {
+    this->x = x;
+}
+
+void Point::setY(int y) {
+    this->y = y;
+}
+
+void Point::setZ(int z) {
+    this->z = z;
+}
+
+void Point::translate(int x, int y, int z) {
+    this->x += x;
+    this->y += y;
+    this->z += z;
+}
+
+void Point::rotate(float x, float y, float z) {
+    // todo
+}
