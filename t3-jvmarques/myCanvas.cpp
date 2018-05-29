@@ -62,5 +62,6 @@ void Canvas2D::showMsg()
 
 void Canvas2D::keyPressEvent(QKeyEvent* event)
 {
-    // empty
+    char key = (char) event->key();
+    cube->rotate(key);
 }

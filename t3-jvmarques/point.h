@@ -8,7 +8,14 @@
 #ifndef POINT_H
 #define POINT_H
 
+#include <iostream>
+#include <math.h>
+
 const short D = 100;
+const char X = 'X';
+const char Y = 'Y';
+const char Z = 'Z';
+const float ROTATE = 0.08;
 
 class Point {
 private:
@@ -83,11 +90,14 @@ public:
 
     /**
      * Rotate the point.
-     * @param x Rotate factor on axis X.
-     * @param y Rotate factor on axis Y.
-     * @param z Rotate factor on axis Z.
+     * @param axis Rotate axis.
      */
-    void rotate(float x, float y, float z);
+    void rotate(char axis);
+
+    /**
+     * @return A copy of this point.
+     */
+    Point copy();
 };
 
 

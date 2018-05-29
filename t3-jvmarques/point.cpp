@@ -54,6 +54,29 @@ void Point::translate(int x, int y, int z) {
     this->z += z;
 }
 
-void Point::rotate(float x, float y, float z) {
-    // todo
+void Point::rotate(char axis) {
+    // assumes that the points are already translated to the origin
+    switch (axis) {
+    case X:
+        y = y*cos(ROTATE) - z*sin(ROTATE);
+        z = y*sin(ROTATE) + z*cos(ROTATE);
+        break;
+
+    case Y:
+        x = x*cos(ROTATE) + z*sin(ROTATE);
+        z = -x*sin(ROTATE) + z*cos(ROTATE);
+        break;
+
+    case Z:
+        x = this->x*cos(ROTATE) - this->y*sin(ROTATE);
+        y = this->x*sin(ROTATE) + this->y*cos(ROTATE);
+        break;
+
+    default:
+        break;
+    }
+}
+
+Point Point::copy() {
+    return Point(x, y, z);
 }

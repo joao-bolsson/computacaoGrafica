@@ -48,11 +48,9 @@ public:
 
     /**
      * Rotate the solid.
-     * @param x Rotate factor on axis X.
-     * @param y Rotate factor on axis Y.
-     * @param z Rotate factor on axis Z.
+     * @param axis Axis to rotate.
      */
-    void rotate(float x, float y, float z);
+    void rotate(char axis);
 };
 
 #endif // SOLID_H
