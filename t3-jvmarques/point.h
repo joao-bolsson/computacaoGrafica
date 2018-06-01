@@ -19,7 +19,7 @@ const float ROTATE = 0.08;
 
 class Point {
 private:
-    int x, y, z;
+    int x, y, z, xcp, ycp, zcp, rotateX, rotateY, rotateZ;
 
 public:
 

@@ -14,6 +14,12 @@ Point::Point(int x, int y, int z) {
     this->x = x;
     this->y = y;
     this->z = z;
+    xcp = x;
+    ycp = y;
+    zcp = z;
+    rotateX = 0;
+    rotateY = 0;
+    rotateZ = 0;
 }
 
 int Point::getX() const {
@@ -29,11 +35,11 @@ int Point::getZ() const {
 }
 
 int Point::getX2d() const {
-    return x / ((z/D) + 1);
+    return x * D / z;
 }
 
 int Point::getY2d() const {
-    return y / ((z/D) + 1);
+    return y * D / z;
 }
 
 void Point::setX(int x) {
@@ -52,24 +58,30 @@ void Point::translate(int x, int y, int z) {
     this->x += x;
     this->y += y;
     this->z += z;
+    xcp += x;
+    ycp += y;
+    zcp += z;
 }
 
 void Point::rotate(char axis) {
     // assumes that the points are already translated to the origin
     switch (axis) {
     case X:
-        y = y*cos(ROTATE) - z*sin(ROTATE);
-        z = y*sin(ROTATE) + z*cos(ROTATE);
+        rotateX++;
+        y = ycp*cos(ROTATE * rotateX) - zcp*sin(ROTATE * rotateX);
+        z = ycp*sin(ROTATE * rotateX) + zcp*cos(ROTATE * rotateX);
         break;
 
     case Y:
-        x = x*cos(ROTATE) + z*sin(ROTATE);
-        z = -x*sin(ROTATE) + z*cos(ROTATE);
+        rotateY++;
+        x = xcp*cos(ROTATE * rotateY) + zcp*sin(ROTATE * rotateY);
+        z = -xcp*sin(ROTATE * rotateY) + zcp*cos(ROTATE * rotateY);
         break;
 
     case Z:
-        x = this->x*cos(ROTATE) - this->y*sin(ROTATE);
-        y = this->x*sin(ROTATE) + this->y*cos(ROTATE);
+        rotateZ++;
+        x = xcp*cos(ROTATE * rotateZ) - ycp*sin(ROTATE * rotateZ);
+        y = xcp*sin(ROTATE * rotateZ) + ycp*cos(ROTATE * rotateZ);
         break;
 
     default:

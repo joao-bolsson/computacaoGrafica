@@ -24,7 +24,7 @@ using namespace std;
 
 vector<Solid*> solids;
 
-Cube *cube = new Cube(150, new Point(300, 200, 0));
+Cube *cube = new Cube(150, new Point(300, 200, 2));
 
 void Canvas2D::paintGL() //callback de desenho na canvas. Chamado pelo Timer definido em mainWindow.cpp
 {
