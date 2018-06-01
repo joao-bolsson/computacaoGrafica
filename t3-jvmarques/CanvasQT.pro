@@ -6,14 +6,16 @@ SOURCES += main.cpp \
     myCanvas.cpp \
     cube.cpp \
     solid.cpp \
-    point.cpp
+    point.cpp \
+    cylinder.cpp
 
 HEADERS += \
            mainwindow.h \
     glCanvas2d.h \
     cube.h \
     solid.h \
-    point.h
+    point.h \
+    cylinder.h
 
 target.path = $$[QT_INSTALL_EXAMPLES]/opengl/qopenglwidget
 
