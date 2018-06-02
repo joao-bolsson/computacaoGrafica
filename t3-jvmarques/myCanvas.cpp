@@ -18,17 +18,17 @@
 #include <math.h>
 #include <QMessageBox>
 #include <QWheelEvent>
-#include "cube.h"
+#include "cylinder.h"
 
 using namespace std;
 
 vector<Solid*> solids;
 
-Cube *cube = new Cube(150, new Point(300, 200, 2));
+Cylinder *c = new Cylinder(10, 20, new Point(0, 0, 1));
 
 void Canvas2D::paintGL() //callback de desenho na canvas. Chamado pelo Timer definido em mainWindow.cpp
 {
-    cube->draw(this);
+    //c->draw(this);
 }
 
 void Canvas2D::wheelEvent(QWheelEvent *event) //callback de mouse
@@ -63,5 +63,5 @@ void Canvas2D::showMsg()
 void Canvas2D::keyPressEvent(QKeyEvent* event)
 {
     char key = (char) event->key();
-    cube->rotate(key);
+    c->rotate(key);
 }
