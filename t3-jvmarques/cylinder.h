@@ -8,19 +8,24 @@
 #define CYLINDER_H
 
 #include "solid.h"
+#include <vector>
 
+using namespace std;
 class Cylinder: public Solid {
 
 private:
-    int d;
+    int r, h, maxL, maxC;
+    vector<vector<Point*>> matrix;
+
 public:
 
     /**
      * Default construct.
-     * @param d Cylinder diameter.
+     * @param r Cylinder radius.
+     * @param h Cylinder height.
      * @param p1 Solid enter point.
      */
-    Cylinder(int d, Point *c);
+    Cylinder(int r, int h, Point *c);
 
     void draw(Canvas2D *canvas);
 };
