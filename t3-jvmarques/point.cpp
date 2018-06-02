@@ -43,7 +43,7 @@ int Point::getX2d() const {
 }
 
 int Point::getY2d() const {
-    return 1;
+    return x * D / z;
 }
 
 void Point::setX(int x) {

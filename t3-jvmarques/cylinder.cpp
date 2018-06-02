@@ -9,13 +9,13 @@ Cylinder::Cylinder(int r, int h, Point *c):Solid(c) {
     //h precisa ser par
 
     this->maxL = h / 2;
-    this->maxC = 12; // 2PI/(PI/6) = 30
+    this->maxC = 12;
 
     int startY = c->getY() - h/2;
     int endY = c->getY() + h/2;
     int stepY = h/4;
 
-    float alfa = 0.52; // 30 * pi / 180
+    float alfa = 0.52;
 
     for (int y = startY; y < endY; y += stepY) {
         vector<Point*> points;
@@ -23,9 +23,6 @@ Cylinder::Cylinder(int r, int h, Point *c):Solid(c) {
         for (float factorAlfa = 0.01; factorAlfa < maxC; factorAlfa++) {
             Point *point = new Point(ceil(r * cos(alfa * factorAlfa)), y, ceil(r * sin(alfa * factorAlfa)));
             points.push_back(point);
-
-//            cout << "point: (" << point->getX() << ", " << point->getY() << ", " << point->getZ() << ")" << endl;
-
         }
         matrix.push_back(points);
     }
@@ -33,28 +30,7 @@ Cylinder::Cylinder(int r, int h, Point *c):Solid(c) {
 }
 
 void Cylinder::draw(Canvas2D *canvas) {
-    /*
-for(l=0; l<M; l++)
-{
-for(c=0; c<N; c++)
-{
-line(M[l,c], M[l ,c+1]); //linha horizontal
-line(M[l,c], M[l+1,c ]); //linha vertical
-line(m[l,c], M[l+1,c+1]); //linha diagonal
-}
-}
-      */
-
-
-//    for (auto v : matrix) {
-//        for (auto point : v) {
-//            if (point->getZ() == 0) {
-//                cout << "z eh zero" << endl;
-//            }
-//            cout << "point: (" << point->getX() << ", " << point->getY() << ", " << point->getZ() << ")" << endl;
-//        }
-//    }
-
+    canvas->color(1, 0, 0);
     int size = matrix.size();
     for (int l = 0; l < size - 1; l++) {
         auto v = matrix.at(l);
