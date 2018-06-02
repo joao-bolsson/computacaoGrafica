@@ -24,11 +24,11 @@ using namespace std;
 
 vector<Solid*> solids;
 
-Cylinder *c = new Cylinder(10, 20, new Point(0, 0, 1));
+Cylinder *c = new Cylinder(10, 20, new Point(400, 200, 1));
 
 void Canvas2D::paintGL() //callback de desenho na canvas. Chamado pelo Timer definido em mainWindow.cpp
 {
-    //c->draw(this);
+    c->draw(this);
 }
 
 void Canvas2D::wheelEvent(QWheelEvent *event) //callback de mouse

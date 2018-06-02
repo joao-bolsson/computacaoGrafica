@@ -6,6 +6,9 @@
  */
 
 #include "point.h"
+#include <iostream>
+
+using namespace std;
 Point::Point() {
     Point(0, 0, 0);
 }
@@ -14,6 +17,7 @@ Point::Point(int x, int y, int z) {
     this->x = x;
     this->y = y;
     this->z = z;
+
     xcp = x;
     ycp = y;
     zcp = z;
@@ -39,7 +43,7 @@ int Point::getX2d() const {
 }
 
 int Point::getY2d() const {
-    return y * D / z;
+    return 1;
 }
 
 void Point::setX(int x) {
