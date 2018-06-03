@@ -58,8 +58,6 @@ void Canvas2D::point(int x, int y)
 
 void Canvas2D::line( int x1, int y1, int x2, int y2 )
 {
-    cout << "(" << x1 << ", " << y1 << ") e (" << x2 << ", " << y2 << ")" << endl;
-
    glBegin(GL_LINES);
       glVertex2d(x1, y1);
       glVertex2d(x2, y2);

@@ -11,7 +11,7 @@
 #include <iostream>
 #include <math.h>
 
-const short D = 100;
+const short D = 10;
 const char X = 'X';
 const char Y = 'Y';
 const char Z = 'Z';

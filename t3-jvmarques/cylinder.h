@@ -30,6 +30,20 @@ public:
     Cylinder(int r, int h, Point *c);
 
     void draw(Canvas2D *canvas);
+
+    /**
+     * Translate the solid.
+     * @param x Units to add to x coordinate.
+     * @param y Units to add to y coordinate.
+     * @param z Units to add to z coordinate.
+     */
+    void translate(int x, int y, int z);
+
+    /**
+     * Rotate the solid.
+     * @param axis Axis to rotate.
+     */
+    void rotate(char axis);
 };
 
 #endif // CYLINDER_H

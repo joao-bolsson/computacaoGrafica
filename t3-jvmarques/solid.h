@@ -44,13 +44,13 @@ public:
      * @param y Units to add to y coordinate.
      * @param z Units to add to z coordinate.
      */
-    void translate(int x, int y, int z);
+    virtual void translate(int x, int y, int z);
 
     /**
      * Rotate the solid.
      * @param axis Axis to rotate.
      */
-    void rotate(char axis);
+    virtual void rotate(char axis);
 };
 
 #endif // SOLID_H
