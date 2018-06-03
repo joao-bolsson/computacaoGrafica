@@ -8,56 +8,48 @@ Cylinder::Cylinder(int r, int h, Point *c):Solid(c) {
     this->r = r;
     this->h = h;
 
-    //h precisa ser par
+    float x, y, z;
+    float step = 0.628;
+    maxL = 0;
+    maxC = 0;
 
-    this->maxL = h / 2;
-    this->maxC = 12;
+    for (float t = 0.0; t <= 6.28; t +=step) {
+        vector<Point*> pointsM;
+        cout << " linha " << maxL << endl;
+        for (float a = 0; a <= 3.14; a +=step) {
+            x = r * cos(a) + c->getX();
+            y = r * sin(a) + c->getY();
+            z = t + c->getZ();
+            Point *p = new Point(x, y, z);
 
-    int startY = c->getY() - h/2;
-    int endY = c->getY() + h/2;
-    int stepY = h;
-
-    float alfa = 0.52;
-
-    for (int y = startY; y <= endY; y += stepY) {
-        vector<Point*> points;
-        // calcula pontos da circunferencia base
-        for (float factorAlfa = 0.01; factorAlfa < maxC; factorAlfa++) {
-            Point *point = new Point(ceil(r * cos(alfa * factorAlfa)), y, ceil(r * sin(alfa * factorAlfa)));
-            points.push_back(point);
-
-            cout << "(" << point->getX() << ", " << point->getY() << ", " << point->getZ() << ")" << " 2D: ("
-                 << point->getX2d() << ", " << point->getY2d() << ")" << endl;;
+            pointsM.push_back(p);
+            if (maxL == 0) {
+                maxC++; // o numero de colunas nao se altera na matriz
+            }
         }
-        matrix.push_back(points);
+        matrix.push_back(pointsM);
+        maxL++;
     }
-
 }
 
 void Cylinder::draw(Canvas2D *canvas) {
     canvas->color(1, 0, 0);
-    int size = matrix.size();
 
-//    cout << "size: " << size << endl;
-
-    for (int l = 0; l < size - 1; l++) {
+    for (int l = 0; l < maxL - 1; l++) {
         auto v = matrix.at(l);
-        auto v1 = matrix.at(l+1);
-        for (int col = 0; col < maxC; col++) {
+        auto v1 = matrix.at(l + 1);
+
+        for (int col = 0; col < maxC - 1; col++) {
             auto p = v.at(col);
-//            auto p1 = v.at(col+1);
+            auto p1 = v.at(col + 1);
             auto pp1 = v1.at(col);
-//            auto pp2 = v1.at(col+1);
+            auto pp2 = v1.at(col + 1);
 
-            cout << "l1: (" << p->getX2d() << ", " << p->getY2d() << ") L2: (" << pp1->getX2d()
-                 << ", " << pp1->getY2d() << ")" << endl;
-
-//            canvas->line(p->getX2d(), p->getY2d(), p1->getX2d(), p1->getY2d());
+            canvas->line(p->getX2d(), p->getY2d(), p1->getX2d(), p1->getY2d());
             canvas->line(p->getX2d(), p->getY2d(), pp1->getX2d(), pp1->getY2d());
-//            canvas->line(p->getX2d(), p->getY2d(), pp2->getX2d(), pp2->getY2d());
+            canvas->line(p->getX2d(), p->getY2d(), pp2->getX2d(), pp2->getY2d());
         }
     }
-
 }
 
 void Cylinder::translate(int x, int y, int z) {

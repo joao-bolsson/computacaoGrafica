@@ -24,7 +24,7 @@ using namespace std;
 
 vector<Solid*> solids;
 
-Cylinder *c = new Cylinder(10, 20, new Point(200, 100, -100));
+Cylinder *c = new Cylinder(300, 20, new Point(1, 1, 1));
 
 void Canvas2D::paintGL() //callback de desenho na canvas. Chamado pelo Timer definido em mainWindow.cpp
 {

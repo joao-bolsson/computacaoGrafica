@@ -39,11 +39,11 @@ int Point::getZ() const {
 }
 
 int Point::getX2d() const {
-    return x * D / z;
+    return (x / (z + D)) + 100;
 }
 
 int Point::getY2d() const {
-    return y * D / z;
+    return (y / (z + D)) + 100;
 }
 
 void Point::setX(int x) {
