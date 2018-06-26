@@ -32,7 +32,9 @@ float tYCamisa = 2;
 
 float posYPistao = tYCamisa - (alturaPistao / 2);
 
-short dir = 1;
+short dir = 1, dirAngulo = -1;
+
+float velocidade = 0.05, angulo = 30, anguloMax = 30;
 
 GLUquadricObj *quadratic;
 
@@ -92,7 +94,7 @@ void display() {
     glColor3f(0, 0, 1);
     glTranslatef(0, tYCamisa - alturaPistao - dif, 0);
     glRotatef((GLfloat) 90, 1, 0, 0);
-    glRotatef((GLfloat) 330, 0, 1, 0);
+    glRotatef((GLfloat) 360 - angulo, 0, 1, 0);
     gluCylinder(quadratic, raioBiela, raioBiela, alturaBiela, SLICES, STACKS);
     glPopMatrix();
 
@@ -112,7 +114,14 @@ void display() {
     } else if (posYPistao <= tYCamisa - (alturaCamisa / 2)) {
         dir = 1;
     }
-    posYPistao += 0.05 * dir;
+    posYPistao += velocidade * dir;
+    angulo += 2 * dirAngulo;
+
+    if (angulo >= anguloMax) {
+        dirAngulo = -1;
+    } else if (angulo <= -anguloMax) {
+        dirAngulo = 1;
+    }
 }
 
 void keyboard(unsigned char key, int x, int y) {
