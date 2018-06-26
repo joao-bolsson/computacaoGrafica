@@ -30,6 +30,10 @@ float alturaCamisa = 1, alturaPistao = 0.5, alturaBiela = 1.5, alturaManivela = 
 // translates
 float tYCamisa = 2;
 
+float posYPistao = tYCamisa - (alturaPistao / 2);
+
+short dir = 1;
+
 GLUquadricObj *quadratic;
 
 void init() {
@@ -76,7 +80,7 @@ void display() {
     // pistao
     glPushMatrix();
     glColor3f(0, 1, 0);
-    glTranslatef(0, tYCamisa - (alturaPistao / 2), 0);
+    glTranslatef(0, posYPistao, 0);
     glRotatef((GLfloat) 90, 1, 0, 0);
     gluCylinder(quadratic, raioPistao, raioPistao, alturaPistao, SLICES, STACKS);
     glPopMatrix();
@@ -100,6 +104,13 @@ void display() {
     glPopMatrix();
 
     glutSwapBuffers();
+
+    if (posYPistao >= tYCamisa) {
+        dir = -1;
+    } else if (posYPistao <= tYCamisa - (alturaCamisa / 2)) {
+        dir = 1;
+    }
+    posYPistao += 0.05 * dir;
 }
 
 void keyboard(unsigned char key, int x, int y) {
