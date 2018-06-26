@@ -15,7 +15,7 @@ using namespace std;
 
 float rx = 0, rz = 0;
 
-float abertura = 940.0, znear = 1, zfar = 20, aspect = 1;
+float abertura = 40.0, znear = 1, zfar = 20, aspect = 1;
 GLUquadricObj *quadratic;
 
 void init() {
@@ -46,12 +46,15 @@ void display() {
     gluLookAt(0, 0, 3,  //from. Posicao onde a camera esta posicionada
               0, 0, 0,  //to. Posicao absoluta onde a camera esta vendo
               0, 1, 0); //up. Vetor Up.
+
     glRotatef((GLfloat) rx, 0.0f, 1.0f, 0.0f);
     glRotatef((GLfloat) rz, 1.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
-    glColor3f(1,0,0);
 
+    glPushMatrix();
+    glColor3f(1,0,0);
     gluCylinder(quadratic, 1.0, 1, 3, 30, 30);
+    glPopMatrix();
 
     glutSwapBuffers();
 }
