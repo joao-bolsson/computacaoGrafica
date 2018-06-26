@@ -85,10 +85,12 @@ void display() {
     gluCylinder(quadratic, raioPistao, raioPistao, alturaPistao, SLICES, STACKS);
     glPopMatrix();
 
+    float dif = (tYCamisa - alturaPistao / 2) - posYPistao;
+
     // biela
     glPushMatrix();
     glColor3f(0, 0, 1);
-    glTranslatef(0, tYCamisa - alturaPistao, 0);
+    glTranslatef(0, tYCamisa - alturaPistao - dif, 0);
     glRotatef((GLfloat) 90, 1, 0, 0);
     glRotatef((GLfloat) 330, 0, 1, 0);
     gluCylinder(quadratic, raioBiela, raioBiela, alturaBiela, SLICES, STACKS);
