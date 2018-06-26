@@ -21,10 +21,10 @@ float rx = 0, rz = 0;
 float abertura = 400.0, znear = 1, zfar = 20, aspect = 1;
 
 // raios
-float raioCamisa = 0.5, raioPistao = 0.5;
+float raioCamisa = 0.5, raioPistao = 0.5, raioBiela = 0.125;
 
 // alturas
-float alturaCamisa = 1, alturaPistao = 0.5;
+float alturaCamisa = 1, alturaPistao = 0.5, alturaBiela = 1.5;
 GLUquadricObj *quadratic;
 
 void init() {
@@ -74,6 +74,15 @@ void display() {
     glTranslatef(0, 1.5, 0);
     glRotatef((GLfloat) 90, 1, 0, 0);
     gluCylinder(quadratic, raioPistao, raioPistao, alturaPistao, SLICES, STACKS);
+    glPopMatrix();
+
+    // biela
+    glPushMatrix();
+    glColor3f(0, 0, 1);
+    glTranslatef(0, 1.25, 0);
+    glRotatef((GLfloat) 90, 1, 0, 0);
+    glRotatef((GLfloat) 315, 0, 1, 0);
+    gluCylinder(quadratic, raioBiela, raioBiela, alturaBiela, SLICES, STACKS);
     glPopMatrix();
 
     glutSwapBuffers();
