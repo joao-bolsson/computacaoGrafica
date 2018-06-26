@@ -25,7 +25,11 @@ float abertura = 400.0, znear = 1, zfar = 20, aspect = 1;
 float raioCamisa = 0.5, raioPistao = raioCamisa, raioBiela = 0.125, raioManivela = raioBiela;
 
 // alturas
-float alturaCamisa = 1, alturaPistao = 0.5, alturaBiela = 1.5, alturaManivela = 0.75;
+float alturaCamisa = 1, alturaPistao = 0.5, alturaBiela = 1.5, alturaManivela = 0.5;
+
+// translates
+float tYCamisa = 2;
+
 GLUquadricObj *quadratic;
 
 void init() {
@@ -64,7 +68,7 @@ void display() {
     // camisa
     glPushMatrix();
     glColor3f(1, 0, 0);
-    glTranslatef(0, 2, 0);
+    glTranslatef(0, tYCamisa, 0);
     glRotatef((GLfloat) 90, 1, 0, 0);
     gluCylinder(quadratic, raioCamisa, raioCamisa, alturaCamisa, SLICES, STACKS);
     glPopMatrix();
@@ -72,7 +76,7 @@ void display() {
     // pistao
     glPushMatrix();
     glColor3f(0, 1, 0);
-    glTranslatef(0, 1.5, 0);
+    glTranslatef(0, tYCamisa - (alturaPistao / 2), 0);
     glRotatef((GLfloat) 90, 1, 0, 0);
     gluCylinder(quadratic, raioPistao, raioPistao, alturaPistao, SLICES, STACKS);
     glPopMatrix();
@@ -80,7 +84,7 @@ void display() {
     // biela
     glPushMatrix();
     glColor3f(0, 0, 1);
-    glTranslatef(0, 1.25, 0);
+    glTranslatef(0, tYCamisa - alturaPistao, 0);
     glRotatef((GLfloat) 90, 1, 0, 0);
     glRotatef((GLfloat) 330, 0, 1, 0);
     gluCylinder(quadratic, raioBiela, raioBiela, alturaBiela, SLICES, STACKS);
@@ -89,9 +93,9 @@ void display() {
     // manivela
     glPushMatrix();
     glColor3f(0, 1, 1);
-    glTranslatef(-alturaManivela, 0, 0);
+//    glTranslatef(-alturaManivela, 0, 0);
     glRotatef((GLfloat) 90, 1, 0, 0);
-    glRotatef((GLfloat) 90, 0, 1, 0);
+    glRotatef((GLfloat) 270, 0, 1, 0);
     gluCylinder(quadratic, raioManivela, raioManivela, alturaManivela, SLICES, STACKS);
     glPopMatrix();
 
