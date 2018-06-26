@@ -8,6 +8,7 @@
 #include <cctype>
 #include <cstdio>
 #include <iostream>
+#include <cmath>
 
 #define SCREEN_X 1000
 #define SCREEN_Y 600
@@ -21,10 +22,10 @@ float rx = 0, rz = 0;
 float abertura = 400.0, znear = 1, zfar = 20, aspect = 1;
 
 // raios
-float raioCamisa = 0.5, raioPistao = 0.5, raioBiela = 0.125;
+float raioCamisa = 0.5, raioPistao = raioCamisa, raioBiela = 0.125, raioManivela = raioBiela;
 
 // alturas
-float alturaCamisa = 1, alturaPistao = 0.5, alturaBiela = 1.5;
+float alturaCamisa = 1, alturaPistao = 0.5, alturaBiela = 1.5, alturaManivela = 0.75;
 GLUquadricObj *quadratic;
 
 void init() {
@@ -81,8 +82,17 @@ void display() {
     glColor3f(0, 0, 1);
     glTranslatef(0, 1.25, 0);
     glRotatef((GLfloat) 90, 1, 0, 0);
-    glRotatef((GLfloat) 315, 0, 1, 0);
+    glRotatef((GLfloat) 330, 0, 1, 0);
     gluCylinder(quadratic, raioBiela, raioBiela, alturaBiela, SLICES, STACKS);
+    glPopMatrix();
+
+    // manivela
+    glPushMatrix();
+    glColor3f(0, 1, 1);
+    glTranslatef(-alturaManivela, 0, 0);
+    glRotatef((GLfloat) 90, 1, 0, 0);
+    glRotatef((GLfloat) 90, 0, 1, 0);
+    gluCylinder(quadratic, raioManivela, raioManivela, alturaManivela, SLICES, STACKS);
     glPopMatrix();
 
     glutSwapBuffers();
