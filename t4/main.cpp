@@ -34,7 +34,7 @@ float posYPistao = tYCamisa - (alturaPistao / 2);
 
 short dir = 1, dirAngulo = -1;
 
-float velocidade = 0.05, angulo = 30, anguloMax = 30;
+float velocidade = 0.01, angulo = 30, anguloMax = 30;
 
 GLUquadricObj *quadratic;
 
@@ -115,7 +115,7 @@ void display() {
         dir = 1;
     }
     posYPistao += velocidade * dir;
-    angulo += 2 * dirAngulo;
+    angulo += velocidade * dirAngulo * 100;
 
     if (angulo >= anguloMax) {
         dirAngulo = -1;
