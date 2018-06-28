@@ -33,7 +33,7 @@ float tYCamisa = 2;
 float posMeio = tYCamisa - (alturaPistao / 2), posYPistao = tYCamisa;
 
 short dir = 1, dirAngulo = -1;
-bool pause = false;
+bool pause = true;
 
 float velocidade = 0.002, angulo = 0, anguloMax = 30;
 float velocidadeAngulo = anguloMax / ((tYCamisa - posMeio) / velocidade);
@@ -104,8 +104,8 @@ void display() {
     // manivela
     glPushMatrix();
     glColor3f(0, 1, 1);
-    glTranslatef(-raioManivela, -raioManivela, 0);
-    glRotatef((GLfloat) 90, 1, 0, 0);
+    glTranslatef(0, -raioManivela * 2, 0);
+    glRotatef((GLfloat) 270, 1, 0, 0);
     glRotatef((GLfloat) anguloManivela, 0, 1, 0);
     gluCylinder(quadratic, raioManivela, raioManivela, alturaManivela, SLICES, STACKS);
     glPopMatrix();
