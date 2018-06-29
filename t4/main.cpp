@@ -104,7 +104,7 @@ void display() {
     // manivela
     glPushMatrix();
     glColor3f(0, 1, 1);
-    glTranslatef(0, -raioManivela * 2, 0);
+    glTranslatef(0, (-raioManivela * 2), 0);
     glRotatef((GLfloat) 270, 1, 0, 0);
     glRotatef((GLfloat) anguloManivela, 0, 1, 0);
     gluCylinder(quadratic, raioManivela, raioManivela, alturaManivela, SLICES, STACKS);
